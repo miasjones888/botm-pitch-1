@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marginalia · BOTM pitch — comprehensive plan + handoff</title>
+
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap" rel="stylesheet">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Reenie+Beanie&display=swap');
+
+  :root {
+    --doc-bg:        #F4F4F2;
+    --doc-surface:   #FFFFFF;
+    --doc-text:      #1A1A18;
+    --doc-text-soft: #4A4A46;
+    --doc-text-mute: #7A7672;
+    --doc-text-faint:#A8A4A0;
+    --doc-rule:      #D8D6D2;
+    --doc-rule-soft: #E8E6E2;
+
+    --color-cream:   #FAF6ED;
+    --color-ink:     #1C1C1A;
+    --color-navy:    #3E4A66;
+    --color-lavender:#A89DBD;
+
+    --status-done:   #4A6B4A;
+    --status-prog:   #B8893A;
+    --status-pend:   #7A6F8E;
+    --status-info:   #5A6680;
+
+    --font-sans: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    --font-hand: 'Reenie Beanie', cursive;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--doc-bg);
+    color: var(--doc-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* DOC SCAFFOLD                                                      */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .doc {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 80px 48px 160px;
+  }
+
+  .doc-head {
+    margin-bottom: 80px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--doc-rule);
+  }
+
+  .doc-filename {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.04em;
+    margin-bottom: 24px;
+  }
+  .doc-filename::before {
+    content: '> ';
+    color: var(--doc-text-faint);
+  }
+
+  .doc-title {
+    font-family: var(--font-sans);
+    font-size: 44px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.025em;
+    margin-bottom: 16px;
+    line-height: 1.05;
+  }
+
+  .doc-sub {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--doc-text-soft);
+    line-height: 1.55;
+    max-width: 75ch;
+    margin-bottom: 28px;
+  }
+
+  .doc-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding-top: 20px;
+    border-top: 1px dashed var(--doc-rule);
+  }
+
+  .doc-meta strong {
+    color: var(--doc-text);
+    font-weight: 500;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* SUPERSEDES BANNER                                                 */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .supersedes {
+    margin-top: 24px;
+    padding: 18px 22px;
+    background: rgba(184, 137, 58, 0.08);
+    border-left: 2px solid var(--status-prog);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--doc-text-soft);
+    line-height: 1.65;
+  }
+
+  .supersedes strong {
+    color: var(--status-prog);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 10px;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* SECTION                                                           */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .section {
+    margin-bottom: 96px;
+  }
+
+  .section-head {
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--doc-rule);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-top: 4px;
+    flex: 1;
+  }
+
+  .section-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-faint);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .section-intro {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--doc-text-soft);
+    line-height: 1.65;
+    max-width: 75ch;
+    margin-bottom: 40px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* STATUS BADGES                                                     */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  .badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+
+  .badge-done {
+    background: rgba(74, 107, 74, 0.12);
+    color: var(--status-done);
+  }
+  .badge-done::before { background: var(--status-done); }
+
+  .badge-prog {
+    background: rgba(184, 137, 58, 0.12);
+    color: var(--status-prog);
+  }
+  .badge-prog::before { background: var(--status-prog); }
+
+  .badge-pend {
+    background: rgba(122, 111, 142, 0.12);
+    color: var(--status-pend);
+  }
+  .badge-pend::before { background: var(--status-pend); }
+
+  .badge-info {
+    background: rgba(90, 102, 128, 0.12);
+    color: var(--status-info);
+  }
+  .badge-info::before { background: var(--status-info); }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* DASHBOARD — top-level state of play                               */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0;
+    border: 1px solid var(--doc-rule);
+    background: var(--doc-surface);
+  }
+
+  .dash-cell {
+    padding: 22px 24px 24px;
+    border-right: 1px solid var(--doc-rule);
+    border-bottom: 1px solid var(--doc-rule);
+  }
+
+  .dash-cell-head {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .dash-cell-val {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.005em;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .dash-cell-note {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    line-height: 1.55;
+    margin-top: 6px;
+  }
+
+  .dash-cell-note strong {
+    color: var(--doc-text-soft);
+    font-weight: 500;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* CARD — used for pitch concept, design systems, etc.               */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .card-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    padding: 28px 30px 30px;
+    background: var(--doc-surface);
+    border: 1px solid var(--doc-rule);
+  }
+
+  .card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    gap: 12px;
+  }
+
+  .card-num {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .card-title {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+
+  .card-body {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--doc-text-soft);
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+
+  .card-body em {
+    color: var(--doc-text);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .card-body p {
+    margin-bottom: 10px;
+  }
+  .card-body p:last-child { margin-bottom: 0; }
+
+  .card-meta-list {
+    list-style: none;
+    margin: 14px 0 0;
+    padding-top: 14px;
+    border-top: 1px dashed var(--doc-rule);
+  }
+
+  .card-meta-list li {
+    padding: 6px 0;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-soft);
+    line-height: 1.55;
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+
+  .card-meta-list li .key {
+    color: var(--doc-text-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 9px;
+    flex-shrink: 0;
+    min-width: 70px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* FILE TABLE                                                        */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .file-list {
+    border: 1px solid var(--doc-rule);
+    background: var(--doc-surface);
+  }
+
+  .file-row {
+    display: grid;
+    grid-template-columns: 280px 1fr 120px;
+    gap: 24px;
+    padding: 22px 26px;
+    border-bottom: 1px solid var(--doc-rule);
+    align-items: start;
+  }
+
+  .file-row:last-child { border-bottom: none; }
+
+  .file-name {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--doc-text);
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+    word-break: break-all;
+  }
+
+  .file-name strong {
+    color: var(--doc-text);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .file-name .path {
+    color: var(--doc-text-mute);
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+
+  .file-desc {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--doc-text-soft);
+    line-height: 1.6;
+  }
+
+  .file-desc em {
+    color: var(--doc-text);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .file-status {
+    text-align: right;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* TIMELINE — remaining sprint work                                  */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .timeline {
+    border: 1px solid var(--doc-rule);
+    background: var(--doc-surface);
+  }
+
+  .tl-row {
+    display: grid;
+    grid-template-columns: 80px 200px 1fr 120px;
+    gap: 24px;
+    padding: 22px 26px;
+    border-bottom: 1px solid var(--doc-rule);
+    align-items: start;
+  }
+
+  .tl-row:last-child { border-bottom: none; }
+
+  .tl-step {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--status-pend);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .tl-name {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+  }
+
+  .tl-name-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    margin-top: 4px;
+    letter-spacing: 0.06em;
+  }
+
+  .tl-desc {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--doc-text-soft);
+    line-height: 1.6;
+  }
+
+  .tl-desc em {
+    color: var(--doc-text);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .tl-time {
+    text-align: right;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    line-height: 1.5;
+  }
+
+  .tl-time strong {
+    color: var(--doc-text);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* PITCH CONCEPT — featured block                                    */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .pitch-concept {
+    background: var(--color-cream);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.11 0 0 0 0 0.10 0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    border: 1px solid var(--doc-rule);
+    padding: 56px 64px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pitch-concept-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-navy);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 24px;
+  }
+
+  .pitch-concept-title {
+    font-family: var(--font-sans);
+    font-size: 64px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.045em;
+    line-height: 0.95;
+    margin-bottom: 20px;
+  }
+
+  .pitch-concept-tagline {
+    font-family: var(--font-sans);
+    font-size: 19px;
+    color: var(--color-ink);
+    line-height: 1.5;
+    max-width: 36ch;
+    margin-bottom: 36px;
+    letter-spacing: -0.005em;
+  }
+
+  .pitch-concept-quote {
+    font-family: var(--font-sans);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--color-ink);
+    line-height: 1.55;
+    max-width: 60ch;
+    padding: 20px 24px;
+    border-left: 3px solid var(--color-lavender);
+    background: rgba(168, 157, 189, 0.06);
+    margin-bottom: 28px;
+  }
+
+  .pitch-concept-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-navy);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding-top: 20px;
+    border-top: 1px solid rgba(28, 28, 26, 0.15);
+  }
+
+  .pitch-concept-meta strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* CALLOUT — for handoff protocol, locked decisions                  */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .callout {
+    padding: 28px 30px;
+    background: var(--doc-surface);
+    border: 1px solid var(--doc-rule);
+    border-left: 3px solid var(--status-info);
+    margin-bottom: 24px;
+  }
+
+  .callout-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--status-info);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .callout-title {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+
+  .callout-body {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--doc-text-soft);
+    line-height: 1.65;
+  }
+
+  .callout-body em {
+    color: var(--doc-text);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .callout-body p {
+    margin-bottom: 10px;
+  }
+  .callout-body p:last-child { margin-bottom: 0; }
+
+  .callout-list {
+    list-style: none;
+    margin: 12px 0 0;
+    padding: 0;
+  }
+
+  .callout-list li {
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--doc-rule);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--doc-text-soft);
+    line-height: 1.6;
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+  }
+  .callout-list li:last-child { border-bottom: none; }
+
+  .callout-list li strong {
+    color: var(--doc-text);
+    font-weight: 500;
+    flex-shrink: 0;
+    min-width: 130px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* RESPONSIVE                                                        */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  @media (max-width: 900px) {
+    .doc { padding: 40px 16px 80px; }
+    .doc-title { font-size: 28px; }
+    .section { margin-bottom: 64px; }
+    .file-row { grid-template-columns: 1fr; gap: 12px; }
+    .file-status { text-align: left; }
+    .tl-row { grid-template-columns: 1fr; gap: 8px; }
+    .tl-time { text-align: left; }
+    .pitch-concept { padding: 32px 28px; }
+    .pitch-concept-title { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc">
+
+  <!-- ────────────────────────────── HEAD ─── -->
+  <header class="doc-head">
+    <div class="doc-filename">marginalia / botm_pitch_comprehensive_plan.html</div>
+    <h1 class="doc-title">Marginalia · BOTM Creator-in-Residence Pitch — comprehensive plan + handoff.</h1>
+    <p class="doc-sub">Full state of play for the Marginalia pitch to Book of the Month's Creator-in-Residence Program. Design systems are locked and ready for handoff. This document supersedes the original pitch plan and serves as the single source of truth for what's done, what's pending, and what a fresh chat needs to know to continue the work.</p>
+    <div class="doc-meta">
+      <span><strong>target submit</strong> Thursday, April 23, 2026</span>
+      <span><strong>application</strong> bookofthemonth.applytojob.com/apply/LrtX5jNEpR</span>
+      <span><strong>artifacts</strong> 5 delivered · 3 pending</span>
+      <span><strong>status</strong> design locked, writing + production remain</span>
+    </div>
+    <div class="supersedes">
+      <strong>supersedes</strong>
+      This document replaces <span style="color: var(--status-prog);">botm-pitch-plan.html</span> (initial plan, written before concept was finalized) and consolidates the current state across all sprint artifacts. The earlier plan still exists in /mnt/user-data/outputs/ as a historical reference but is no longer the working document.
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 01 · DASHBOARD                                       -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-num">01 · dashboard</div>
+        <h2 class="section-title">Where everything stands.</h2>
+      </div>
+      <div class="section-tag">at a glance</div>
+    </div>
+    <p class="section-intro">Top-level state of every workstream in the sprint. Design phase is complete and locked. Writing and production remain.</p>
+
+    <div class="dashboard">
+      <div class="dash-cell">
+        <div class="dash-cell-head">strategic context</div>
+        <div class="dash-cell-val">Locked</div>
+        <div class="dash-cell-note">BOTM lane, Volume 0 alignment, audience cluster, sample book all decided. <strong>Lost Lambs by Madeline Cash (BOTM Jan 2026)</strong> as sample episode.</div>
+      </div>
+      <div class="dash-cell">
+        <div class="dash-cell-head">concept</div>
+        <div class="dash-cell-val">Locked · Marginalia</div>
+        <div class="dash-cell-note">Monthly collage-essay on the interior life of reading. Film + companion zine + 3 short cuts per piece. Pitch is for one piece first.</div>
+      </div>
+      <div class="dash-cell">
+        <div class="dash-cell-head">design system</div>
+        <div class="dash-cell-val">Locked · v2</div>
+        <div class="dash-cell-note">General Sans + IBM Plex Mono + Reenie Beanie. Cream / ink / navy + lavender accent. Documented in standalone file.</div>
+      </div>
+      <div class="dash-cell">
+        <div class="dash-cell-head">deck mockups</div>
+        <div class="dash-cell-val">Locked · v4</div>
+        <div class="dash-cell-note">Five slides, postcard close on slide 5. Editorial rework, asymmetric layouts. Ready for Canva production.</div>
+      </div>
+      <div class="dash-cell">
+        <div class="dash-cell-head">zine brief</div>
+        <div class="dash-cell-val">Locked · 8 spreads</div>
+        <div class="dash-cell-note">Six quiet + two earned-dense. Restraint as operating principle. Ready for Claude Design or Canva build.</div>
+      </div>
+      <div class="dash-cell">
+        <div class="dash-cell-head">film brief</div>
+        <div class="dash-cell-val">Deferred</div>
+        <div class="dash-cell-note">Held until BOTM responds. Builds with their input or after their decision. Not a Thursday-submission requirement.</div>
+      </div>
+      <div class="dash-cell">
+        <div class="dash-cell-head">field 3 pitch text</div>
+        <div class="dash-cell-val">Pending</div>
+        <div class="dash-cell-note">The actual writing BOTM will read. Anchored on balcony paragraph. Most important remaining work.</div>
+      </div>
+      <div class="dash-cell">
+        <div class="dash-cell-head">canva deck build</div>
+        <div class="dash-cell-val">Pending</div>
+        <div class="dash-cell-note">Translate v4 mockups to editable Canva. Source images for slide 1, 3, 5. Production work.</div>
+      </div>
+      <div class="dash-cell">
+        <div class="dash-cell-head">application submit</div>
+        <div class="dash-cell-val">Pending</div>
+        <div class="dash-cell-note">Field 1 (links), 2 (dropdown), 4 (budget — copy drafted), 5 (basics + resume). Final step.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 02 · PITCH CONCEPT                                   -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-num">02 · concept</div>
+        <h2 class="section-title">What Marginalia is.</h2>
+      </div>
+      <div class="section-tag">locked</div>
+    </div>
+    <p class="section-intro">The pitch concept in its locked form. This is the version that the deck mockups and zine brief have been built against. Do not relitigate.</p>
+
+    <div class="pitch-concept">
+      <div class="pitch-concept-eyebrow">a creator-in-residence proposal — for Book of the Month</div>
+      <div class="pitch-concept-title">Marginalia.</div>
+      <p class="pitch-concept-tagline">A monthly collage-essay on the interior life of reading.</p>
+
+      <p class="pitch-concept-quote">"The reading life of any woman, anywhere — filmed and written with craft."</p>
+
+      <div class="pitch-concept-meta">
+        <span><strong>format</strong> 6–9 min film + companion printed essay-object + 3 short cuts</span>
+        <span><strong>cadence</strong> monthly</span>
+        <span><strong>sample episode</strong> Lost Lambs by Madeline Cash · BOTM Jan 2026</span>
+        <span><strong>publishing register</strong> Volume-Ø adjacent</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px;">
+      <div class="callout">
+        <div class="callout-label">voice anchor — the balcony paragraph</div>
+        <div class="callout-title">The source paragraph for Field 3 drafting. Mia's voice. Preserve verbatim or paraphrase carefully.</div>
+        <div class="callout-body">
+          <p style="font-family: var(--font-sans); font-size: 14px; font-style: italic; color: var(--doc-text); line-height: 1.7; padding: 16px 20px; background: var(--color-cream); border-left: 2px solid var(--color-navy);">Sitting out on a balcony in Paris, watching the sitting reading and thinking and drinking coffee and smoking and writing in your journal while listening to music and perhaps talking passionately with a friend about the book you're reading and how it makes you feel — what you see vs. what they see, the poetry and prose it inspires in you, the change it inspires, how it touches your own life, how you see the world when you come out of the world within the book, how it immediately becomes nostalgic and fuzzy because you can never go back to the feeling of reading the book for the first time, how it feels to hold a book close to your heart, your mind, for it to inspire deep thought, feeling, and discussion, how it connects to the world.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">core characterization moves</div>
+        <div class="callout-title">Three modalities of the reader-figure across the work.</div>
+        <ul class="callout-list">
+          <li><strong>cinematic body</strong>composed, framed, intentional. the held shot. the deliberate gesture.</li>
+          <li><strong>casual / webcam body</strong>unguarded, low-light, intimate. the body present without performance.</li>
+          <li><strong>written word as text on screen</strong>the writing made visible. fragments appearing over image, voice always present.</li>
+        </ul>
+      </div>
+
+      <div class="callout">
+        <div class="callout-label">register · what to do and what to avoid</div>
+        <div class="callout-title">Tonal guardrails for every artifact.</div>
+        <ul class="callout-list">
+          <li><strong>do</strong>global, not European. art-essay register. intellectually serious, humanly warm. quiet, considered, with breath.</li>
+          <li><strong>do not</strong>cozy, me-time, lifestyle-coded, Kinfolk-perfect, lifestyle-flatlay aesthetic. nothing gendered as feminine-domestic.</li>
+          <li><strong>do</strong>name authors and books specifically. say "reader" not "user." say "work" not "content." cut adverbs.</li>
+          <li><strong>do not</strong>pitch the whole catalog. tied to BOTM's literary fiction / Volume 0 lane only.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 03 · STRATEGIC CONTEXT                               -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-num">03 · strategic context</div>
+        <h2 class="section-title">Why this pitch, why now, why this lane.</h2>
+      </div>
+      <div class="section-tag">research summary</div>
+    </div>
+    <p class="section-intro">Background context that informs every artifact in the sprint. BOTM is at a strategic moment — institution-building around its centennial — and Marginalia positions as the content arm of that moment.</p>
+
+    <div class="card-row">
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-num">01 · institution</span>
+          <span class="badge badge-info">context</span>
+        </div>
+        <h3 class="card-title">BOTM at 100.</h3>
+        <p class="card-body">Book of the Month turns 100 in 2026. Four institutional moves visible right now — the Lolly Award ($25K fiction prize), Volume 0 (literary short-fiction magazine), Aspen Literary Festival presenting sponsorship, and the Creator-in-Residence Program. The pitch positions Marginalia as content in service of this institution-building moment.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-num">02 · the unlock</span>
+          <span class="badge badge-info">context</span>
+        </div>
+        <h3 class="card-title">Volume 0 alignment.</h3>
+        <p class="card-body">Volume 0 is BOTM's literary short-fiction magazine — Emma Cline, Nada Alic, Kristen Roupenian on the roster, $35K author fees, CEO John Lippman edits. The companion printed essay-object positions Marginalia as <em>Volume-Ø adjacent</em> in publishing register. This is the strategic key — converts a creator gig into a publishing relationship.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-num">03 · audience</span>
+          <span class="badge badge-info">context</span>
+        </div>
+        <h3 class="card-title">The literary lane.</h3>
+        <p class="card-body">Pitch is for the literary subset of BOTM's base — readers of Madeline Cash, Kiran Millwood Hargrave, Aja Gabel, Erin Somers, Emily Adrian, Beatriz Serrano, Emma Cline. Not the romance / commercial fiction audience. The deck mockups and zine brief are calibrated to this taste cluster.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-num">04 · application</span>
+          <span class="badge badge-info">format</span>
+        </div>
+        <h3 class="card-title">Five fields to fill.</h3>
+        <p class="card-body">Application URL: <em>bookofthemonth.applytojob.com/apply/LrtX5jNEpR</em>. Five fields — links, content type dropdown, pitch (Field 3), budget (Field 4), basics + resume. Compensation $50–$5,000 per piece. Rolling submissions, remote.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 04 · DESIGN SYSTEMS — DELIVERED                      -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-num">04 · design systems</div>
+        <h2 class="section-title">Three locked design artifacts. Ready to be passed off.</h2>
+      </div>
+      <div class="section-tag">design phase complete</div>
+    </div>
+    <p class="section-intro">All three design artifacts are locked and self-contained. They can be handed to Claude Design, to a human designer, or used by Mia directly in Canva. Each artifact builds on the one before — design system is the foundation, deck and zine consume it.</p>
+
+    <div class="card-row">
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-num">a · foundation</span>
+          <span class="badge badge-done">locked</span>
+        </div>
+        <h3 class="card-title">Design System v2.</h3>
+        <p class="card-body">Typography, color tokens, spacing scale, do's and don'ts. Self-demonstrating documentation that shows the system using the system.</p>
+        <ul class="card-meta-list">
+          <li><span class="key">file</span><code style="font-family:var(--font-mono);font-size:10px;">botm-design-system.html</code></li>
+          <li><span class="key">faces</span>General Sans (Fontshare) primary · IBM Plex Mono metadata · Reenie Beanie hand</li>
+          <li><span class="key">colors</span>ink #1C1C1A · cream #FAF6ED · dusty navy #3E4A66 · soft lavender #A89DBD</li>
+          <li><span class="key">scale</span>body 15px · display 76px · 4px spacing base</li>
+          <li><span class="key">rules</span>no serifs · lavender once per artifact max · hand once per artifact max</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-num">b · the pitch</span>
+          <span class="badge badge-done">locked</span>
+        </div>
+        <h3 class="card-title">Deck Mockups v4.</h3>
+        <p class="card-body">Five slides at 16:9, full-viewport navigation, editorial rework with asymmetric layouts. Slide 5 is a postcard close — the deck enacts the work it pitches by ending as a printed object.</p>
+        <ul class="card-meta-list">
+          <li><span class="key">file</span><code style="font-family:var(--font-mono);font-size:10px;">botm-deck-mockups.html</code></li>
+          <li><span class="key">slides</span>01 atmosphere · 02 concept · 03 sample episode · 04 system · 05 postcard close</li>
+          <li><span class="key">images needed</span>1 atmospheric (slide 1) · 4 drift movements (slide 3) · cover detail optional (slide 5)</li>
+          <li><span class="key">closing line</span>"One book. One reader. <em>A month.</em>"</li>
+          <li><span class="key">build target</span>Canva, editable, ready for application upload</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <span class="card-num">c · the object</span>
+          <span class="badge badge-done">locked</span>
+        </div>
+        <h3 class="card-title">Zine Design Brief.</h3>
+        <p class="card-body">Production brief for the printed essay-object that ships in the BOTM box. Eight spreads — six quiet chapbook pages plus two earned-dense (constellation + catalog). Restraint as operating principle. Wireframes, materials inventory, copy register, production specs.</p>
+        <ul class="card-meta-list">
+          <li><span class="key">file</span><code style="font-family:var(--font-mono);font-size:10px;">marginalia-zine-brief.html</code></li>
+          <li><span class="key">format</span>A6 closed (~4×6") · ~8×6" open spread · 12 pages · saddle-stitched</li>
+          <li><span class="key">color</span>2-color (ink + navy) + lavender accent (twice only)</li>
+          <li><span class="key">spreads</span>cover · opening · tributary · the line · reflection · colophon · constellation · catalog</li>
+          <li><span class="key">arc placement</span><em>open — to be decided</em></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 32px;">
+      <div class="callout">
+        <div class="callout-label">design lock — what's already decided</div>
+        <div class="callout-title">Decisions that should not be relitigated in any continuation.</div>
+        <ul class="callout-list">
+          <li><strong>typography</strong>General Sans + IBM Plex Mono + Reenie Beanie. NO serifs. NO Caveat.</li>
+          <li><strong>color palette</strong>cream + ink + navy. lavender once per artifact max. NO forest green as primary.</li>
+          <li><strong>deck slide 5</strong>postcard close, NOT minimal. lavender postage stamp top-right.</li>
+          <li><strong>zine register</strong>chapbook restraint, NOT busy collage. white space is the design.</li>
+          <li><strong>zine hand element</strong>used exactly once across the publication — Mia's signature on colophon only.</li>
+          <li><strong>document chrome</strong>light grey/white documentation. brand colors confined to inside contained surfaces.</li>
+          <li><strong>centennial framing</strong>dropped as primary. light context only. one-piece-first pitch.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 05 · ALL DELIVERED FILES                             -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-num">05 · file inventory</div>
+        <h2 class="section-title">Every artifact produced in the sprint.</h2>
+      </div>
+      <div class="section-tag">handoff package</div>
+    </div>
+    <p class="section-intro">Complete list of files in <code style="font-family:var(--font-mono);font-size:13px;">/mnt/user-data/outputs/</code>. Each is self-contained HTML — open in any browser, no dependencies. For continuation in a new chat, all of these need to be available.</p>
+
+    <div class="file-list">
+
+      <div class="file-row">
+        <div class="file-name">
+          <strong>botm-pitch-comprehensive-plan.html</strong>
+          <span class="path">/mnt/user-data/outputs/</span>
+        </div>
+        <div class="file-desc">
+          <em>This document.</em> The current source-of-truth for the pitch sprint. State of play, all design systems noted, handoff protocol, continuation instructions.
+        </div>
+        <div class="file-status"><span class="badge badge-done">current</span></div>
+      </div>
+
+      <div class="file-row">
+        <div class="file-name">
+          <strong>botm-design-system.html</strong>
+          <span class="path">/mnt/user-data/outputs/</span>
+        </div>
+        <div class="file-desc">
+          Self-demonstrating design system v2. Typography, color, tokens, components, do's and don'ts. <em>Foundation for all other design artifacts.</em>
+        </div>
+        <div class="file-status"><span class="badge badge-done">locked</span></div>
+      </div>
+
+      <div class="file-row">
+        <div class="file-name">
+          <strong>botm-deck-mockups.html</strong>
+          <span class="path">/mnt/user-data/outputs/</span>
+        </div>
+        <div class="file-desc">
+          Five-slide pitch deck mockups, v4. Full-viewport navigation, postcard close on slide 5. <em>Reference for Canva build of the actual deck.</em>
+        </div>
+        <div class="file-status"><span class="badge badge-done">locked</span></div>
+      </div>
+
+      <div class="file-row">
+        <div class="file-name">
+          <strong>marginalia-zine-brief.html</strong>
+          <span class="path">/mnt/user-data/outputs/</span>
+        </div>
+        <div class="file-desc">
+          Eight-spread zine production brief. Principles, materials inventory, wireframes, copy register, production specs. <em>Ready to hand to Claude Design or use as in-Canva working document.</em>
+        </div>
+        <div class="file-status"><span class="badge badge-done">locked</span></div>
+      </div>
+
+      <div class="file-row">
+        <div class="file-name">
+          <strong>botm-pitch-sprint.html</strong>
+          <span class="path">/mnt/user-data/outputs/</span>
+        </div>
+        <div class="file-desc">
+          Compressed 48-hour sprint plan. Six work blocks, ~6–7 hours total. <em>Block 4 contains pre-drafted budget copy for Field 4.</em> Useful for execution sequencing.
+        </div>
+        <div class="file-status"><span class="badge badge-done">reference</span></div>
+      </div>
+
+      <div class="file-row">
+        <div class="file-name">
+          <strong>botm-pitch-plan.html</strong>
+          <span class="path">/mnt/user-data/outputs/</span>
+        </div>
+        <div class="file-desc">
+          Original pitch plan, written before concept was finalized. <em>Superseded by this comprehensive plan.</em> Kept as historical reference only — not the current working document.
+        </div>
+        <div class="file-status"><span class="badge badge-pend">superseded</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 06 · REMAINING WORK                                  -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-num">06 · remaining work</div>
+        <h2 class="section-title">What still needs to happen before Thursday submit.</h2>
+      </div>
+      <div class="section-tag">execution sequence</div>
+    </div>
+    <p class="section-intro">Three remaining workstreams in priority order. Field 3 first — it's the writing, requires Mia's voice and judgment. Canva build and application fill follow as production work.</p>
+
+    <div class="timeline">
+
+      <div class="tl-row">
+        <div class="tl-step">step 01</div>
+        <div>
+          <div class="tl-name">Field 3 pitch text</div>
+          <div class="tl-name-sub">the actual writing BOTM will read</div>
+        </div>
+        <div class="tl-desc">
+          Draft the pitch text using the balcony paragraph as voice anchor. Open with sensibility (the balcony observation), name the work (Marginalia), describe the form (film + zine + cuts), reference the sample episode (Lost Lambs), gesture at Volume 0 alignment, close with the sample line. <em>Should be 250–400 words. Read aloud before submitting.</em>
+        </div>
+        <div class="tl-time">
+          <strong>1–2 hrs</strong>
+          drafting + edit
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-step">step 02</div>
+        <div>
+          <div class="tl-name">Source images</div>
+          <div class="tl-name-sub">for deck slides 1, 3, optionally 5</div>
+        </div>
+        <div class="tl-desc">
+          Slide 1 needs one atmospheric image (domestic interior, real natural light). Slide 3 needs four images, one per drift movement. Source from Unsplash, personal archive, or shoot with iPhone. <em>Treat with halftone or duotone in Canva or Photoshop before placing.</em>
+        </div>
+        <div class="tl-time">
+          <strong>1 hr</strong>
+          source + treat
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-step">step 03</div>
+        <div>
+          <div class="tl-name">Canva deck build</div>
+          <div class="tl-name-sub">v4 mockups → editable Canva deck</div>
+        </div>
+        <div class="tl-desc">
+          Translate the locked deck mockups into Canva. Use design system v2 tokens (fonts via Canva web fonts, colors as specified, spacing per mockup). Five slides. Postcard layout for slide 5 follows the mockup precisely. <em>Export PDF for application upload.</em>
+        </div>
+        <div class="tl-time">
+          <strong>2–3 hrs</strong>
+          Canva production
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-step">step 04</div>
+        <div>
+          <div class="tl-name">Application fill</div>
+          <div class="tl-name-sub">five fields, submit</div>
+        </div>
+        <div class="tl-desc">
+          Field 1 (links — portfolio, LinkedIn, named campaigns). Field 2 (content type dropdown — select multiple). Field 3 (paste pitch text from step 01). Field 4 (paste budget copy from sprint doc Block 4). Field 5 (basics + resume upload). <em>Attach Canva deck PDF where supported.</em>
+        </div>
+        <div class="tl-time">
+          <strong>30 min</strong>
+          form fill + submit
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 32px;">
+      <div class="callout">
+        <div class="callout-label">deferred — not Thursday-blocking</div>
+        <div class="callout-title">Work held until BOTM responds.</div>
+        <div class="callout-body">
+          <p><em>Film sensibility brief.</em> The film is the deliverable BOTM is hiring for. Building the brief now would be preempting work that should happen with their input. Held until the pitch lands — built either with their feedback or after their decision to proceed.</p>
+          <p>The deck already gestures hard at film direction through Slide 3's drift-movement grid. That's enough for the pitch.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 07 · HANDOFF PROTOCOL                                -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-num">07 · handoff</div>
+        <h2 class="section-title">For continuation in a new chat.</h2>
+      </div>
+      <div class="section-tag">continuation protocol</div>
+    </div>
+    <p class="section-intro">If this work is picked up in a new chat — by Mia or by a fresh Claude instance — these are the things to know upfront. Read this section first before doing anything else.</p>
+
+    <div class="callout">
+      <div class="callout-label">orient · what to load first</div>
+      <div class="callout-title">Read these three files in order before responding to anything.</div>
+      <ul class="callout-list">
+        <li><strong>1 · this document</strong>botm-pitch-comprehensive-plan.html — current state, locked decisions, remaining work</li>
+        <li><strong>2 · design system</strong>botm-design-system.html — typography, color, tokens that everything else uses</li>
+        <li><strong>3 · zine brief or deck</strong>marginalia-zine-brief.html or botm-deck-mockups.html — depending on which workstream is being touched</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">do not relitigate</div>
+      <div class="callout-title">Decisions that are locked. Do not re-debate them.</div>
+      <ul class="callout-list">
+        <li><strong>concept</strong>Marginalia as monthly collage-essay. Film + zine + 3 short cuts. Pitch is for one piece first.</li>
+        <li><strong>sample book</strong>Lost Lambs by Madeline Cash, BOTM January 2026.</li>
+        <li><strong>typography</strong>General Sans + IBM Plex Mono + Reenie Beanie. No serifs. No Caveat.</li>
+        <li><strong>color</strong>Cream + ink + navy + lavender accent. No forest green as primary.</li>
+        <li><strong>deck slide 5</strong>Postcard close. Not the minimal alternative.</li>
+        <li><strong>zine register</strong>Chapbook restraint, not busy collage. White space is the design.</li>
+        <li><strong>zine hand</strong>Used once across the entire publication — colophon signature only.</li>
+        <li><strong>document chrome</strong>For any new docs: light grey/white. Brand colors confined to inside contained surfaces (wireframes, swatches, copy examples).</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">voice + tone — Mia's preferences</div>
+      <div class="callout-title">How to talk to Mia, what register to write in.</div>
+      <div class="callout-body">
+        <p>Direct, considered, intellectually serious. No corporate gloss, no motivational language, no performed enthusiasm. Default to verbose and detailed — more information is better than less. Don't bullet-point your way out of real explanation.</p>
+        <p>Mia's reference points: philosophy, the arts, music, theology (academic, never devotional), spiritual theory, creative direction, copywriting, art direction, creative technology, filmmaking, production. When pulling from these, go deep — lineages of thought, primary sources, adjacent frameworks.</p>
+        <p>For practical work: smallest actionable units. Reduce friction. Don't comment on the friction. The gap between conception and completion is the central problem — help Mia define the smallest completable version, not the ideal version.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">writing the pitch — Field 3</div>
+      <div class="callout-title">When drafting Field 3, anchor on these.</div>
+      <ul class="callout-list">
+        <li><strong>voice anchor</strong>The balcony paragraph (Section 02 of this document)</li>
+        <li><strong>open with</strong>sensibility, not concept. the felt experience of the reading life.</li>
+        <li><strong>name the work</strong>Marginalia. period after the title. NOT a working title — final title.</li>
+        <li><strong>describe the form</strong>monthly piece. film (6–9 min). companion printed essay-object. three short cuts.</li>
+        <li><strong>reference</strong>Lost Lambs by Madeline Cash (BOTM Jan 2026) as sample treatment</li>
+        <li><strong>gesture at</strong>Volume 0 alignment. "Volume-Ø adjacent" as register. Don't overpitch this.</li>
+        <li><strong>length</strong>250–400 words. read aloud before submitting. cut adverbs.</li>
+        <li><strong>close with</strong>the sample line: "One book. One reader. A month."</li>
+      </ul>
+    </div>
+
+    <div class="callout">
+      <div class="callout-label">if the pitch lands — film brief is next</div>
+      <div class="callout-title">When BOTM responds positively, return to the film sensibility brief.</div>
+      <div class="callout-body">
+        <p>The film brief was deferred intentionally — building it now would preempt work that should happen with BOTM's input. When the response comes, the next artifact to build is the film brief in the same shape as the zine brief: principles, materials inventory (held shots, treated stills, voice, writing-on-screen, ambient sound), wireframe blueprints (one per beat), copy register, production specs.</p>
+        <p>Proposed beat structure for first piece: Beat 1 Opening, Beat 2 The line that catches, Beat 3 Tributary, Beat 4 The written response, Beat 5 Closing. Roughly 7:30 across the 6–9 minute target.</p>
+      </div>
+    </div>
+
+  </section>
+
+</div>
+
+</body>
+</html>

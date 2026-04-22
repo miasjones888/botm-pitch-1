@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visual Language Foundation · Mia Jones</title>
+
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap" rel="stylesheet">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Reenie+Beanie&display=swap');
+
+  :root {
+    /* The visual language palette — these are the actual brand colors */
+    --color-ink:           #1C1C1A;
+    --color-ink-soft:      #3A3A36;
+    --color-cream:         #FAF6ED;
+    --color-cream-warm:    #F2EBDC;
+    --color-cream-deep:    #E5DCC4;
+    --color-navy:          #3E4A66;
+    --color-navy-soft:     #5A6680;
+    --color-lavender:      #A89DBD;
+    --color-lavender-pale: #E0DAE8;
+    --color-rule-soft:     #C8BFA8;
+    --color-muted:         #7A7466;
+    --color-faint:         #A8A18E;
+
+    /* The brand fonts */
+    --font-sans: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    --font-hand: 'Reenie Beanie', cursive;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* ─── This document IS the brand. Cream ground. Ink type. */
+  html, body {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.11 0 0 0 0 0.10 0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* SCAFFOLD                                                          */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .doc {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 96px 56px 200px;
+  }
+
+  /* ─── COVER */
+  .cover {
+    min-height: 88vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: 48px;
+    margin-bottom: 160px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid rgba(28,28,26,0.12);
+  }
+
+  .cover-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-muted);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .cover-top strong { color: var(--color-ink); font-weight: 600; }
+
+  .cover-mid {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 22ch;
+  }
+
+  .cover-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-navy);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 32px;
+  }
+
+  .cover-title {
+    font-family: var(--font-sans);
+    font-size: clamp(56px, 9vw, 112px);
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.045em;
+    line-height: 0.92;
+    margin-bottom: 28px;
+  }
+
+  .cover-tagline {
+    font-family: var(--font-sans);
+    font-size: 19px;
+    font-style: italic;
+    color: var(--color-ink-soft);
+    line-height: 1.5;
+    max-width: 36ch;
+    letter-spacing: -0.005em;
+  }
+
+  .cover-bottom {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: end;
+    padding-top: 24px;
+    border-top: 1px dashed rgba(28,28,26,0.18);
+  }
+
+  .cover-bottom-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .cover-bottom-meta strong { color: var(--color-ink); font-weight: 600; }
+
+  .cover-bottom-stamp {
+    background: var(--color-lavender-pale);
+    border: 1px solid var(--color-lavender);
+    padding: 10px 14px 12px;
+    transform: rotate(2deg);
+    text-align: center;
+    min-width: 76px;
+  }
+
+  .cover-bottom-stamp-mark {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-navy);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .cover-bottom-stamp-cap {
+    font-family: var(--font-mono);
+    font-size: 7px;
+    color: var(--color-navy);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* SECTION                                                           */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .section {
+    margin-bottom: 144px;
+  }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 56px;
+    margin-bottom: 56px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(28,28,26,0.12);
+    align-items: baseline;
+  }
+
+  .section-num-block {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-navy);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .section-num-block .roman {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 64px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    margin-top: 8px;
+    text-transform: none;
+  }
+
+  .section-title-block .title {
+    font-family: var(--font-sans);
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .section-title-block .sub {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-style: italic;
+    color: var(--color-ink-soft);
+    line-height: 1.55;
+    max-width: 60ch;
+  }
+
+  .section-intro {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--color-ink-soft);
+    line-height: 1.7;
+    max-width: 70ch;
+    margin: 0 0 56px 256px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* COLOR — SECTION I                                                 */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .palette {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  .palette-primary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .palette-secondary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .swatch {
+    display: block;
+  }
+
+  .swatch-chip {
+    width: 100%;
+    aspect-ratio: 1 / 1.1;
+    border: 1px solid rgba(28,28,26,0.12);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .swatch-chip-sm {
+    aspect-ratio: 1 / 1;
+  }
+
+  .swatch.s-cream .swatch-chip { background: var(--color-cream); }
+  .swatch.s-ink .swatch-chip { background: var(--color-ink); }
+  .swatch.s-navy .swatch-chip { background: var(--color-navy); }
+  .swatch.s-lavender .swatch-chip { background: var(--color-lavender); }
+  .swatch.s-cream-warm .swatch-chip { background: var(--color-cream-warm); }
+  .swatch.s-cream-deep .swatch-chip { background: var(--color-cream-deep); }
+  .swatch.s-ink-soft .swatch-chip { background: var(--color-ink-soft); }
+  .swatch.s-navy-soft .swatch-chip { background: var(--color-navy-soft); }
+  .swatch.s-lavender-pale .swatch-chip { background: var(--color-lavender-pale); }
+  .swatch.s-rule .swatch-chip { background: var(--color-rule-soft); }
+  .swatch.s-muted .swatch-chip { background: var(--color-muted); }
+  .swatch.s-faint .swatch-chip { background: var(--color-faint); }
+
+  .swatch-name {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+
+  .swatch-hex {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-navy);
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+  }
+
+  .swatch-role {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    font-style: italic;
+    color: var(--color-muted);
+    line-height: 1.55;
+  }
+
+  .palette-rules {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px dashed rgba(28,28,26,0.18);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .palette-rule {
+    padding: 0;
+  }
+
+  .palette-rule-num {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--color-navy);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .palette-rule-name {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.005em;
+    margin-bottom: 10px;
+    line-height: 1.25;
+  }
+
+  .palette-rule-desc {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--color-ink-soft);
+    line-height: 1.65;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* TYPOGRAPHY — SECTION II                                           */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .type-spec {
+    margin-bottom: 88px;
+  }
+
+  .type-spec:last-child { margin-bottom: 0; }
+
+  .type-spec-head {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed rgba(28,28,26,0.15);
+  }
+
+  .type-spec-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-navy);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    line-height: 1.7;
+  }
+
+  .type-spec-meta strong {
+    color: var(--color-ink);
+    font-weight: 600;
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 22px;
+    letter-spacing: -0.015em;
+    text-transform: none;
+    margin-bottom: 6px;
+  }
+
+  .type-spec-role {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-style: italic;
+    color: var(--color-ink-soft);
+    line-height: 1.6;
+  }
+
+  /* sans display specimen */
+  .specimen-display {
+    font-family: var(--font-sans);
+    font-size: 88px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    margin-bottom: 32px;
+  }
+
+  /* sans body specimen */
+  .specimen-body {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    color: var(--color-ink);
+    line-height: 1.65;
+    max-width: 60ch;
+    margin-bottom: 32px;
+  }
+
+  /* sans italic specimen */
+  .specimen-italic {
+    font-family: var(--font-sans);
+    font-style: italic;
+    font-size: 24px;
+    color: var(--color-ink);
+    line-height: 1.45;
+    max-width: 38ch;
+    letter-spacing: -0.01em;
+    margin-bottom: 32px;
+  }
+
+  /* sans weight ladder */
+  .specimen-weights {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 24px;
+    align-items: baseline;
+    border-top: 1px dashed rgba(28,28,26,0.12);
+    padding-top: 24px;
+  }
+
+  .specimen-weight-row {
+    display: contents;
+  }
+
+  .specimen-weight-row .label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--color-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 12px 0;
+    border-bottom: 1px dashed rgba(28,28,26,0.08);
+  }
+
+  .specimen-weight-row .sample {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    color: var(--color-ink);
+    letter-spacing: -0.015em;
+    padding: 12px 0;
+    border-bottom: 1px dashed rgba(28,28,26,0.08);
+  }
+
+  .specimen-weight-row.w300 .sample { font-weight: 300; }
+  .specimen-weight-row.w400 .sample { font-weight: 400; }
+  .specimen-weight-row.w500 .sample { font-weight: 500; }
+  .specimen-weight-row.w600 .sample { font-weight: 600; }
+  .specimen-weight-row.w700 .sample { font-weight: 700; }
+
+  /* mono specimen */
+  .specimen-mono-large {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--color-ink);
+    letter-spacing: 0.04em;
+    line-height: 1.7;
+    max-width: 52ch;
+    margin-bottom: 32px;
+  }
+
+  .specimen-mono-caps {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-muted);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  /* hand specimen */
+  .specimen-hand-large {
+    font-family: var(--font-hand);
+    font-size: 56px;
+    color: var(--color-navy);
+    line-height: 1;
+    transform: rotate(-2deg);
+    display: inline-block;
+    margin-bottom: 32px;
+  }
+
+  .specimen-hand-small {
+    font-family: var(--font-hand);
+    font-size: 28px;
+    color: var(--color-navy);
+    line-height: 1.05;
+    transform: rotate(-1deg);
+    display: inline-block;
+  }
+
+  /* type scale table */
+  .type-scale {
+    margin-top: 48px;
+    border-top: 1px solid rgba(28,28,26,0.12);
+    padding-top: 32px;
+  }
+
+  .type-scale-row {
+    display: grid;
+    grid-template-columns: 100px 100px 1fr;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px dashed rgba(28,28,26,0.1);
+    align-items: baseline;
+  }
+
+  .type-scale-row .label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--color-navy);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .type-scale-row .px {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-muted);
+    letter-spacing: 0.06em;
+  }
+
+  .type-scale-row .sample {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
+    font-weight: 500;
+  }
+
+  .type-scale-row.r-1 .sample { font-size: 76px; line-height: 0.95; letter-spacing: -0.04em; }
+  .type-scale-row.r-2 .sample { font-size: 48px; line-height: 1; letter-spacing: -0.025em; }
+  .type-scale-row.r-3 .sample { font-size: 28px; line-height: 1.1; letter-spacing: -0.015em; }
+  .type-scale-row.r-4 .sample { font-size: 21px; line-height: 1.3; letter-spacing: -0.005em; font-weight: 400; }
+  .type-scale-row.r-5 .sample { font-size: 17px; line-height: 1.55; font-weight: 400; }
+  .type-scale-row.r-6 .sample { font-size: 15px; line-height: 1.6; font-weight: 400; }
+  .type-scale-row.r-7 .sample { font-size: 13px; line-height: 1.55; font-weight: 400; color: var(--color-ink-soft); }
+  .type-scale-row.r-8 .sample { font-size: 11px; font-family: var(--font-mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--color-muted); }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* COMPOSITION — SECTION III                                         */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+  .principle-block {
+    padding: 40px 44px 44px;
+    background: rgba(255,255,255,0.4);
+    border: 1px solid rgba(28,28,26,0.1);
+  }
+
+  .principle-num-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-navy);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+
+  .principle-headline {
+    font-family: var(--font-sans);
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.022em;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .principle-text {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--color-ink-soft);
+    line-height: 1.7;
+  }
+
+  .principle-text em {
+    color: var(--color-ink);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* MATERIALS — SECTION IV                                            */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .material-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  .material-card {
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(28,28,26,0.1);
+    overflow: hidden;
+  }
+
+  .material-display {
+    aspect-ratio: 1 / 1;
+    background: var(--color-cream);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(28,28,26,0.08);
+  }
+
+  .material-meta-block {
+    padding: 22px 24px 24px;
+  }
+
+  .material-num-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--color-navy);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .material-headline {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.012em;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .material-text {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--color-ink-soft);
+    line-height: 1.65;
+  }
+
+  /* material visualizations */
+  .mat-pressed::before {
+    content: '';
+    position: absolute;
+    top: 22%; left: 36%;
+    width: 28%; height: 56%;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(90,120,75,0.7) 0%, rgba(90,120,75,0.4) 30%, transparent 60%),
+      radial-gradient(ellipse at 50% 70%, rgba(70,95,60,0.5) 0%, transparent 50%);
+    transform: rotate(-8deg);
+  }
+
+  .mat-photo::before {
+    content: '';
+    position: absolute;
+    top: 25%; left: 28%;
+    width: 44%; height: 50%;
+    background: linear-gradient(170deg, #6B8060 0%, #5A7050 50%, #455A40 100%);
+    border: 1px solid var(--color-rule-soft);
+  }
+
+  .mat-duotone::before {
+    content: '';
+    position: absolute;
+    top: 30%; left: 22%;
+    width: 56%; height: 40%;
+    background:
+      linear-gradient(180deg,
+        rgba(62,74,102,0.3) 0%,
+        rgba(168,157,189,0.15) 60%,
+        rgba(229,220,196,0.5) 100%
+      ),
+      linear-gradient(135deg, #4A5570 0%, #6B7390 60%, #C8C0D8 100%);
+  }
+
+  .mat-italic {
+    display: flex;
+    align-items: center;
+    padding: 22% 18%;
+  }
+  .mat-italic::before {
+    content: 'A short italic line sits in a wide field of cream.';
+    font-family: var(--font-sans);
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--color-ink);
+    letter-spacing: -0.005em;
+  }
+
+  .mat-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22%;
+  }
+  .mat-display::before {
+    content: 'one\Aphrase.';
+    white-space: pre;
+    font-family: var(--font-sans);
+    font-size: 44px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+  }
+
+  .mat-mono {
+    display: flex;
+    align-items: center;
+    padding: 30% 14%;
+  }
+  .mat-mono::before {
+    content: '— PLATE I.  ·  A WINDOW';
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--color-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .mat-hand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22%;
+  }
+  .mat-hand::before {
+    content: '— with thanks.';
+    font-family: var(--font-hand);
+    font-size: 36px;
+    color: var(--color-navy);
+    transform: rotate(-3deg);
+    line-height: 1;
+  }
+
+  .mat-stamp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .mat-stamp::before {
+    content: '';
+    width: 26%;
+    height: 32%;
+    background: var(--color-lavender-pale);
+    border: 1px solid var(--color-lavender);
+    transform: rotate(2deg);
+  }
+  .mat-stamp::after {
+    content: 'M.';
+    position: absolute;
+    font-family: var(--font-sans);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--color-navy);
+    letter-spacing: -0.02em;
+    transform: rotate(2deg);
+  }
+
+  .mat-rule {
+    display: flex;
+    align-items: center;
+    padding: 30% 14%;
+    flex-direction: column;
+    gap: 4px;
+    align-items: stretch;
+    justify-content: center;
+  }
+  .mat-rule::before {
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: var(--color-rule-soft);
+  }
+  .mat-rule::after {
+    content: 'thin rule, used as divider';
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-muted);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .mat-paper {
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.11 0 0 0 0 0.10 0 0 0 0.18 0' /></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"),
+      linear-gradient(135deg, var(--color-cream), var(--color-cream-warm));
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* LAYOUT EXAMPLES — SECTION V                                       */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .layout-example {
+    margin-bottom: 80px;
+  }
+
+  .layout-example:last-child { margin-bottom: 0; }
+
+  .layout-example-head {
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed rgba(28,28,26,0.15);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .layout-example-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-navy);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .layout-example-title {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.018em;
+    line-height: 1.2;
+    margin-top: 6px;
+    flex: 1;
+  }
+
+  .layout-example-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-muted);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .layout-frame {
+    aspect-ratio: 16 / 9;
+    background: var(--color-cream);
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.11 0 0 0 0 0.10 0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    border: 1px solid rgba(28,28,26,0.1);
+    position: relative;
+    overflow: hidden;
+    container-type: size;
+    container-name: frame;
+  }
+
+  .layout-frame.spread {
+    aspect-ratio: 8 / 6;
+  }
+
+  /* layout 1 — atmosphere page */
+  .lf-atm-image {
+    position: absolute;
+    top: 0; left: 0; bottom: 0; width: 38%;
+    background:
+      linear-gradient(170deg, rgba(28,28,26,0.4) 0%, rgba(28,28,26,0.05) 50%, rgba(28,28,26,0.3) 100%),
+      linear-gradient(135deg, #4A5570 0%, #5A6680 60%, #2A3548 100%);
+  }
+  .lf-atm-eyebrow {
+    position: absolute;
+    top: 8cqw; left: 44cqw;
+    font-family: var(--font-mono);
+    font-size: 1.1cqw;
+    color: var(--color-navy);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .lf-atm-title {
+    position: absolute;
+    top: 28cqw; left: 44cqw;
+    font-family: var(--font-sans);
+    font-size: 12cqw;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.045em;
+    line-height: 0.9;
+  }
+  .lf-atm-tag {
+    position: absolute;
+    bottom: 10cqw; left: 44cqw;
+    font-family: var(--font-sans);
+    font-size: 1.6cqw;
+    font-style: italic;
+    color: var(--color-ink-soft);
+    line-height: 1.4;
+    max-width: 30cqw;
+  }
+  .lf-atm-byline {
+    position: absolute;
+    bottom: 4cqw; left: 44cqw; right: 4cqw;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 0.9cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding-top: 1.5cqw;
+    border-top: 1px solid rgba(28,28,26,0.15);
+  }
+
+  /* layout 2 — pull quote concept page */
+  .lf-pq-bar {
+    position: absolute;
+    top: 14cqw;
+    left: 8cqw;
+    width: 0.3cqw;
+    height: 30cqw;
+    background: var(--color-lavender);
+  }
+  .lf-pq-quote {
+    position: absolute;
+    top: 14cqw;
+    left: 11cqw;
+    width: 50cqw;
+    font-family: var(--font-sans);
+    font-size: 4.4cqw;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+  .lf-pq-quote em { font-style: italic; }
+  .lf-pq-side {
+    position: absolute;
+    top: 16cqw; right: 6cqw;
+    width: 24cqw;
+    font-family: var(--font-sans);
+    font-size: 1.3cqw;
+    color: var(--color-ink-soft);
+    line-height: 1.65;
+  }
+  .lf-pq-eyebrow {
+    position: absolute;
+    top: 6cqw; left: 8cqw;
+    font-family: var(--font-mono);
+    font-size: 1cqw;
+    color: var(--color-navy);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* layout 3 — chapbook spread */
+  .lf-cb-fold {
+    position: absolute;
+    left: 50%; top: 0; bottom: 0;
+    width: 1px;
+    border-left: 1px dashed rgba(28,28,26,0.08);
+  }
+  .lf-cb-mast-l {
+    position: absolute;
+    top: 8cqw; left: 8cqw;
+    font-family: var(--font-mono);
+    font-size: 1.1cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .lf-cb-image {
+    position: absolute;
+    top: 16cqw; left: 14cqw;
+    width: 24cqw; height: 24cqw;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(90,120,75,0.6) 0%, transparent 40%),
+      radial-gradient(ellipse at 50% 70%, rgba(70,95,60,0.4) 0%, transparent 35%),
+      var(--color-cream);
+  }
+  .lf-cb-cap {
+    position: absolute;
+    top: 41.5cqw; left: 14cqw;
+    font-family: var(--font-mono);
+    font-size: 0.9cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .lf-cb-tag-r {
+    position: absolute;
+    top: 8cqw; right: 8cqw;
+    font-family: var(--font-mono);
+    font-size: 1.1cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+  .lf-cb-quote {
+    position: absolute;
+    top: 22cqw; right: 8cqw;
+    width: 32cqw;
+    font-family: var(--font-sans);
+    font-style: italic;
+    font-size: 2.2cqw;
+    color: var(--color-ink);
+    line-height: 1.4;
+    letter-spacing: -0.012em;
+  }
+
+  /* layout 4 — postcard close */
+  .lf-pc-divide {
+    position: absolute;
+    left: 50%; top: 4cqw; bottom: 4cqw;
+    width: 1px;
+    border-left: 1px dashed rgba(28,28,26,0.25);
+  }
+  .lf-pc-stamp {
+    position: absolute;
+    top: 6cqw; right: 6cqw;
+    width: 8cqw; height: 9cqw;
+    background: var(--color-lavender-pale);
+    border: 1px solid var(--color-lavender);
+    transform: rotate(2deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .lf-pc-stamp .m {
+    font-family: var(--font-sans);
+    font-size: 3.4cqw;
+    font-weight: 500;
+    color: var(--color-navy);
+    letter-spacing: -0.025em;
+    line-height: 1;
+  }
+  .lf-pc-stamp .cap {
+    font-family: var(--font-mono);
+    font-size: 0.7cqw;
+    color: var(--color-navy);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+  .lf-pc-message {
+    position: absolute;
+    top: 14cqw; left: 5cqw;
+    width: 40cqw;
+    font-family: var(--font-hand);
+    font-size: 4.6cqw;
+    color: var(--color-navy);
+    line-height: 1.05;
+    transform: rotate(-1.5deg);
+  }
+  .lf-pc-sign {
+    position: absolute;
+    bottom: 8cqw; left: 12cqw;
+    font-family: var(--font-hand);
+    font-size: 2.6cqw;
+    color: var(--color-navy);
+    line-height: 1;
+    transform: rotate(-2deg);
+  }
+  .lf-pc-meta {
+    position: absolute;
+    top: 8cqw; left: 5cqw;
+    font-family: var(--font-mono);
+    font-size: 0.85cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .lf-pc-addr {
+    position: absolute;
+    top: 22cqw; left: 56cqw;
+    font-family: var(--font-mono);
+    font-size: 1.1cqw;
+    color: var(--color-ink);
+    letter-spacing: 0.04em;
+    line-height: 1.7;
+  }
+  .lf-pc-addr em { font-style: italic; color: var(--color-ink-soft); }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* VOICE — SECTION VI                                                */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .voice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+  }
+
+  .voice-block {
+    padding: 0;
+  }
+
+  .voice-block-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-navy);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+
+  .voice-block-headline {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    margin-bottom: 20px;
+  }
+
+  .voice-block-body {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--color-ink-soft);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .voice-block-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .voice-block-list li {
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(28,28,26,0.12);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--color-ink);
+    line-height: 1.6;
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .voice-block-list li:last-child { border-bottom: none; }
+
+  .voice-block-list li .word {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--color-navy);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    flex-shrink: 0;
+    min-width: 60px;
+  }
+
+  .voice-anchor {
+    margin-top: 56px;
+    padding: 36px 40px 40px;
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(28,28,26,0.1);
+    border-left: 2px solid var(--color-navy);
+  }
+
+  .voice-anchor-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-navy);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+
+  .voice-anchor-text {
+    font-family: var(--font-sans);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--color-ink);
+    line-height: 1.7;
+    letter-spacing: -0.005em;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* DO / DON'T — SECTION VII                                          */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .dodont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+
+  .dodont-side {
+    padding: 0;
+  }
+
+  .dodont-head {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 24px;
+    padding-bottom: 14px;
+    border-bottom: 1.5px solid;
+  }
+
+  .dodont-side.do .dodont-head { color: #4A6B4A; border-color: #4A6B4A; }
+  .dodont-side.dont .dodont-head { color: #8C4036; border-color: #8C4036; }
+
+  .dodont-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .dodont-list li {
+    padding: 14px 0;
+    border-bottom: 1px dashed rgba(28,28,26,0.12);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--color-ink-soft);
+    line-height: 1.6;
+  }
+  .dodont-list li:last-child { border-bottom: none; }
+
+  .dodont-list li strong {
+    color: var(--color-ink);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* WORDMARK PLACEHOLDER — SECTION VIII                               */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .wordmark-tbd {
+    padding: 56px 64px;
+    background: rgba(168,157,189,0.08);
+    border: 1px dashed var(--color-lavender);
+    text-align: center;
+  }
+
+  .wordmark-tbd-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-lavender);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+
+  .wordmark-tbd-title {
+    font-family: var(--font-sans);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.022em;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .wordmark-tbd-body {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--color-ink-soft);
+    line-height: 1.65;
+    max-width: 56ch;
+    margin: 0 auto;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* RESPONSIVE                                                        */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  @media (max-width: 900px) {
+    .doc { padding: 48px 20px 100px; }
+    .section { margin-bottom: 96px; }
+    .section-head { grid-template-columns: 1fr; gap: 16px; }
+    .section-intro { margin-left: 0; }
+    .palette { grid-template-columns: 1fr; }
+    .palette-secondary { grid-template-columns: repeat(2, 1fr); }
+    .palette-rules { grid-template-columns: 1fr; }
+    .principles-grid { grid-template-columns: 1fr; }
+    .material-grid { grid-template-columns: 1fr; }
+    .voice-grid { grid-template-columns: 1fr; }
+    .dodont { grid-template-columns: 1fr; }
+    .specimen-display { font-size: 56px; }
+    .type-spec-head { grid-template-columns: 1fr; gap: 16px; }
+    .type-scale-row { grid-template-columns: 1fr; gap: 8px; }
+    .cover-bottom { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc">
+
+  <!-- ─────────────────────────────────────────── COVER -->
+  <header class="cover">
+    <div class="cover-top">
+      <span><strong>Mia Jones</strong> · Visual Language Foundation</span>
+      <span>v 1.0  ·  April 2026</span>
+    </div>
+
+    <div class="cover-mid">
+      <div class="cover-eyebrow">a brand foundation document</div>
+      <h1 class="cover-title">A visual language for slow, considered work.</h1>
+      <p class="cover-tagline">Cream paper. Quiet typography. Real photography. White space treated as composition. Hand element used sparingly. The aesthetic of small literary monographs and editorial restraint.</p>
+    </div>
+
+    <div class="cover-bottom">
+      <div class="cover-bottom-meta">
+        <span><strong>scope</strong> Print + digital · long-form editorial</span>
+        <span><strong>register</strong> small literary monograph</span>
+        <span><strong>tradition</strong> Dutch · Japanese · net-art · Web 1.0</span>
+      </div>
+      <div class="cover-bottom-stamp">
+        <div class="cover-bottom-stamp-mark">M.</div>
+        <div class="cover-bottom-stamp-cap">v.1</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- I · COLOR                                            -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num-block">
+        Section
+        <span class="roman">I.</span>
+      </div>
+      <div class="section-title-block">
+        <h2 class="title">Color.</h2>
+        <p class="sub">Four primary tones. Cream is the ground; ink is the voice; navy is the second voice; lavender is the singular accent. Twelve secondary tones support the four. The whole system is tuned for warmth and quiet.</p>
+      </div>
+    </div>
+
+    <div class="palette">
+      <div class="palette-primary">
+        <div class="swatch s-cream">
+          <div class="swatch-chip"></div>
+          <div class="swatch-name">Cream</div>
+          <div class="swatch-hex">#FAF6ED</div>
+          <div class="swatch-role">The ground. Every page begins here. Warm, soft, not white. Carries the warmth of paper through any digital surface.</div>
+        </div>
+        <div class="swatch s-ink">
+          <div class="swatch-chip"></div>
+          <div class="swatch-name">Ink</div>
+          <div class="swatch-hex">#1C1C1A</div>
+          <div class="swatch-role">The voice. Every body text and primary mark in ink. Not pure black — softened, with warmth. The typeface's natural color.</div>
+        </div>
+      </div>
+      <div class="palette-primary">
+        <div class="swatch s-navy">
+          <div class="swatch-chip"></div>
+          <div class="swatch-name">Dusty Navy</div>
+          <div class="swatch-hex">#3E4A66</div>
+          <div class="swatch-role">The second voice. Section markers, italic emphasis, the handwriting color. Quieter than ink, supports without competing.</div>
+        </div>
+        <div class="swatch s-lavender">
+          <div class="swatch-chip"></div>
+          <div class="swatch-name">Soft Lavender</div>
+          <div class="swatch-hex">#A89DBD</div>
+          <div class="swatch-role">The accent. Used once per artifact, maximum. Edition stamps, small punctuation moments. The color of restraint.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="palette-secondary" style="margin-top: 64px;">
+      <div class="swatch s-cream-warm">
+        <div class="swatch-chip swatch-chip-sm"></div>
+        <div class="swatch-name" style="font-size: 14px;">Cream Warm</div>
+        <div class="swatch-hex">#F2EBDC</div>
+      </div>
+      <div class="swatch s-cream-deep">
+        <div class="swatch-chip swatch-chip-sm"></div>
+        <div class="swatch-name" style="font-size: 14px;">Cream Deep</div>
+        <div class="swatch-hex">#E5DCC4</div>
+      </div>
+      <div class="swatch s-rule">
+        <div class="swatch-chip swatch-chip-sm"></div>
+        <div class="swatch-name" style="font-size: 14px;">Rule Soft</div>
+        <div class="swatch-hex">#C8BFA8</div>
+      </div>
+      <div class="swatch s-ink-soft">
+        <div class="swatch-chip swatch-chip-sm"></div>
+        <div class="swatch-name" style="font-size: 14px;">Ink Soft</div>
+        <div class="swatch-hex">#3A3A36</div>
+      </div>
+      <div class="swatch s-navy-soft">
+        <div class="swatch-chip swatch-chip-sm"></div>
+        <div class="swatch-name" style="font-size: 14px;">Navy Soft</div>
+        <div class="swatch-hex">#5A6680</div>
+      </div>
+      <div class="swatch s-lavender-pale">
+        <div class="swatch-chip swatch-chip-sm"></div>
+        <div class="swatch-name" style="font-size: 14px;">Lavender Pale</div>
+        <div class="swatch-hex">#E0DAE8</div>
+      </div>
+    </div>
+
+    <div class="palette-rules">
+      <div class="palette-rule">
+        <div class="palette-rule-num">rule i.</div>
+        <div class="palette-rule-name">Cream is the ground.</div>
+        <p class="palette-rule-desc">Every artifact begins on cream. Pure white is forbidden. Cream carries the warmth of the system through any surface — print, digital, video.</p>
+      </div>
+      <div class="palette-rule">
+        <div class="palette-rule-num">rule ii.</div>
+        <div class="palette-rule-name">Lavender is precious.</div>
+        <p class="palette-rule-desc">Lavender appears at most once per artifact. Used for edition stamps, small punctuation moments. Never as a body color, never as a fill.</p>
+      </div>
+      <div class="palette-rule">
+        <div class="palette-rule-num">rule iii.</div>
+        <div class="palette-rule-name">No forest green as primary.</div>
+        <p class="palette-rule-desc">Forest tones may appear inside duotone-treated photography (m.03) but are never used as a primary brand color or display color. Restraint over richness.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- II · TYPOGRAPHY                                      -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num-block">
+        Section
+        <span class="roman">II.</span>
+      </div>
+      <div class="section-title-block">
+        <h2 class="title">Typography.</h2>
+        <p class="sub">Three faces. One sans for everything that speaks. One mono for everything that documents. One hand for the single moment of personal gesture per artifact. No serifs. No exceptions.</p>
+      </div>
+    </div>
+
+    <!-- ─── primary face -->
+    <div class="type-spec">
+      <div class="type-spec-head">
+        <div class="type-spec-meta">
+          <strong>General Sans</strong>
+          Fontshare<br>
+          weights 300–700<br>
+          <em style="font-style: italic;">primary</em>
+        </div>
+        <div>
+          <p class="type-spec-role">The voice of the system. Used for display, headlines, body, italic, and pulled quotes. Modern, slightly geometric, with enough warmth to read as humanist. Free from Fontshare. Available as a Canva web font.</p>
+        </div>
+      </div>
+
+      <p class="specimen-display">A page is not a frame.<br>A page is a breath.</p>
+
+      <p class="specimen-italic">She was always in the act of becoming someone she had not yet met.</p>
+
+      <p class="specimen-body">The body sits in modest sans, set in a narrow measure with generous leading. Spacing carries the meaning, not weight or ornament. A short paragraph is allowed to take up the room of a long one if the room is what it needs. Restraint is the point. Type set with care reads slower, and slower is the goal.</p>
+
+      <div class="specimen-weights">
+        <div class="specimen-weight-row w300"><div class="label">300 · Light</div><div class="sample">A page is not a frame.</div></div>
+        <div class="specimen-weight-row w400"><div class="label">400 · Regular</div><div class="sample">A page is not a frame.</div></div>
+        <div class="specimen-weight-row w500"><div class="label">500 · Medium</div><div class="sample">A page is not a frame.</div></div>
+        <div class="specimen-weight-row w600"><div class="label">600 · Semibold</div><div class="sample">A page is not a frame.</div></div>
+        <div class="specimen-weight-row w700"><div class="label">700 · Bold</div><div class="sample">A page is not a frame.</div></div>
+      </div>
+    </div>
+
+    <!-- ─── mono -->
+    <div class="type-spec">
+      <div class="type-spec-head">
+        <div class="type-spec-meta">
+          <strong>IBM Plex Mono</strong>
+          Google Fonts<br>
+          weights 300–600<br>
+          <em style="font-style: italic;">metadata · captions · labels</em>
+        </div>
+        <div>
+          <p class="type-spec-role">The connective tissue. Used for plate captions, masthead text, section markers, folio numbers, attribution rows, eyebrows. Set small (10–13px) with wide letter spacing (0.18–0.22em). Always quiet, always low, never competing for attention.</p>
+        </div>
+      </div>
+
+      <p class="specimen-mono-caps">— PLATE I.  ·  A WINDOW, BEFORE READING</p>
+
+      <p class="specimen-mono-large">The mono face is for documenting, not for speaking. It carries the small mechanics of the system — issue numbers, plate captions, dates, the things that orient the reader without intruding. Its character is functional, scholarly, restrained. <em>It looks like a footnote learned to whisper.</em></p>
+    </div>
+
+    <!-- ─── hand -->
+    <div class="type-spec">
+      <div class="type-spec-head">
+        <div class="type-spec-meta">
+          <strong>Reenie Beanie</strong>
+          Google Fonts<br>
+          single weight<br>
+          <em style="font-style: italic;">single use only</em>
+        </div>
+        <div>
+          <p class="type-spec-role">The hand. Used <em>once per artifact</em> — for the closing signature, the signed-off moment. Set in dusty navy with slight rotation. Reads as a real hand on paper, not as decoration. <em>If the hand appears twice, it appears too often.</em></p>
+        </div>
+      </div>
+
+      <span class="specimen-hand-large">— with thanks.</span><br>
+      <span class="specimen-hand-small">this is the line I'd film first</span>
+    </div>
+
+    <!-- ─── type scale -->
+    <div class="type-scale">
+      <div class="type-scale-row r-1">
+        <div class="label">display I</div><div class="px">76 / 0.95</div><div class="sample">A short phrase.</div>
+      </div>
+      <div class="type-scale-row r-2">
+        <div class="label">display II</div><div class="px">48 / 1.0</div><div class="sample">A section heading.</div>
+      </div>
+      <div class="type-scale-row r-3">
+        <div class="label">heading</div><div class="px">28 / 1.1</div><div class="sample">An article heading.</div>
+      </div>
+      <div class="type-scale-row r-4">
+        <div class="label">subhead</div><div class="px">21 / 1.3</div><div class="sample">A supporting subhead.</div>
+      </div>
+      <div class="type-scale-row r-5">
+        <div class="label">body large</div><div class="px">17 / 1.55</div><div class="sample">For body paragraphs that need a little more room to breathe.</div>
+      </div>
+      <div class="type-scale-row r-6">
+        <div class="label">body</div><div class="px">15 / 1.6</div><div class="sample">The default body size for most reading. Set narrow, set quietly.</div>
+      </div>
+      <div class="type-scale-row r-7">
+        <div class="label">small</div><div class="px">13 / 1.55</div><div class="sample">Supporting text, secondary descriptions, footnotes.</div>
+      </div>
+      <div class="type-scale-row r-8">
+        <div class="label">caption</div><div class="px">11 mono</div><div class="sample">— PLATE I.  ·  EXAMPLE CAPTION</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- III · COMPOSITION                                    -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num-block">
+        Section
+        <span class="roman">III.</span>
+      </div>
+      <div class="section-title-block">
+        <h2 class="title">Composition principles.</h2>
+        <p class="sub">Five rules that hold every artifact together. They are not preferences. They are the operating logic of the system. If a layout decision violates one of these, the decision is wrong.</p>
+      </div>
+    </div>
+
+    <div class="principles-grid">
+      <div class="principle-block">
+        <div class="principle-num-tag">i.</div>
+        <h3 class="principle-headline">White space is the design.</h3>
+        <p class="principle-text">Every page should feel as though most of it is intentionally empty. Cream is not background — it is composition. Generous margins on every edge. <em>If a page feels full, something must come off it.</em></p>
+      </div>
+
+      <div class="principle-block">
+        <div class="principle-num-tag">ii.</div>
+        <h3 class="principle-headline">One precious thing per page.</h3>
+        <p class="principle-text">Each page holds one image, or one block of type, or one quiet typographic moment — and then it stops. The thing on the page is the page. A second element only earns its place if it is small, supporting, and obviously secondary.</p>
+      </div>
+
+      <div class="principle-block">
+        <div class="principle-num-tag">iii.</div>
+        <h3 class="principle-headline">Real photography. Treated. Small.</h3>
+        <p class="principle-text">When images appear, they are real (a pressed plant, a window, a hand on a book) and treated (halftone, duotone, scan-edged). They sit at modest scale within a wide cream field. <em>They are never collaged. They are placed.</em></p>
+      </div>
+
+      <div class="principle-block">
+        <div class="principle-num-tag">iv.</div>
+        <h3 class="principle-headline">Type with care.</h3>
+        <p class="principle-text">Body in modest sans, narrow measure, generous leading. Captions in small mono with conviction. One display moment per spread at most. Italic used sparingly. <em>Spacing and scale carry the meaning, not weight or ornament.</em></p>
+      </div>
+
+      <div class="principle-block">
+        <div class="principle-num-tag">v.</div>
+        <h3 class="principle-headline">Hand element used once.</h3>
+        <p class="principle-text">Across an entire artifact, the hand appears <em>exactly once</em> — for a signature, a sign-off, a single personal mark. Reenie Beanie, navy, slight rotation. No marginalia annotations. No scattered hand notes. The handwriting is reserved for where it lands.</p>
+      </div>
+
+      <div class="principle-block">
+        <div class="principle-num-tag">vi.</div>
+        <h3 class="principle-headline">Density when it earns its place.</h3>
+        <p class="principle-text">Up to two pages in any extended artifact may break rules i. and ii. — they may be visually denser, organized as constellation, catalog, or index. <em>These pages earn their density by doing work the quiet pages cannot.</em> Density is not decoration.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- IV · MATERIALS                                       -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num-block">
+        Section
+        <span class="roman">IV.</span>
+      </div>
+      <div class="section-title-block">
+        <h2 class="title">Material library.</h2>
+        <p class="sub">Nine reusable treatments that comprise the visual vocabulary. Each is shown at the actual ratio of element to cream. Notice how much cream sits around each. That ratio is the design.</p>
+      </div>
+    </div>
+
+    <div class="material-grid">
+
+      <div class="material-card">
+        <div class="material-display mat-pressed"></div>
+        <div class="material-meta-block">
+          <div class="material-num-tag">m.01 · primary</div>
+          <h3 class="material-headline">Pressed plant scan</h3>
+          <p class="material-text">A single botanical specimen scanned flat against cream. Modest scale, generous margin on all sides, never bleeding to the edge. The opening or anchoring image of long-form work.</p>
+        </div>
+      </div>
+
+      <div class="material-card">
+        <div class="material-display mat-photo"></div>
+        <div class="material-meta-block">
+          <div class="material-num-tag">m.02 · primary</div>
+          <h3 class="material-headline">Single treated photograph</h3>
+          <p class="material-text">A photograph treated to halftone or duotone in forest green, navy, or ink. Placed at modest scale on cream. A single contained element. No tape, no rotation, no overlap.</p>
+        </div>
+      </div>
+
+      <div class="material-card">
+        <div class="material-display mat-duotone"></div>
+        <div class="material-meta-block">
+          <div class="material-num-tag">m.03</div>
+          <h3 class="material-headline">Duotone landscape</h3>
+          <p class="material-text">A landscape reduced to two tones — typically navy + cream, or forest green + cream. Used at slightly larger scale than m.02 when the page calls for an opening or closing breath.</p>
+        </div>
+      </div>
+
+      <div class="material-card">
+        <div class="material-display mat-italic"></div>
+        <div class="material-meta-block">
+          <div class="material-num-tag">m.04</div>
+          <h3 class="material-headline">Italic body, narrow</h3>
+          <p class="material-text">Sans italic, set in a narrow column, generous leading, sitting in a wide cream field. Used for quoted passages, observations, voice-of-the-narrator fragments.</p>
+        </div>
+      </div>
+
+      <div class="material-card">
+        <div class="material-display mat-display"></div>
+        <div class="material-meta-block">
+          <div class="material-num-tag">m.05</div>
+          <h3 class="material-headline">Display moment</h3>
+          <p class="material-text">A single short phrase set at display scale — large sans, tight letter spacing, dropped into a sea of cream. Used at most once per spread. The page's quiet declaration.</p>
+        </div>
+      </div>
+
+      <div class="material-card">
+        <div class="material-display mat-mono"></div>
+        <div class="material-meta-block">
+          <div class="material-num-tag">m.06</div>
+          <h3 class="material-headline">Mono caption / metadata</h3>
+          <p class="material-text">Small uppercase mono with wide letter spacing. Plate numbers, captions, folio marks, dates. Sits low and small, never competing with primary content.</p>
+        </div>
+      </div>
+
+      <div class="material-card">
+        <div class="material-display mat-hand"></div>
+        <div class="material-meta-block">
+          <div class="material-num-tag">m.07 · once only</div>
+          <h3 class="material-headline">Handwritten signature</h3>
+          <p class="material-text">Reenie Beanie, navy, slight rotation. Used <em style="font-style: italic;">exactly once</em> per artifact — for a signature or sign-off. Not a marginalia annotation. One moment of hand, where it belongs.</p>
+        </div>
+      </div>
+
+      <div class="material-card">
+        <div class="material-display mat-stamp"></div>
+        <div class="material-meta-block">
+          <div class="material-num-tag">m.08 · the lavender</div>
+          <h3 class="material-headline">Edition stamp</h3>
+          <p class="material-text">A small lavender-pale rectangle with thin border and monogram inside. Slight tilt. The lavender moment of the artifact — used once, sometimes twice on bookended cover and colophon.</p>
+        </div>
+      </div>
+
+      <div class="material-card">
+        <div class="material-display mat-paper"></div>
+        <div class="material-meta-block">
+          <div class="material-num-tag">m.09 · base</div>
+          <h3 class="material-headline">Paper texture</h3>
+          <p class="material-text">Subtle SVG noise at low opacity, multiply blend. Applied as a base layer to every surface. Suggests uncoated stock under print. Always present, never noticed.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- V · LAYOUT EXAMPLES                                  -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num-block">
+        Section
+        <span class="roman">V.</span>
+      </div>
+      <div class="section-title-block">
+        <h2 class="title">Layout examples.</h2>
+        <p class="sub">Four canonical compositions showing how the system assembles. Each is a finished example, not a wireframe — these are the visual targets the system aims at.</p>
+      </div>
+    </div>
+
+    <!-- LAYOUT 1 — atmosphere page -->
+    <div class="layout-example">
+      <div class="layout-example-head">
+        <div>
+          <div class="layout-example-num">layout 01 · digital · 16:9</div>
+          <h3 class="layout-example-title">Atmosphere page.</h3>
+        </div>
+        <div class="layout-example-tag">image left, type right · pitch deck slide pattern</div>
+      </div>
+      <div class="layout-frame">
+        <div class="lf-atm-image"></div>
+        <div class="lf-atm-eyebrow">a brief eyebrow above the title</div>
+        <div class="lf-atm-title">A title.</div>
+        <div class="lf-atm-tag">A short, italic line that frames what the work is.</div>
+        <div class="lf-atm-byline">
+          <span>byline · left</span>
+          <span>date · right</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LAYOUT 2 — pull quote concept page -->
+    <div class="layout-example">
+      <div class="layout-example-head">
+        <div>
+          <div class="layout-example-num">layout 02 · digital · 16:9</div>
+          <h3 class="layout-example-title">Pulled quote with sidebar.</h3>
+        </div>
+        <div class="layout-example-tag">3px lavender bar · italic emphasis · narrow side body</div>
+      </div>
+      <div class="layout-frame">
+        <div class="lf-pq-eyebrow">section · concept</div>
+        <div class="lf-pq-bar"></div>
+        <div class="lf-pq-quote">"A quoted line that anchors the page, with <em>italic emphasis</em> on the meaningful clause."</div>
+        <div class="lf-pq-side">A short body paragraph in the right sidebar offers context. Three or four sentences. Quiet support to the dominant pulled quote on the left.</div>
+      </div>
+    </div>
+
+    <!-- LAYOUT 3 — chapbook spread -->
+    <div class="layout-example">
+      <div class="layout-example-head">
+        <div>
+          <div class="layout-example-num">layout 03 · print · 8 × 6 spread</div>
+          <h3 class="layout-example-title">Chapbook opening spread.</h3>
+        </div>
+        <div class="layout-example-tag">image left page, italic line right page · the canonical spread</div>
+      </div>
+      <div class="layout-frame spread">
+        <div class="lf-cb-fold"></div>
+        <div class="lf-cb-mast-l">— masthead · left page</div>
+        <div class="lf-cb-image"></div>
+        <div class="lf-cb-cap">— PLATE I.</div>
+        <div class="lf-cb-tag-r">i. opening</div>
+        <div class="lf-cb-quote">A single italic line drawn from the work, set in a narrow column on the right page. The cream around it does the rest.</div>
+      </div>
+    </div>
+
+    <!-- LAYOUT 4 — postcard close -->
+    <div class="layout-example">
+      <div class="layout-example-head">
+        <div>
+          <div class="layout-example-num">layout 04 · digital · 16:9</div>
+          <h3 class="layout-example-title">Postcard close.</h3>
+        </div>
+        <div class="layout-example-tag">closing slide pattern · message left, address right · single hand moment</div>
+      </div>
+      <div class="layout-frame">
+        <div class="lf-pc-divide"></div>
+        <div class="lf-pc-meta">— from the writer's table</div>
+        <div class="lf-pc-message">One line. One reader. <em style="font-style: italic;">A month.</em></div>
+        <div class="lf-pc-sign">— with thanks.</div>
+        <div class="lf-pc-stamp">
+          <div class="m">M.</div>
+          <div class="cap">monogram</div>
+        </div>
+        <div class="lf-pc-addr">
+          <em>To · the recipient</em><br>
+          a destination<br>
+          in another city<br><br>
+          POSTMARK · DATE
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- VI · VOICE                                           -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num-block">
+        Section
+        <span class="roman">VI.</span>
+      </div>
+      <div class="section-title-block">
+        <h2 class="title">Voice.</h2>
+        <p class="sub">How the system speaks — vocabulary, register, sentence shape. The voice is direct, considered, slightly worn-in. No corporate gloss. No motivational language. No performed enthusiasm.</p>
+      </div>
+    </div>
+
+    <div class="voice-grid">
+      <div class="voice-block">
+        <div class="voice-block-eyebrow">vocabulary</div>
+        <h3 class="voice-block-headline">Words the system uses, and the words it replaces.</h3>
+        <p class="voice-block-body">Specific words signal register. The system reads as a literary publication, not a product.</p>
+        <ul class="voice-block-list">
+          <li><span class="word">use</span>reader (not user, audience, consumer)</li>
+          <li><span class="word">use</span>work (not content, asset, deliverable)</li>
+          <li><span class="word">use</span>writer, director (not creator, talent)</li>
+          <li><span class="word">use</span>specific names of authors and books</li>
+          <li><span class="word">use</span>roman numerals for sections (i., ii., iii.)</li>
+          <li><span class="word">use</span>"—" em dash with spaces (— like this —)</li>
+        </ul>
+      </div>
+
+      <div class="voice-block">
+        <div class="voice-block-eyebrow">register</div>
+        <h3 class="voice-block-headline">How sentences are shaped.</h3>
+        <p class="voice-block-body">The voice is intellectually serious and humanly warm. Direct, considered, with breath. Open with sensibility, not with concept.</p>
+        <ul class="voice-block-list">
+          <li><span class="word">do</span>cut adverbs. they make prose sound uncertain.</li>
+          <li><span class="word">do</span>name things specifically. abstractions weaken.</li>
+          <li><span class="word">do</span>use short sentences in series. they accumulate weight.</li>
+          <li><span class="word">do</span>read aloud before publishing. the ear catches what the eye misses.</li>
+          <li><span class="word">do not</span>open with "in today's world" or any such throat-clear.</li>
+          <li><span class="word">do not</span>perform feelings. show, don't tell.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="voice-anchor">
+      <div class="voice-anchor-eyebrow">voice anchor — sample paragraph in the system's register</div>
+      <p class="voice-anchor-text">Sitting out on a balcony in Paris, watching the sitting reading and thinking and drinking coffee and smoking and writing in your journal while listening to music and perhaps talking passionately with a friend about the book you're reading and how it makes you feel — what you see vs. what they see, the poetry and prose it inspires in you, the change it inspires, how it touches your own life, how you see the world when you come out of the world within the book, how it immediately becomes nostalgic and fuzzy because you can never go back to the feeling of reading the book for the first time, how it feels to hold a book close to your heart, your mind, for it to inspire deep thought, feeling, and discussion, how it connects to the world.</p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- VII · DO / DON'T                                     -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num-block">
+        Section
+        <span class="roman">VII.</span>
+      </div>
+      <div class="section-title-block">
+        <h2 class="title">Do · Do not.</h2>
+        <p class="sub">The hard rules. Many systems are forgiving of exceptions. This one is not. The discipline is the design.</p>
+      </div>
+    </div>
+
+    <div class="dodont">
+      <div class="dodont-side do">
+        <div class="dodont-head">Do</div>
+        <ul class="dodont-list">
+          <li><strong>Treat cream as ground.</strong>Every artifact begins with cream paper. The warmth carries through any surface.</li>
+          <li><strong>Use real photography, treated.</strong>Halftone or duotone every photo before placement. Untreated photos will read wrong even on right layouts.</li>
+          <li><strong>Reserve the hand for one moment.</strong>One handwritten element per artifact, used at the closing or sign-off. The hand should land, not scatter.</li>
+          <li><strong>Set type with care.</strong>Narrow measures. Generous leading. Small captions. The eye should slow down inside the system.</li>
+          <li><strong>Keep lavender precious.</strong>One lavender moment per artifact maximum. Edition stamps, small punctuation.</li>
+          <li><strong>Treat margins as sacred.</strong>The breathing room is not negotiable. Content lives inside the safe-zone.</li>
+        </ul>
+      </div>
+
+      <div class="dodont-side dont">
+        <div class="dodont-head">Do not</div>
+        <ul class="dodont-list">
+          <li><strong>Use serifs.</strong>The system has no serif faces. Garamond, Caslon, Baskerville all incorrect.</li>
+          <li><strong>Use pure black or pure white.</strong>Every color is softened. #000 and #FFF read as harsh against the system's warmth.</li>
+          <li><strong>Collage with tape, rotation, or overlap.</strong>The system is editorial restraint, not busy collage. Images are placed, not stacked.</li>
+          <li><strong>Use forest green as a primary color.</strong>It belongs inside duotone-treated photography, not as a brand color or display color.</li>
+          <li><strong>Scatter hand annotations.</strong>If the hand appears more than once, it appears too often. Marginalia is a name, not a behavior.</li>
+          <li><strong>Read as cozy, lifestyle, or "me-time."</strong>The work is intellectually serious. Not Kinfolk. Not flatlay. Not feminine-domestic-coded.</li>
+          <li><strong>Open with "in today's world."</strong>No throat-clearing openers. The first sentence should already be the work.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- VIII · WORDMARK PLACEHOLDER                          -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num-block">
+        Section
+        <span class="roman">VIII.</span>
+      </div>
+      <div class="section-title-block">
+        <h2 class="title">Wordmark.</h2>
+        <p class="sub">The identity layer that sits on top of the foundation. Not yet built — the project name has not been finalized. This section will hold logotype, monogram variants, clear-space rules, and minimum-size specifications when the name lands.</p>
+      </div>
+    </div>
+
+    <div class="wordmark-tbd">
+      <div class="wordmark-tbd-tag">to be added</div>
+      <h3 class="wordmark-tbd-title">Wordmark deferred until project name is locked.</h3>
+      <p class="wordmark-tbd-body">The visual language exists independent of the wordmark. When the publication name is decided, the wordmark will be developed in General Sans 500 — joining the existing system as the identity layer. The "M." monogram inside m.08 (edition stamp) is a one-off use specific to current production work, not a standalone identity mark.</p>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

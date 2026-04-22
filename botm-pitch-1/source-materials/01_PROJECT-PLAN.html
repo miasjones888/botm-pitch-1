@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>found_document_project / checklist</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+
+  :root {
+    --bg: #F5F2EA;
+    --ink: #0A0A0A;
+    --muted: #6B6B66;
+    --rule: #1A1A1A;
+    --accent: #5C8B8C;
+    --done: #9AA89A;
+    --hover: #ECE7DA;
+    --warn: #B85C3C;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0E0E0C;
+      --ink: #E8E5DC;
+      --muted: #7A7A72;
+      --rule: #2A2A26;
+      --accent: #7AABAC;
+      --done: #4A5A4A;
+      --hover: #1A1A18;
+      --warn: #D87A5C;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 32px 24px 120px;
+  }
+
+  /* ────────────────────────────── header */
+
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 24px;
+    margin-bottom: 32px;
+  }
+
+  .filename {
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    margin-bottom: 16px;
+  }
+
+  .filename::before { content: '> '; color: var(--accent); }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    font-style: italic;
+    margin-bottom: 24px;
+  }
+
+  .meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px 32px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .meta-row { display: contents; }
+  .meta-key::before { content: ''; }
+  .meta-key { padding-right: 8px; }
+  .meta-val { color: var(--ink); }
+
+  /* ────────────────────────────── progress */
+
+  .progress-block {
+    margin: 32px 0;
+    padding: 16px 20px;
+    background: var(--hover);
+    border-left: 2px solid var(--accent);
+  }
+
+  .progress-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .progress-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--rule);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+
+  .progress-stats {
+    font-size: 12px;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .progress-stats strong { font-weight: 600; }
+
+  .next-move {
+    font-size: 12px;
+    color: var(--ink);
+    padding-top: 8px;
+    border-top: 1px dashed var(--rule);
+    margin-top: 8px;
+  }
+
+  .next-move-label {
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 10px;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* ────────────────────────────── controls */
+
+  .controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .ctrl {
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 11px;
+    padding: 6px 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: background 0.15s;
+  }
+
+  .ctrl:hover {
+    background: var(--hover);
+  }
+
+  .ctrl.danger {
+    border-color: var(--warn);
+    color: var(--warn);
+  }
+
+  .ctrl.danger:hover {
+    background: var(--warn);
+    color: var(--bg);
+  }
+
+  /* ────────────────────────────── phase */
+
+  .phase {
+    margin: 40px 0;
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .phase-toggle {
+    color: var(--muted);
+    font-size: 11px;
+    width: 12px;
+    transition: transform 0.2s;
+    display: inline-block;
+  }
+
+  .phase.collapsed .phase-toggle {
+    transform: rotate(-90deg);
+  }
+
+  .phase-num {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .phase-title {
+    font-size: 16px;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .phase-status {
+    font-size: 11px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .phase-status.complete {
+    color: var(--done);
+  }
+
+  .phase-meta {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 16px;
+    padding-left: 24px;
+  }
+
+  .phase-body {
+    padding-left: 24px;
+    overflow: hidden;
+    transition: max-height 0.2s;
+  }
+
+  .phase.collapsed .phase-body {
+    max-height: 0;
+    padding-bottom: 0;
+  }
+
+  .session-group {
+    margin: 16px 0;
+  }
+
+  .session-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  /* ────────────────────────────── checkbox items */
+
+  ul.steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li.step {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 8px 6px 4px;
+    margin: 0;
+    line-height: 1.5;
+    border-radius: 0;
+    transition: background 0.1s;
+  }
+
+  li.step:hover {
+    background: var(--hover);
+  }
+
+  li.step.checked {
+    color: var(--done);
+  }
+
+  li.step.checked .step-text {
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+    text-decoration-color: var(--done);
+  }
+
+  .step-checkbox {
+    flex-shrink: 0;
+    margin-top: 2px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--ink);
+    background: var(--bg);
+    font-family: inherit;
+    color: var(--ink);
+    font-size: 10px;
+    line-height: 1;
+    padding: 0;
+  }
+
+  li.step.checked .step-checkbox {
+    background: var(--done);
+    border-color: var(--done);
+    color: var(--bg);
+  }
+
+  li.step.checked .step-checkbox::after {
+    content: '×';
+    font-weight: 600;
+  }
+
+  .step-id {
+    color: var(--muted);
+    font-size: 11px;
+    flex-shrink: 0;
+    min-width: 36px;
+    text-align: right;
+    padding-top: 1px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .step-text {
+    flex: 1;
+    font-size: 13px;
+    word-wrap: break-word;
+  }
+
+  li.step.is-next {
+    background: var(--hover);
+    border-left: 2px solid var(--accent);
+    padding-left: 6px;
+    margin-left: -8px;
+  }
+
+  /* nested checklists (sub-items) */
+
+  ul.nested {
+    list-style: none;
+    margin: 4px 0 4px 56px;
+    padding: 0;
+    border-left: 1px dashed var(--rule);
+    padding-left: 12px;
+  }
+
+  ul.nested li {
+    padding: 3px 0;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  ul.nested li::before {
+    content: '[ ] ';
+    color: var(--muted);
+  }
+
+  ul.nested li.subchecked::before {
+    content: '[×] ';
+    color: var(--done);
+  }
+
+  ul.nested li {
+    cursor: pointer;
+    user-select: none;
+  }
+
+  ul.nested li.subchecked {
+    color: var(--done);
+    text-decoration: line-through;
+    text-decoration-thickness: 1px;
+  }
+
+  /* ────────────────────────────── footer */
+
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent);
+  }
+
+  /* ────────────────────────────── ascii rule */
+
+  .ascii-rule {
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-align: center;
+    margin: 32px 0;
+    line-height: 1;
+  }
+
+  /* ────────────────────────────── special boxes */
+
+  .callout {
+    border-left: 2px solid var(--warn);
+    padding: 10px 14px;
+    margin: 16px 0;
+    background: var(--hover);
+    font-size: 12px;
+  }
+
+  .callout-label {
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 10px;
+    color: var(--warn);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+
+  .callout em {
+    font-style: italic;
+  }
+
+  /* ────────────────────────────── decisions captured */
+
+  .decisions {
+    margin: 32px 0;
+    padding: 16px 20px;
+    border: 1px solid var(--rule);
+    font-size: 12px;
+  }
+
+  .decisions h2 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .decision-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 8px 16px;
+    padding: 4px 0;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .decision-row:last-child { border-bottom: none; }
+
+  .decision-key {
+    color: var(--muted);
+  }
+
+  .decision-val input,
+  .decision-val select {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--rule);
+    font-family: inherit;
+    font-size: 12px;
+    color: var(--ink);
+    padding: 2px 4px;
+    width: 100%;
+  }
+
+  .decision-val input:focus,
+  .decision-val select:focus {
+    outline: none;
+    border-bottom-color: var(--accent);
+  }
+
+  .decision-val input::placeholder {
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* ────────────────────────────── responsive */
+
+  @media (max-width: 600px) {
+    body {
+      padding: 20px 16px 80px;
+      font-size: 13px;
+    }
+
+    h1 { font-size: 18px; }
+
+    .meta {
+      grid-template-columns: 1fr;
+      gap: 4px 0;
+    }
+
+    .phase-body {
+      padding-left: 12px;
+    }
+
+    ul.nested {
+      margin-left: 28px;
+    }
+
+    .step-id {
+      min-width: 32px;
+      font-size: 10px;
+    }
+
+    .decision-row {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+  }
+
+  /* ────────────────────────────── print */
+
+  @media print {
+    body { background: white; color: black; max-width: 100%; padding: 20px; }
+    .controls, .ctrl, footer { display: none; }
+    .phase.collapsed .phase-body { max-height: none !important; }
+    li.step:hover { background: transparent; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="filename">found_document_project/01_PROJECT-PLAN.html</div>
+  <h1>Found Document — Hybrid Genre Project</h1>
+  <div class="subtitle">Step-by-step checklist. Pick the next open box. Do that one thing. Stop.</div>
+
+  <div class="meta">
+    <div class="meta-row"><span class="meta-key">pathway</span><span class="meta-val">creative-writing (hybrid)</span></div>
+    <div class="meta-row"><span class="meta-key">status</span><span class="meta-val">off-stack capture</span></div>
+    <div class="meta-row"><span class="meta-key">iteration ceiling</span><span class="meta-val">3 drafts (hard)</span></div>
+    <div class="meta-row"><span class="meta-key">completion floor</span><span class="meta-val">printed copy held</span></div>
+    <div class="meta-row"><span class="meta-key">created</span><span class="meta-val">2026-04-21</span></div>
+    <div class="meta-row"><span class="meta-key">est. sessions</span><span class="meta-val">25–40 across 4–12 weeks</span></div>
+  </div>
+</header>
+
+<!-- ────────────────────────────── progress block -->
+
+<div class="progress-block">
+  <div class="progress-label">progress</div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-stats"><strong id="progressDone">0</strong>/<span id="progressTotal">0</span> · <span id="progressPct">0%</span></div>
+  </div>
+  <div class="next-move">
+    <span class="next-move-label">next single move</span>
+    <span id="nextMove">S.1 — Open Google Drive. Create folder "Found Document Project".</span>
+  </div>
+</div>
+
+<!-- ────────────────────────────── controls -->
+
+<div class="controls">
+  <button class="ctrl" onclick="expandAll()">expand all</button>
+  <button class="ctrl" onclick="collapseAll()">collapse all</button>
+  <button class="ctrl" onclick="collapseDone()">collapse complete phases</button>
+  <button class="ctrl" onclick="window.print()">print</button>
+  <button class="ctrl danger" onclick="resetAll()">reset all</button>
+</div>
+
+<!-- ────────────────────────────── decisions captured -->
+
+<div class="decisions">
+  <h2>decisions captured (fill as you go)</h2>
+  <div class="decision-row">
+    <span class="decision-key">core sentence</span>
+    <span class="decision-val"><input type="text" data-key="core" placeholder="the gravity center, one sentence you can say without looking"></span>
+  </div>
+  <div class="decision-row">
+    <span class="decision-key">form (Phase 4.4)</span>
+    <span class="decision-val">
+      <select data-key="form">
+        <option value="">— not yet —</option>
+        <option>Braided</option>
+        <option>Layered</option>
+        <option>Collaged</option>
+        <option>Erasure</option>
+        <option>Indexed</option>
+        <option>Other</option>
+      </select>
+    </span>
+  </div>
+  <div class="decision-row">
+    <span class="decision-key">presence (Phase 4.6)</span>
+    <span class="decision-val">
+      <select data-key="presence">
+        <option value="">— not yet —</option>
+        <option>Invisible</option>
+        <option>Implied</option>
+        <option>Explicit</option>
+      </select>
+    </span>
+  </div>
+  <div class="decision-row">
+    <span class="decision-key">three operations (Phase 4.8)</span>
+    <span class="decision-val"><input type="text" data-key="ops" placeholder="e.g. erasure, fragmentation, silence-marking"></span>
+  </div>
+  <div class="decision-row">
+    <span class="decision-key">final title (Phase 10.27)</span>
+    <span class="decision-val"><input type="text" data-key="title" placeholder="last decision, not first"></span>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════ -->
+<!-- PHASES                                           -->
+<!-- ════════════════════════════════════════════════ -->
+
+<div id="phases"></div>
+
+<footer>
+  <p>This artifact is the operational layer. The <em>why</em> lives in the companion files: <code>02_BEATS-AND-LINES.md</code>, <code>03_DEEP-ANNOTATION.md</code>, <code>04_AESTHETIC-AND-ZINE-DIRECTION.md</code>, <code>05_OPERATIONS-TOOLKIT.md</code>, <code>06_SESSION-LOG-TEMPLATE.md</code>.</p>
+  <p style="margin-top: 8px;">State persists between sessions. Closing this tab does not lose your check marks. To start over: use <em>reset all</em>.</p>
+</footer>
+
+<script>
+// ────────────────────────────── data
+
+const PHASES = [
+  {
+    id: 'setup', num: 'SETUP', title: 'Day one — folder + log + notes',
+    meta: 'One sitting, ~20 min. Sets up everything else.',
+    sessions: [
+      { steps: [
+        ['S.1', 'Open Google Drive'],
+        ['S.2', 'Create new folder titled "Found Document Project"'],
+        ['S.3', 'Move all six artifact files (01 through 06) into that folder'],
+        ['S.4', 'Inside the folder, create new Google Doc titled "Found Document — Session Log"'],
+        ['S.5', 'Open 06_SESSION-LOG-TEMPLATE.md. Copy entire contents into Session Log doc.'],
+        ['S.6', 'In Session Log, fill the CURRENT STATE block with starting values (Phase 0, no decisions yet)'],
+        ['S.7', 'Open Apple Notes'],
+        ['S.8', 'Create new note titled "Found Document — Reactions"'],
+        ['S.9', 'Create second new note titled "Found Document — Reading Quotes" in Reading bucket'],
+        ['S.10', 'Close everything. Walk away minimum 24 hours before Phase 0.']
+      ]}
+    ]
+  },
+  {
+    id: 'p0', num: 'PHASE 0', title: 'Sitting with the material',
+    meta: '~3 sessions, 20–90 min each. No writing yet.',
+    sessions: [
+      { label: 'Session 0a — First read of beats and lines', steps: [
+        ['0.1', 'Open Session Log. Write today\'s date as Session 1 entry header.'],
+        ['0.2', 'Open 02_BEATS-AND-LINES.md'],
+        ['0.3', 'Read it once, beginning to end. Slowly. No marking. No notes.'],
+        ['0.4', 'Close the file.'],
+        ['0.5', 'Open Apple Notes → "Found Document — Reactions"'],
+        ['0.6', 'Capture between one and five fragments. No editing. One is fine.'],
+        ['0.7', 'Update Session Log entry: phase, time, what you did, what session gave you.'],
+        ['0.8', 'Walk away minimum 2 hours before Session 0b.']
+      ]},
+      { label: 'Session 0b — Deep annotation read', steps: [
+        ['0.9', 'New Session Log entry, today\'s date, Session 2.'],
+        ['0.10', 'Open 03_DEEP-ANNOTATION.md'],
+        ['0.11', 'Read slowly. This is heavy. Stop when you need to.'],
+        ['0.12', 'If you need to break the read across two sittings, that is fine. Note in Session Log.'],
+        ['0.13', 'When done: close the file.'],
+        ['0.14', 'Open Apple Notes → "Found Document — Reactions"'],
+        ['0.15', 'Add up to five new fragments. Do not edit older ones.'],
+        ['0.16', 'Update Session Log entry.'],
+        ['0.17', 'Walk away minimum 24 hours before Session 0c.']
+      ]},
+      { label: 'Session 0c — Cold return', steps: [
+        ['0.18', 'New Session Log entry, today\'s date, Session 3.'],
+        ['0.19', 'Open Apple Notes → "Found Document — Reactions"'],
+        ['0.20', 'Read all fragments cold. Do not edit.'],
+        ['0.21', 'Mark the fragments that still hold (star, asterisk, or move to top).'],
+        ['0.22', 'In one sentence: name what the held fragments share, if anything.'],
+        ['0.23', 'Update Session Log. Mark Phase 0 complete in CURRENT STATE block.'],
+        ['0.24', 'Update CURRENT STATE: Phase = 1, Next single move = "Phase 1, step 1.1"']
+      ]}
+    ]
+  },
+  {
+    id: 'p1', num: 'PHASE 1', title: 'Concept doc',
+    meta: '1 session, ~45 min.',
+    sessions: [
+      { steps: [
+        ['1.1', 'New Session Log entry. Note Phase 1 start.'],
+        ['1.2', 'Create new Google Doc titled "Found Document — Concept" in project folder'],
+        ['1.3', 'Type heading: "What is this piece doing?"'],
+        ['1.4', 'Write one sentence. "I don\'t know yet" is valid.'],
+        ['1.5', 'Type heading: "Who is this for?"'],
+        ['1.6', 'Write one sentence. Default: self-only.'],
+        ['1.7', 'Type heading: "What is the irreducible thing it does?"'],
+        ['1.8', 'Write one sentence.'],
+        ['1.9', 'Type heading: "What form does it want?"'],
+        ['1.10', 'Write one sentence. Default: zine, 16–32 pages, PDF.'],
+        ['1.11', 'Type heading: "What is the tonal register?"'],
+        ['1.12', 'Write one sentence. Default: indifferent and accurate.'],
+        ['1.13', 'Type heading: "Core sentence — gravity center, not a thesis."'],
+        ['1.14', 'Write one sentence you can say without looking.'],
+        ['1.15', 'Read core sentence aloud. Edit until you can say it from memory.'],
+        ['1.16', 'Save. Close.'],
+        ['1.17', 'Update Session Log. Mark Phase 1 complete. CURRENT STATE: Phase = 2.'],
+        ['1.18', 'Walk away minimum 24 hours before any Phase 2 work.']
+      ]}
+    ]
+  },
+  {
+    id: 'p2', num: 'PHASE 2', title: 'Adjacent reading + operations toolkit',
+    meta: '~4–6 sessions, parallel to Phase 3. Not blocking.',
+    sessions: [
+      { label: 'Acquisition', steps: [
+        ['2.1', 'New Session Log entry, Phase 2 start.'],
+        ['2.2', 'Place library hold or buy: Nox by Anne Carson'],
+        ['2.3', 'Place library hold or buy: Bluets by Maggie Nelson'],
+        ['2.4', 'Optional: Don\'t Let Me Be Lonely (Rankine), Ongoingness (Manguso), Ban en Banlieue (Kapil)'],
+        ['2.5', 'Optional: A Little White Shadow (Ruefle) or Voyager (Reddy) — erasure examples'],
+        ['2.6', 'Update Session Log with what was placed/ordered.']
+      ]},
+      { label: 'Operations toolkit primer', steps: [
+        ['2.7', 'Separate session: open 05_OPERATIONS-TOOLKIT.md'],
+        ['2.8', 'Read it once, beginning to end. Slowly.'],
+        ['2.9', 'In Apple Notes: list operations that immediately interest you. Maximum five.'],
+        ['2.10', 'Update Session Log.']
+      ]},
+      { label: 'Reading sessions (each book = one session)', steps: [
+        ['2.11', 'When Nox arrives: read it in one sitting. Treat it as an object.'],
+        ['2.12', 'After: capture ONE quote in "Found Document — Reading Quotes" note.'],
+        ['2.13', 'In Session Log: name one operation Carson performs that you might use.'],
+        ['2.14', 'When Bluets arrives: read first 20 pages in one sitting.'],
+        ['2.15', 'Capture one quote in Reading Quotes note.'],
+        ['2.16', 'In Session Log: name one operation Nelson performs that you might use.'],
+        ['2.17', 'Repeat 2.14–2.16 for any optional books read.'],
+        ['2.18', 'STOP when total quotes captured = 5. Five is a hard ceiling.'],
+        ['2.19', 'Mark Phase 2 complete when you\'ve read at least Nox AND completed 2.7–2.10.']
+      ]}
+    ]
+  },
+  {
+    id: 'p3', num: 'PHASE 3', title: 'Engagement with the document',
+    meta: '~4–6 sessions. Most cognitively demanding phase.',
+    sessions: [
+      { label: 'Setup', steps: [
+        ['3.1', 'New Session Log entry, Phase 3 start.'],
+        ['3.2', 'Print the original PDF if possible. Single-sided, room for marginalia.'],
+        ['3.3', 'If not: open clean digital PDF in markup app (Apple Notes, Notability, Adobe, Drive comments)']
+      ]},
+      { label: 'Session 3a — First close read, no writing', steps: [
+        ['3.4', 'New Session Log entry.'],
+        ['3.5', 'Sit with the document. Set timer 45 min.'],
+        ['3.6', 'First close read. Mark only — highlights, underlines, dots. No words.'],
+        ['3.7', 'Close document. Walk away minimum 2 hours.'],
+        ['3.8', 'Update Session Log.']
+      ]},
+      { label: 'Session 3b — Second close read, marginal reactions', steps: [
+        ['3.9', 'New Session Log entry.'],
+        ['3.10', 'Reopen the marked document.'],
+        ['3.11', 'Second close read. Write in margins: questions, single words, names of resonances. Do not make sentences.'],
+        ['3.12', 'Update Session Log.'],
+        ['3.13', 'Walk away minimum 12 hours.']
+      ]},
+      { label: 'Session 3c — Reaction capture (typed)', steps: [
+        ['3.14', 'New Session Log entry.'],
+        ['3.15', 'Create new Google Doc: "Found Document — Reaction Capture" in project folder'],
+        ['3.16', 'Set timer 30 min.'],
+        ['3.17', 'Type ONLY fragments that arrived during close reads. One per line. No editing.'],
+        ['3.18', 'Goal: 20+ fragments by end of phase. May take more than one session.'],
+        ['3.19', 'Stop when timer dings. Update Session Log.']
+      ]},
+      { label: 'Session 3d — Continue capture if needed', steps: [
+        ['3.20', 'Repeat session 3c until you have ≥20 fragments.'],
+        ['3.21', 'When you have 20+, walk away minimum 24 hours.']
+      ]},
+      { label: 'Session 3e — Cold filter', steps: [
+        ['3.22', 'New Session Log entry.'],
+        ['3.23', 'Open Reaction Capture doc. Read all fragments cold.'],
+        ['3.24', 'Mark the five that still hold (bold, or move to top section).'],
+        ['3.25', 'Below the marked five, write one sentence: what (if anything) the five share.'],
+        ['3.26', 'Save. Close. Update Session Log. Mark Phase 3 complete.']
+      ]}
+    ]
+  },
+  {
+    id: 'p4', num: 'PHASE 4', title: 'Structural decision (load-bearing)',
+    meta: '1 session, ~45 min. Do not skip.',
+    sessions: [
+      { steps: [
+        ['4.1', 'New Session Log entry, Phase 4 start.'],
+        ['4.2', 'Reopen 05_OPERATIONS-TOOLKIT.md. Re-skim. Note pairing logic at end.'],
+        ['4.3', 'Open Concept doc. Add new section: "Form decision."'],
+        ['4.4', 'Pick ONE form. Write it.', ['Braided', 'Layered', 'Collaged', 'Erasure', 'Indexed', 'Other']],
+        ['4.5', 'Add new section: "Presence decision."'],
+        ['4.6', 'Pick ONE presence option.', ['Invisible', 'Implied', 'Explicit']],
+        ['4.7', 'Add new section: "Three operations chosen."'],
+        ['4.8', 'Pick three operations from 05_OPERATIONS-TOOLKIT.md. Write them.'],
+        ['4.9', 'Add new section: "Rough shape." One paragraph: how long, how many sections, what holds it together.'],
+        ['4.10', 'Save Concept doc.'],
+        ['4.11', 'Update Session Log CURRENT STATE: form, presence, three operations.'],
+        ['4.12', 'Mark Phase 4 complete. These are now constraints. Stop second-guessing.']
+      ]}
+    ]
+  },
+  {
+    id: 'p5', num: 'PHASE 5', title: 'Zero draft',
+    meta: '~5–8 sessions, 25 min each. AI off — hard rule.',
+    sessions: [
+      { label: 'Setup', steps: [
+        ['5.1', 'New Session Log entry, Phase 5 start.'],
+        ['5.2', 'Create new Google Doc: "Found Document — Zero Draft" in project folder'],
+        ['5.3', 'At top of doc, paste core sentence from Concept doc as header.'],
+        ['5.4', 'Below it, paste form decision, presence decision, three operations.'],
+        ['5.5', 'Type "BEGIN ZERO DRAFT". Skip three lines.']
+      ]},
+      { label: 'Each writing session (repeat 5.6–5.12 until ending exists)', steps: [
+        ['5.6', 'New Session Log entry.'],
+        ['5.7', 'Set timer 25 min.'],
+        ['5.8', 'Open Zero Draft. Do not reread previous sessions\' writing. Scroll to bottom.'],
+        ['5.9', 'Write. Anything. Apply your operations. Do not edit. Do not delete.'],
+        ['5.10', 'Stop when timer dings. Mid-sentence is fine.'],
+        ['5.11', 'Save. Close.'],
+        ['5.12', 'Update Session Log: one sentence on what session gave you.']
+      ]},
+      { label: 'Continue until ending', steps: [
+        ['5.13', 'Repeat 5.6–5.12 across multiple sessions across days.'],
+        ['5.14', 'When piece has ANY ending — even a bad one — type "END ZERO DRAFT" at bottom.'],
+        ['5.15', 'Save. Close.'],
+        ['5.16', 'Update Session Log. Mark Phase 5 complete. You have a zero draft.']
+      ]}
+    ]
+  },
+  {
+    id: 'p6', num: 'PHASE 6', title: 'Rest',
+    meta: 'Mandatory. Minimum 7 days. Do not skip.',
+    sessions: [
+      { steps: [
+        ['6.1', 'Update Session Log: Phase 6 begin date.'],
+        ['6.2', 'Do not open the Zero Draft for 7 full days.'],
+        ['6.3', 'During this time: read, walk, work on something else.'],
+        ['6.4', 'On day 7+ (not earlier): mark Phase 6 complete. Phase 7 unlocks.']
+      ]}
+    ]
+  },
+  {
+    id: 'p7', num: 'PHASE 7', title: 'Redline pass',
+    meta: '1–2 sessions.',
+    sessions: [
+      { steps: [
+        ['7.1', 'New Session Log entry, Phase 7 start.'],
+        ['7.2', 'Print the Zero Draft. (If not possible, open in markup app.)'],
+        ['7.3', 'Read with a pen. Set timer 60 min.'],
+        ['7.4', 'Mark cuts (strikethrough), additions (caret + margin notes), structural moves (arrows).'],
+        ['7.5', 'Do not fix in the doc yet. Just mark.'],
+        ['7.6', 'When done: update Session Log. Mark Phase 7 complete.']
+      ]}
+    ]
+  },
+  {
+    id: 'p8', num: 'PHASE 8', title: 'Retype pass (Draft 1)',
+    meta: '1–2 sessions. AI off.',
+    sessions: [
+      { steps: [
+        ['8.1', 'New Session Log entry, Phase 8 start.'],
+        ['8.2', 'Create new Google Doc: "Found Document — Draft 1"'],
+        ['8.3', 'Place marked-up Zero Draft beside your screen.'],
+        ['8.4', 'Retype entire piece from scratch into Draft 1, incorporating redlines as you go.'],
+        ['8.5', 'This is not transcription. It is the first real edit.'],
+        ['8.6', 'When complete: save. Close.'],
+        ['8.7', 'Update Session Log. Mark Phase 8 complete. Draft 1 exists.']
+      ]}
+    ]
+  },
+  {
+    id: 'p9', num: 'PHASE 9', title: 'Honest gate',
+    meta: '30 min, one sitting.',
+    sessions: [
+      { steps: [
+        ['9.1', 'Walk away minimum 3 days from end of Phase 8 before this session.'],
+        ['9.2', 'New Session Log entry, Phase 9 start.'],
+        ['9.3', 'Open Draft 1. Read it cold. Beginning to end. Do not mark.'],
+        ['9.4', 'Close the doc. Sit for 5 minutes.'],
+        ['9.5', 'Answer in Session Log, one sentence: "Is this piece in a good spot?"'],
+        ['9.6', 'If YES → mark Phase 9 complete. Skip to Phase 10.'],
+        ['9.7', 'If NO → mark Phase 9 complete and proceed to Phase 9b (second draft cycle).'],
+        ['9.8', 'Hard rule: Phase 9b can only happen ONCE. Maximum 3 drafts total.']
+      ]},
+      { label: 'Phase 9b — Second draft cycle (only if needed)', steps: [
+        ['9.9', 'Repeat Phase 6 (rest, 7 days minimum)'],
+        ['9.10', 'Repeat Phase 7 (redline pass on Draft 1)'],
+        ['9.11', 'Create "Found Document — Draft 2" doc. Repeat Phase 8 (retype with redlines).'],
+        ['9.12', 'Repeat Phase 9.1–9.5 on Draft 2.'],
+        ['9.13', 'Whatever you get to after Draft 2, that is the piece. Move to Phase 10 regardless.']
+      ]}
+    ]
+  },
+  {
+    id: 'p10', num: 'PHASE 10', title: 'Production (AI on for layout)',
+    meta: '~4–6 sessions.',
+    sessions: [
+      { label: 'Setup', steps: [
+        ['10.1', 'New Session Log entry, Phase 10 start.'],
+        ['10.2', 'Reopen 04_AESTHETIC-AND-ZINE-DIRECTION.md. Re-skim Direction B.'],
+        ['10.3', 'Confirm Direction B (or write override + reason in Session Log).']
+      ]},
+      { label: 'Type and tooling', steps: [
+        ['10.4', 'Download IBM Plex Mono from Google Fonts (free)'],
+        ['10.5', 'Install: extract zip, open each .ttf, click "Install Font" in Font Book (Mac)'],
+        ['10.6', 'Restart Figma if it was open']
+      ]},
+      { label: 'Figma file setup', steps: [
+        ['10.7', 'Open Figma. Create new file: "Found Document — Zine v1"'],
+        ['10.8', 'Decide page dimensions. Default: 5.5" × 8.5" (half-letter folded).'],
+        ['10.9', 'Set up text styles in Figma:', [
+          'body — IBM Plex Mono Regular, 10pt, line height 1.5',
+          'voice-document — IBM Plex Mono Regular',
+          'voice-yours — IBM Plex Mono Light, indent 1 character',
+          'voice-caretaker — IBM Plex Mono Italic',
+          'header — IBM Plex Mono Bold, 12pt, prefixed with >',
+          'vital-sign-block — IBM Plex Mono Regular, 9pt, monospace-aligned'
+        ]],
+        ['10.10', 'Set up color styles:', [
+          'black #000000',
+          'off-white #F5F2EA (page background)',
+          'accent (washed teal) #5C8B8C — used for ONE element only'
+        ]],
+        ['10.11', 'Set up grid: 0.5" margins, ragged-right text alignment']
+      ]},
+      { label: 'Layout — first pass', steps: [
+        ['10.12', 'Create page count: start with 20 pages (multiple of 4 for saddle-stitch)'],
+        ['10.13', 'Drop entire Draft 1 (or Draft 2) into pages. Don\'t design yet.'],
+        ['10.14', 'Apply text styles to each block.'],
+        ['10.15', 'Save. Walk away.']
+      ]},
+      { label: 'Layout — second pass (rhythm)', steps: [
+        ['10.16', 'New session.'],
+        ['10.17', 'Identify lines that deserve isolation. Candidates: MRI line, handgun gesture, final period.'],
+        ['10.18', 'Move those to their own pages.'],
+        ['10.19', 'Add ASCII rule lines (─────────) between sections.'],
+        ['10.20', 'Save.']
+      ]},
+      { label: 'Layout — third pass (structure)', steps: [
+        ['10.21', 'New session.'],
+        ['10.22', 'Add filename-style section headers (>discovery/10-23-24.log, etc.)'],
+        ['10.23', 'Format vital sign blocks as monospace-aligned blocks.'],
+        ['10.24', 'Add page numbers (form-style: Page X of — with total left blank)'],
+        ['10.25', 'Save.']
+      ]},
+      { label: 'Cover', steps: [
+        ['10.26', 'Solve cover last.'],
+        ['10.27', 'Decide title (this is now the moment — not before)'],
+        ['10.28', 'Default cover: title in IBM Plex Mono on otherwise blank cover.'],
+        ['10.29', 'Save.']
+      ]},
+      { label: 'Export', steps: [
+        ['10.30', 'In Figma: select all pages → Export → PDF, single file'],
+        ['10.31', 'Save PDF to project folder: "Found Document — Zine v1.pdf"'],
+        ['10.32', 'Open PDF. Read on screen end to end. Catch obvious problems only.'],
+        ['10.33', 'If problems: return to Figma, fix, re-export. Maximum 2 export iterations.']
+      ]},
+      { label: 'Print one copy (completion floor)', steps: [
+        ['10.34', 'Print one copy: home printer, local print shop, or mail-order (Mixam).'],
+        ['10.35', 'When the printed object arrives in your hands: hold it. Do not open for 5 minutes.'],
+        ['10.36', 'Mark Phase 10 complete. THE COMPLETION FLOOR HAS BEEN MET. v1 EXISTS.'],
+        ['10.37', 'Update Session Log. Fill END-OF-PROJECT FIELDS in template.']
+      ]}
+    ]
+  },
+  {
+    id: 'p11', num: 'PHASE 11', title: 'Distribution (optional)',
+    meta: 'Only if v1 has a reader other than yourself.',
+    sessions: [
+      { steps: [
+        ['11.1', 'Decide audience: one trusted reader / small print run / web upload / journal submission'],
+        ['11.2', 'If one trusted reader: send PDF or hand them the printed copy. Do not explain it.'],
+        ['11.3', 'If small print run: order 5–10 copies through Mixam or local riso shop.'],
+        ['11.4', 'If web upload: post PDF to your portfolio site or Are.na.'],
+        ['11.5', 'If journal submission: research one hybrid-form journal (Sleepingfish, DIAGRAM, Black Sun Lit, Conjunctions). Submit per their guidelines.'],
+        ['11.6', 'Take one action. Do not keep iterating.'],
+        ['11.7', 'Update Session Log. Project complete.']
+      ]}
+    ]
+  }
+];
+
+// ────────────────────────────── state
+
+const STORAGE_KEY = 'found_document_checklist_v1';
+let state = {
+  checked: {},
+  subchecked: {},
+  collapsed: {},
+  decisions: {}
+};
+
+async function loadState() {
+  try {
+    const result = await window.storage.get(STORAGE_KEY);
+    if (result && result.value) {
+      const loaded = JSON.parse(result.value);
+      state = { ...state, ...loaded };
+    }
+  } catch (e) {
+    // No prior state; that's fine.
+  }
+}
+
+async function saveState() {
+  try {
+    await window.storage.set(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {
+    console.error('Save failed:', e);
+  }
+}
+
+// ────────────────────────────── render
+
+function render() {
+  const container = document.getElementById('phases');
+  container.innerHTML = '';
+
+  PHASES.forEach((phase, pIdx) => {
+    const isCollapsed = state.collapsed[phase.id];
+    const phaseEl = document.createElement('section');
+    phaseEl.className = 'phase' + (isCollapsed ? ' collapsed' : '');
+    phaseEl.dataset.phase = phase.id;
+
+    // Count steps
+    const allSteps = phase.sessions.flatMap(s => s.steps.map(st => st[0]));
+    const doneSteps = allSteps.filter(id => state.checked[id]).length;
+    const isComplete = doneSteps === allSteps.length;
+
+    phaseEl.innerHTML = `
+      <div class="phase-header" onclick="togglePhase('${phase.id}')">
+        <span class="phase-toggle">▼</span>
+        <span class="phase-num">${phase.num}</span>
+        <span class="phase-title">${phase.title}</span>
+        <span class="phase-status ${isComplete ? 'complete' : ''}">${doneSteps}/${allSteps.length}${isComplete ? ' ✓' : ''}</span>
+      </div>
+      <div class="phase-meta">${phase.meta}</div>
+      <div class="phase-body"></div>
+    `;
+
+    const body = phaseEl.querySelector('.phase-body');
+
+    phase.sessions.forEach((session, sIdx) => {
+      const group = document.createElement('div');
+      group.className = 'session-group';
+
+      if (session.label) {
+        const label = document.createElement('div');
+        label.className = 'session-label';
+        label.textContent = session.label;
+        group.appendChild(label);
+      }
+
+      const ul = document.createElement('ul');
+      ul.className = 'steps';
+
+      session.steps.forEach(([id, text, sublist]) => {
+        const li = document.createElement('li');
+        li.className = 'step' + (state.checked[id] ? ' checked' : '');
+        li.dataset.id = id;
+
+        li.innerHTML = `
+          <button class="step-checkbox" onclick="toggleStep('${id}')" aria-label="Toggle ${id}"></button>
+          <span class="step-id">${id}</span>
+          <span class="step-text"></span>
+        `;
+        li.querySelector('.step-text').textContent = text;
+        ul.appendChild(li);
+
+        if (sublist && Array.isArray(sublist)) {
+          const subUl = document.createElement('ul');
+          subUl.className = 'nested';
+          sublist.forEach((subText, subIdx) => {
+            const subId = `${id}.${subIdx}`;
+            const subLi = document.createElement('li');
+            subLi.className = state.subchecked[subId] ? 'subchecked' : '';
+            subLi.textContent = subText;
+            subLi.onclick = () => toggleSubstep(subId);
+            subUl.appendChild(subLi);
+          });
+          ul.appendChild(subUl);
+        }
+      });
+
+      group.appendChild(ul);
+      body.appendChild(group);
+    });
+
+    container.appendChild(phaseEl);
+  });
+
+  updateProgress();
+  updateNextMove();
+  renderDecisions();
+}
+
+function renderDecisions() {
+  document.querySelectorAll('[data-key]').forEach(input => {
+    const key = input.dataset.key;
+    if (state.decisions[key] !== undefined) {
+      input.value = state.decisions[key];
+    }
+  });
+}
+
+// ────────────────────────────── interactions
+
+function toggleStep(id) {
+  state.checked[id] = !state.checked[id];
+  saveState();
+  render();
+}
+
+function toggleSubstep(id) {
+  state.subchecked[id] = !state.subchecked[id];
+  saveState();
+  render();
+}
+
+function togglePhase(id) {
+  state.collapsed[id] = !state.collapsed[id];
+  saveState();
+  render();
+}
+
+function expandAll() {
+  state.collapsed = {};
+  saveState();
+  render();
+}
+
+function collapseAll() {
+  PHASES.forEach(p => state.collapsed[p.id] = true);
+  saveState();
+  render();
+}
+
+function collapseDone() {
+  PHASES.forEach(phase => {
+    const allSteps = phase.sessions.flatMap(s => s.steps.map(st => st[0]));
+    const doneSteps = allSteps.filter(id => state.checked[id]).length;
+    if (doneSteps === allSteps.length && allSteps.length > 0) {
+      state.collapsed[phase.id] = true;
+    }
+  });
+  saveState();
+  render();
+}
+
+function resetAll() {
+  if (!confirm('Reset all checks, decisions, and collapse state? This cannot be undone.')) return;
+  state = { checked: {}, subchecked: {}, collapsed: {}, decisions: {} };
+  saveState();
+  render();
+  document.querySelectorAll('[data-key]').forEach(input => {
+    if (input.tagName === 'SELECT') input.selectedIndex = 0;
+    else input.value = '';
+  });
+}
+
+// ────────────────────────────── progress + next-move
+
+function updateProgress() {
+  const allSteps = PHASES.flatMap(p => p.sessions.flatMap(s => s.steps.map(st => st[0])));
+  const total = allSteps.length;
+  const done = allSteps.filter(id => state.checked[id]).length;
+  const pct = total ? Math.round((done / total) * 100) : 0;
+
+  document.getElementById('progressDone').textContent = done;
+  document.getElementById('progressTotal').textContent = total;
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+}
+
+function updateNextMove() {
+  let nextStep = null;
+  for (const phase of PHASES) {
+    for (const session of phase.sessions) {
+      for (const [id, text] of session.steps) {
+        if (!state.checked[id]) {
+          nextStep = { id, text };
+          break;
+        }
+      }
+      if (nextStep) break;
+    }
+    if (nextStep) break;
+  }
+
+  const el = document.getElementById('nextMove');
+  if (nextStep) {
+    el.textContent = `${nextStep.id} — ${nextStep.text}`;
+    // Highlight the next step in the list
+    document.querySelectorAll('li.step').forEach(li => li.classList.remove('is-next'));
+    const liEl = document.querySelector(`li.step[data-id="${nextStep.id}"]`);
+    if (liEl) liEl.classList.add('is-next');
+  } else {
+    el.textContent = 'All steps complete. The piece exists. ✓';
+  }
+}
+
+// ────────────────────────────── decisions inputs
+
+document.addEventListener('change', (e) => {
+  if (e.target.dataset.key) {
+    state.decisions[e.target.dataset.key] = e.target.value;
+    saveState();
+  }
+});
+
+document.addEventListener('input', (e) => {
+  if (e.target.dataset.key && e.target.tagName === 'INPUT') {
+    state.decisions[e.target.dataset.key] = e.target.value;
+    saveState();
+  }
+});
+
+// ────────────────────────────── boot
+
+(async function init() {
+  await loadState();
+  render();
+})();
+</script>
+
+</body>
+</html>

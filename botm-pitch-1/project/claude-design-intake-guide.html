@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Design intake form · field-by-field guide</title>
+
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap" rel="stylesheet">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600&display=swap');
+
+  :root {
+    --doc-bg:        #F4F4F2;
+    --doc-surface:   #FFFFFF;
+    --doc-text:      #1A1A18;
+    --doc-text-soft: #4A4A46;
+    --doc-text-mute: #7A7672;
+    --doc-text-faint:#A8A4A0;
+    --doc-rule:      #D8D6D2;
+
+    --status-info:   #5A6680;
+    --status-prog:   #B8893A;
+    --status-done:   #4A6B4A;
+    --status-skip:   #A8A4A0;
+
+    --font-sans: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--doc-bg);
+    color: var(--doc-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.65;
+  }
+
+  .doc {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 80px 48px 160px;
+  }
+
+  /* ─── HEAD */
+
+  .doc-head {
+    margin-bottom: 64px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--doc-rule);
+  }
+
+  .doc-filename {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.04em;
+    margin-bottom: 24px;
+  }
+  .doc-filename::before {
+    content: '> ';
+    color: var(--doc-text-faint);
+  }
+
+  .doc-title {
+    font-family: var(--font-sans);
+    font-size: 40px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.025em;
+    margin-bottom: 16px;
+    line-height: 1.05;
+  }
+
+  .doc-sub {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--doc-text-soft);
+    line-height: 1.6;
+    max-width: 70ch;
+  }
+
+  /* ─── SECTION */
+
+  .section {
+    margin-bottom: 80px;
+  }
+
+  .section-head {
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--doc-rule);
+  }
+
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .section-intro {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--doc-text-soft);
+    line-height: 1.65;
+    margin-bottom: 32px;
+    max-width: 70ch;
+  }
+
+  /* ─── FIELD BLOCK */
+
+  .field {
+    background: var(--doc-surface);
+    border: 1px solid var(--doc-rule);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+
+  .field-head {
+    padding: 22px 28px 22px;
+    border-bottom: 1px solid var(--doc-rule);
+    background: var(--doc-bg);
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .field-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .field-num strong {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.025em;
+    line-height: 0.9;
+    margin-bottom: 4px;
+    text-transform: none;
+  }
+
+  .field-name {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.012em;
+    line-height: 1.3;
+  }
+
+  .field-name-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+  }
+
+  .field-action {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 2px;
+  }
+
+  .field-action.fill {
+    background: rgba(74, 107, 74, 0.1);
+    color: var(--status-done);
+  }
+  .field-action.upload {
+    background: rgba(90, 102, 128, 0.1);
+    color: var(--status-info);
+  }
+  .field-action.skip {
+    background: rgba(168, 164, 160, 0.15);
+    color: var(--status-skip);
+  }
+  .field-action.optional {
+    background: rgba(184, 137, 58, 0.12);
+    color: var(--status-prog);
+  }
+
+  .field-body {
+    padding: 28px 32px 32px;
+  }
+
+  .field-instruction {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--doc-text-soft);
+    line-height: 1.7;
+    margin-bottom: 18px;
+  }
+
+  .field-instruction:last-child { margin-bottom: 0; }
+
+  .field-instruction em {
+    color: var(--doc-text);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .field-instruction code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background: var(--doc-bg);
+    padding: 2px 6px;
+    border: 1px solid var(--doc-rule);
+    border-radius: 2px;
+    color: var(--doc-text);
+  }
+
+  /* ─── COPY BLOCK */
+
+  .copy-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--status-info);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-top: 24px;
+  }
+
+  .copy-block {
+    padding: 22px 26px;
+    background: var(--doc-bg);
+    border: 1px solid var(--doc-rule);
+    border-left: 2px solid var(--status-info);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--doc-text);
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+
+  .copy-block strong {
+    color: var(--doc-text);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 12px;
+    margin-top: 16px;
+  }
+
+  .copy-block strong:first-child { margin-top: 0; }
+
+  .copy-block ul {
+    list-style: none;
+    margin: 8px 0 16px;
+    padding: 0;
+  }
+
+  .copy-block ul li {
+    padding: 4px 0 4px 16px;
+    position: relative;
+    font-size: 13px;
+    color: var(--doc-text-soft);
+  }
+
+  .copy-block ul li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--doc-text-mute);
+  }
+
+  .copy-block-foot {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.04em;
+    margin-top: 4px;
+  }
+
+  /* ─── FILE LIST */
+
+  .file-list-block {
+    margin: 18px 0 8px;
+    border: 1px solid var(--doc-rule);
+    background: var(--doc-bg);
+  }
+
+  .file-list-row {
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--doc-rule);
+    display: grid;
+    grid-template-columns: 30px 1fr auto;
+    gap: 18px;
+    align-items: center;
+  }
+
+  .file-list-row:last-child { border-bottom: none; }
+
+  .file-list-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.06em;
+  }
+
+  .file-list-name {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--doc-text);
+    word-break: break-all;
+  }
+
+  .file-list-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* ─── NOTE */
+
+  .note {
+    padding: 22px 28px;
+    background: rgba(184, 137, 58, 0.08);
+    border-left: 2px solid var(--status-prog);
+    margin-bottom: 24px;
+  }
+
+  .note-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--status-prog);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .note-text {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--doc-text-soft);
+    line-height: 1.65;
+  }
+
+  .note-text em {
+    color: var(--doc-text);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  /* ─── STEP */
+
+  .step-list {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+  }
+
+  .step-list li {
+    counter-increment: step;
+    padding: 12px 0 12px 36px;
+    position: relative;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--doc-text-soft);
+    line-height: 1.65;
+    border-bottom: 1px dashed var(--doc-rule);
+  }
+
+  .step-list li:last-child { border-bottom: none; }
+
+  .step-list li::before {
+    content: counter(step) '.';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--status-info);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+
+  .step-list li code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background: var(--doc-bg);
+    padding: 2px 6px;
+    border: 1px solid var(--doc-rule);
+    border-radius: 2px;
+    color: var(--doc-text);
+  }
+
+  @media (max-width: 800px) {
+    .doc { padding: 40px 16px 80px; }
+    .field-head { grid-template-columns: 1fr; gap: 12px; }
+    .file-list-row { grid-template-columns: 1fr; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc">
+
+  <header class="doc-head">
+    <div class="doc-filename">claude-design / intake-form-guide.html</div>
+    <h1 class="doc-title">Claude Design intake — field-by-field guide.</h1>
+    <p class="doc-sub">Step-by-step instructions for completing the Claude Design "Tell us about your company" intake form. Each field below corresponds to a field in the actual form. Copy-paste ready text is provided for the text fields.</p>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- BEFORE YOU BEGIN                                     -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">before you begin</div>
+      <h2 class="section-title">Two prep steps.</h2>
+    </div>
+
+    <div class="note">
+      <div class="note-label">prep step 1 · download files</div>
+      <p class="note-text">On your computer, create a folder called <code style="font-family:var(--font-mono);font-size:13px;background:var(--doc-surface);padding:2px 6px;border:1px solid var(--doc-rule);">mia-visual-language</code> (or similar). Download these four files from <code style="font-family:var(--font-mono);font-size:13px;background:var(--doc-surface);padding:2px 6px;border:1px solid var(--doc-rule);">/mnt/user-data/outputs/</code> into that folder.</p>
+
+      <div class="file-list-block" style="margin-top: 14px;">
+        <div class="file-list-row">
+          <div class="file-list-num">01</div>
+          <div class="file-list-name">visual-language-foundation.html</div>
+          <div class="file-list-tag">primary</div>
+        </div>
+        <div class="file-list-row">
+          <div class="file-list-num">02</div>
+          <div class="file-list-name">botm-deck-mockups.html</div>
+          <div class="file-list-tag">finished example · digital</div>
+        </div>
+        <div class="file-list-row">
+          <div class="file-list-num">03</div>
+          <div class="file-list-name">marginalia-zine-brief.html</div>
+          <div class="file-list-tag">finished example · print</div>
+        </div>
+        <div class="file-list-row">
+          <div class="file-list-num">04</div>
+          <div class="file-list-name">botm-design-system.html</div>
+          <div class="file-list-tag">code/token reference</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="note-label">prep step 2 · open Claude Design</div>
+      <p class="note-text">Navigate to <code style="font-family:var(--font-mono);font-size:13px;background:var(--doc-surface);padding:2px 6px;border:1px solid var(--doc-rule);">claude.ai/design</code>. In the lower-left corner of the project picker, click the current organization name. Select your organization or create a new one. <em>You'll be redirected to the intake form shown in the screenshot.</em></p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- FIELD-BY-FIELD                                       -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">the form · field by field</div>
+      <h2 class="section-title">Six fields, in order.</h2>
+    </div>
+
+    <!-- ─── FIELD 1 -->
+    <div class="field">
+      <div class="field-head">
+        <div class="field-num">field<strong>1</strong></div>
+        <div>
+          <div class="field-name">Company name and blurb</div>
+          <div class="field-name-sub">(or name of design system)</div>
+        </div>
+        <div class="field-action fill">paste</div>
+      </div>
+      <div class="field-body">
+        <p class="field-instruction">Since the project name has not been finalized, name the design system after yourself. <em>This becomes the umbrella brand identity that future projects can inherit from.</em></p>
+
+        <div class="copy-label">copy and paste this into the field:</div>
+        <div class="copy-block">
+          <strong>Mia Jones — Visual Language</strong>
+          A visual language for slow, considered editorial work. Cream paper, quiet typography, real photography treated and placed with restraint, white space treated as composition. The aesthetic of small literary monographs and editorial restraint.
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── FIELD 2 -->
+    <div class="field">
+      <div class="field-head">
+        <div class="field-num">field<strong>2</strong></div>
+        <div>
+          <div class="field-name">Link code on GitHub</div>
+          <div class="field-name-sub">URL field</div>
+        </div>
+        <div class="field-action skip">skip</div>
+      </div>
+      <div class="field-body">
+        <p class="field-instruction">Skip this field. There is no public GitHub repository for the visual language. The HTML files contain everything Claude Design needs.</p>
+      </div>
+    </div>
+
+    <!-- ─── FIELD 3 -->
+    <div class="field">
+      <div class="field-head">
+        <div class="field-num">field<strong>3</strong></div>
+        <div>
+          <div class="field-name">Link code from your computer</div>
+          <div class="field-name-sub">drag a folder here or browse</div>
+        </div>
+        <div class="field-action upload">upload</div>
+      </div>
+      <div class="field-body">
+        <p class="field-instruction"><em>This is the most important upload.</em> Drag the <code>mia-visual-language</code> folder you created in prep step 1 into this field. Claude Design will read the four HTML files — including their CSS variables, font imports, component classes, and rendered structure.</p>
+
+        <p class="field-instruction">The form note says "Claude will copy selected files" — that's fine. The four HTML files are self-contained and don't depend on external assets beyond the font imports.</p>
+
+        <div class="note" style="margin-top: 18px; margin-bottom: 0;">
+          <div class="note-label">why HTML works as "code" here</div>
+          <p class="note-text">The HTML files contain CSS variable declarations (colors, typography, spacing tokens), <code style="font-family:var(--font-mono);font-size:12px;background:var(--doc-surface);padding:2px 5px;border:1px solid var(--doc-rule);">@import</code> statements for fonts, and rendered visual examples of the system in use. Claude Design extracts patterns from this exactly the way it would from a React component library — by reading the code and the rendered structure together. <em>The visual language foundation document is intentionally built to be machine-readable as a design system specification.</em></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── FIELD 4 -->
+    <div class="field">
+      <div class="field-head">
+        <div class="field-num">field<strong>4</strong></div>
+        <div>
+          <div class="field-name">Upload a .fig file</div>
+          <div class="field-name-sub">drop .fig here or browse</div>
+        </div>
+        <div class="field-action skip">skip</div>
+      </div>
+      <div class="field-body">
+        <p class="field-instruction">Skip this field. There is no Figma file for the visual language.</p>
+      </div>
+    </div>
+
+    <!-- ─── FIELD 5 -->
+    <div class="field">
+      <div class="field-head">
+        <div class="field-num">field<strong>5</strong></div>
+        <div>
+          <div class="field-name">Add fonts, logos and assets</div>
+          <div class="field-name-sub">drag files here or browse</div>
+        </div>
+        <div class="field-action optional">optional</div>
+      </div>
+      <div class="field-body">
+        <p class="field-instruction"><em>Fonts:</em> Skip. General Sans is hosted on Fontshare and IBM Plex Mono and Reenie Beanie are hosted on Google Fonts — they're imported via URL in the HTML files and Claude Design will resolve them automatically. No font files need to be uploaded.</p>
+
+        <p class="field-instruction"><em>Logos:</em> Skip. There is no logo or wordmark yet — the project name has not been finalized. The visual language is intentionally identity-mark-free at this stage.</p>
+
+        <p class="field-instruction"><em>Reference assets — recommended optional addition:</em> The Claude Design help article specifically says "Include real examples, not just specs. A finished landing page or marketing site tells Claude more about your brand's feel than a color palette alone." Consider uploading 5–10 of the inspiration screenshots from your refs folder — the Earth Era cover, the Beuys spread, the chapbook examples, the pressed plant herbarium pages. <em>These give Claude Design additional finished examples in the visual register.</em></p>
+
+        <p class="field-instruction">If you upload reference images, choose ones that demonstrate the quiet chapbook restraint — not the busy collage layouts. Recommended priorities:</p>
+
+        <ol class="step-list">
+          <li>The "Echter Arznei-Baldrian" pressed plant spread</li>
+          <li>The "Earth Era" cover with the dark green leaf</li>
+          <li>The "Beuys in Kleve" spread with three small photos and dense text column</li>
+          <li>The "iterations" landscape thumbnails on cream</li>
+          <li>The "Chloe Benjamin" homepage with sparse small images</li>
+          <li>The "Listening for Silence" spread with grayscale forest image and quiet right-page text</li>
+          <li>The "Birch Tree" book spread with type and small photo</li>
+          <li>The Lots Sheppard duotone landscape pair</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- ─── FIELD 6 -->
+    <div class="field">
+      <div class="field-head">
+        <div class="field-num">field<strong>6</strong></div>
+        <div>
+          <div class="field-name">Any other notes?</div>
+          <div class="field-name-sub">free-text field</div>
+        </div>
+        <div class="field-action fill">paste</div>
+      </div>
+      <div class="field-body">
+        <p class="field-instruction">This is where you give Claude Design explicit guidance on what to pay attention to and what to avoid. <em>Use this field aggressively</em> — it acts as the prompt that frames how Claude Design interprets the uploaded files.</p>
+
+        <div class="copy-label">copy and paste this into the field:</div>
+        <div class="copy-block">
+          <strong>Visual language summary</strong>
+          Cream ground (#FAF6ED) — never pure white. Ink type (#1C1C1A) — never pure black. Dusty navy (#3E4A66) as second voice. Soft lavender (#A89DBD) as accent — used at most once per artifact.
+
+          Three faces: General Sans (Fontshare, primary), IBM Plex Mono (metadata/captions), Reenie Beanie (handwriting — used exactly once per artifact, for closing signature only).
+
+          <strong>Critical rules — non-negotiable</strong>
+          <ul>
+            <li>No serifs. Ever.</li>
+            <li>No pure black or pure white.</li>
+            <li>Real photography, treated to halftone or duotone, placed at modest scale on cream.</li>
+            <li>No collage with tape, rotation, or overlap. Images are placed, not stacked.</li>
+            <li>White space is the design — generous margins, single-image-per-page restraint.</li>
+            <li>Hand element used exactly once per artifact.</li>
+            <li>Lavender used at most once per artifact.</li>
+            <li>No forest green as primary (only inside duotone-treated photography).</li>
+          </ul>
+
+          <strong>Register — what to read as, what to avoid</strong>
+          Intellectually serious, humanly warm. Direct, considered, with breath. Reads as small literary monograph or editorial chapbook — not as product, not as lifestyle. Avoid: cozy, Kinfolk, flatlay, feminine-domestic-coded, "in today's world" openers, motivational language, performed enthusiasm.
+
+          <strong>Voice vocabulary</strong>
+          Use "reader" not "user." Use "work" not "content." Use "writer/director" not "creator." Name authors and books specifically. Use roman numerals for sections (i., ii., iii.). Use em dashes with spaces (— like this —).
+
+          <strong>Primary reference</strong>
+          The file <code>visual-language-foundation.html</code> demonstrates the system by being the system. It contains the complete brand bible — color palette as actual swatches at scale, typography specimens at real sizes, layout examples as finished compositions, voice samples in the system's own voice. <em>Extract from this file as the primary source.</em>
+
+          <strong>Supporting examples</strong>
+          The other three HTML files show finished applications:
+          <ul>
+            <li><code>botm-deck-mockups.html</code> — five-slide pitch deck (digital editorial, 16:9)</li>
+            <li><code>marginalia-zine-brief.html</code> — eight-spread zine production brief (print editorial)</li>
+            <li><code>botm-design-system.html</code> — code/token reference document</li>
+          </ul>
+
+          <strong>No wordmark yet</strong>
+          The publication name is being finalized. The visual language exists independent of any wordmark. The "M." monogram appearing inside lavender postage stamps is one-off use specific to current pitch work — not a standalone brand mark. Do not extract a logo or treat the M. as an identity element.
+        </div>
+        <p class="copy-block-foot">paste the entire block above (including the headings and lists) into the "Any other notes?" field</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- AFTER SUBMITTING                                     -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">after submitting</div>
+      <h2 class="section-title">What to do once Claude Design extracts.</h2>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <div class="field-num">step<strong>A</strong></div>
+        <div>
+          <div class="field-name">Wait for the extraction.</div>
+          <div class="field-name-sub">automatic, takes a few minutes</div>
+        </div>
+        <div class="field-action upload">wait</div>
+      </div>
+      <div class="field-body">
+        <p class="field-instruction">Claude Design will analyze the uploaded folder and the notes, and generate a UI kit — color palette, typography specifications, components, layout patterns. This typically takes a few minutes.</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <div class="field-num">step<strong>B</strong></div>
+        <div>
+          <div class="field-name">Validate with a test project.</div>
+          <div class="field-name-sub">before publishing</div>
+        </div>
+        <div class="field-action fill">test</div>
+      </div>
+      <div class="field-body">
+        <p class="field-instruction">Before publishing the system to your team (or to your default), create a test project. Use one of these prompts to verify the extraction matches your visual register:</p>
+
+        <ol class="step-list">
+          <li>"Design a one-sheet for a film about the interior life of reading."</li>
+          <li>"Create an Instagram carousel introducing a new long-form essay project."</li>
+          <li>"Make a Substack header and intro post in this visual language."</li>
+          <li>"Build a landing page for a small literary publication."</li>
+        </ol>
+
+        <p class="field-instruction">If the output reads cream-grounded, type-set-with-care, generous-margin, single-image-per-page — the extraction worked. If it reads as generic, busy, or off-brand, see troubleshooting below.</p>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <div class="field-num">step<strong>C</strong></div>
+        <div>
+          <div class="field-name">Publish.</div>
+          <div class="field-name-sub">switch the toggle on</div>
+        </div>
+        <div class="field-action fill">publish</div>
+      </div>
+      <div class="field-body">
+        <p class="field-instruction">Once the test project output reads correctly, switch the "Published" toggle on. After publishing, any project created from the Claude Design homescreen will use this visual language by default.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- TROUBLESHOOTING                                      -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">troubleshooting</div>
+      <h2 class="section-title">If extraction comes out wrong.</h2>
+    </div>
+    <p class="section-intro">Claude Design extracts inductively. If it gets the wrong system, the fix is more or different examples plus stronger guidance in the notes field.</p>
+
+    <div class="field">
+      <div class="field-head">
+        <div class="field-num">if<strong>A</strong></div>
+        <div>
+          <div class="field-name">Output uses serifs, full-color photography, or pure white.</div>
+        </div>
+        <div class="field-action optional">re-prompt</div>
+      </div>
+      <div class="field-body">
+        <p class="field-instruction">The system was extracted incorrectly. Open Claude Design's "Remix" interface for the system and prompt: <em>"Re-read the visual-language-foundation.html file, especially Section II (Typography) and Section VII (Do/Do not). The system uses no serifs, no pure black or white, and no full-color photography. All photography is halftone or duotone. Update the design system accordingly."</em></p>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <div class="field-num">if<strong>B</strong></div>
+        <div>
+          <div class="field-name">Output reads as busy or collage-heavy.</div>
+        </div>
+        <div class="field-action optional">re-prompt</div>
+      </div>
+      <div class="field-body">
+        <p class="field-instruction">Claude Design extracted "collage" instead of "restraint." Prompt: <em>"The visual language is editorial restraint, not busy collage. White space is the design. Single image per page at modest scale, surrounded by generous cream margin. Re-read Section III (Composition principles) and Section V (Layout examples) of the foundation."</em></p>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <div class="field-num">if<strong>C</strong></div>
+        <div>
+          <div class="field-name">Output reads as cozy, lifestyle, or feminine-domestic.</div>
+        </div>
+        <div class="field-action optional">re-prompt</div>
+      </div>
+      <div class="field-body">
+        <p class="field-instruction">The voice register did not transfer. Prompt: <em>"The register is intellectually serious and humanly warm — not lifestyle, not cozy, not Kinfolk. Read the voice anchor paragraph in Section VI of the foundation. The work reads as a small literary monograph, not as a lifestyle product."</em></p>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <div class="field-num">if<strong>D</strong></div>
+        <div>
+          <div class="field-name">Output keeps adding handwritten elements everywhere.</div>
+        </div>
+        <div class="field-action optional">re-prompt</div>
+      </div>
+      <div class="field-body">
+        <p class="field-instruction">The "hand element used once" rule did not transfer. Prompt: <em>"Reenie Beanie is used exactly once per artifact, only for the closing signature. Never for marginalia annotations, scattered hand notes, or curved arrows. See Section III principle v. and Section IV material m.07."</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- WHEN PROJECT NAME IS LOCKED                          -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div class="section-num">future · when project name is locked</div>
+      <h2 class="section-title">Adding the wordmark layer later.</h2>
+    </div>
+
+    <div class="field">
+      <div class="field-head">
+        <div class="field-num">when<strong>·</strong></div>
+        <div>
+          <div class="field-name">Update Section VIII of the foundation.</div>
+          <div class="field-name-sub">remix the system in Claude Design</div>
+        </div>
+        <div class="field-action fill">update</div>
+      </div>
+      <div class="field-body">
+        <p class="field-instruction">When the publication name is decided, Section VIII (Wordmark) of the foundation document gets built — logotype in General Sans 500, monogram variants, clear-space rules, minimum-size specifications, color variants for cream / ink / navy backgrounds.</p>
+
+        <p class="field-instruction">From your Claude Design organization settings, click "Open" next to your design system. Click "Remix" in the upper right to open the chat. Upload the updated foundation document and prompt: <em>"This is the updated visual language foundation with the wordmark added in Section VIII. Update the design system to include the new identity layer."</em></p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

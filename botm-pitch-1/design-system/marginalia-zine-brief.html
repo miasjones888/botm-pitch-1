@@ -1,0 +1,2328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marginalia · zine — design brief and wireframes</title>
+
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap" rel="stylesheet">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Reenie+Beanie&display=swap');
+
+  /* ─── DOC CHROME — neutral greys, no brand color */
+  :root {
+    --doc-bg:        #F4F4F2;
+    --doc-surface:   #FFFFFF;
+    --doc-text:      #1A1A18;
+    --doc-text-soft: #4A4A46;
+    --doc-text-mute: #7A7672;
+    --doc-text-faint:#A8A4A0;
+    --doc-rule:      #D8D6D2;
+    --doc-rule-soft: #E8E6E2;
+
+    /* ─── BRAND TOKENS — used only INSIDE wireframes and swatches */
+    --color-ink:           #1C1C1A;
+    --color-ink-soft:      #3A3A36;
+    --color-cream:         #FAF6ED;
+    --color-cream-warm:    #F2EBDC;
+    --color-cream-deep:    #E5DCC4;
+    --color-navy:          #3E4A66;
+    --color-navy-soft:     #5A6680;
+    --color-lavender:      #A89DBD;
+    --color-lavender-pale: #E0DAE8;
+    --color-rule-soft:     #C8BFA8;
+    --color-muted:         #7A7466;
+    --color-faint:         #A8A18E;
+
+    --font-sans: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    --font-hand: 'Reenie Beanie', cursive;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--doc-bg);
+    color: var(--doc-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* DOC SCAFFOLD — clean documentation                                */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .doc {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 80px 48px 160px;
+  }
+
+  .doc-head {
+    margin-bottom: 80px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--doc-rule);
+  }
+
+  .doc-filename {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.04em;
+    margin-bottom: 24px;
+  }
+  .doc-filename::before {
+    content: '> ';
+    color: var(--doc-text-faint);
+  }
+
+  .doc-title {
+    font-family: var(--font-sans);
+    font-size: 44px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.025em;
+    margin-bottom: 16px;
+    line-height: 1.05;
+  }
+
+  .doc-sub {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 400;
+    color: var(--doc-text-soft);
+    line-height: 1.55;
+    max-width: 70ch;
+    margin-bottom: 28px;
+  }
+
+  .doc-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding-top: 20px;
+    border-top: 1px dashed var(--doc-rule);
+  }
+
+  .doc-meta strong {
+    color: var(--doc-text);
+    font-weight: 500;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* SECTION                                                           */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .section {
+    margin-bottom: 96px;
+  }
+
+  .section-head {
+    margin-bottom: 32px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--doc-rule);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-top: 4px;
+    flex: 1;
+  }
+
+  .section-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-faint);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .section-intro {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--doc-text-soft);
+    line-height: 1.65;
+    max-width: 75ch;
+    margin-bottom: 40px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* PRINCIPLES                                                        */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .principle {
+    padding: 28px 30px 30px;
+    background: var(--doc-surface);
+    border: 1px solid var(--doc-rule);
+    border-left: 2px solid var(--doc-text);
+  }
+
+  .principle-num {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .principle-rule {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+
+  .principle-body {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--doc-text-soft);
+    line-height: 1.65;
+  }
+
+  .principle-body em {
+    color: var(--doc-text);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* MATERIALS                                                         */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .materials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+  }
+
+  .material {
+    border: 1px solid var(--doc-rule);
+    background: var(--doc-surface);
+    overflow: hidden;
+  }
+
+  .material-swatch {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--color-cream);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--doc-rule);
+  }
+
+  .material-meta {
+    padding: 18px 20px 20px;
+  }
+
+  .material-num {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .material-name {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .material-desc {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--doc-text-soft);
+    line-height: 1.6;
+  }
+
+  .material-desc em {
+    color: var(--doc-text);
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  /* ──── swatch treatments — actual brand color use, only inside swatches */
+
+  .swatch-pressed {
+    background: var(--color-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .swatch-pressed::before {
+    content: '';
+    position: absolute;
+    top: 25%; left: 38%;
+    width: 24%; height: 50%;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(90,120,75,0.7) 0%, rgba(90,120,75,0.4) 30%, transparent 60%),
+      radial-gradient(ellipse at 50% 70%, rgba(70,95,60,0.5) 0%, transparent 50%);
+    transform: rotate(-8deg);
+  }
+
+  .swatch-photo {
+    background: var(--color-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .swatch-photo::before {
+    content: '';
+    width: 35%;
+    height: 50%;
+    background: linear-gradient(170deg, #6B8060 0%, #5A7050 50%, #455A40 100%);
+    border: 1px solid var(--color-rule-soft);
+  }
+
+  .swatch-duotone {
+    background: var(--color-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .swatch-duotone::before {
+    content: '';
+    width: 50%;
+    height: 40%;
+    background:
+      linear-gradient(180deg,
+        rgba(62,74,102,0.3) 0%,
+        rgba(168,157,189,0.15) 60%,
+        rgba(229,220,196,0.5) 100%
+      ),
+      linear-gradient(135deg, #4A5570 0%, #6B7390 60%, #C8C0D8 100%);
+  }
+
+  .swatch-index {
+    background: var(--color-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18% 20%;
+  }
+  .swatch-index::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(135deg, #C2CCB0, #A8B898);
+    border: 1px solid var(--color-rule-soft);
+  }
+
+  .swatch-text-block {
+    background: var(--color-cream);
+    display: flex;
+    align-items: center;
+    padding: 25% 18%;
+  }
+  .swatch-text-block::before {
+    content: 'A short caption sits quietly in a wide field of cream.';
+    font-family: var(--font-sans);
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.45;
+    color: var(--color-ink);
+    letter-spacing: -0.005em;
+  }
+
+  .swatch-display {
+    background: var(--color-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22%;
+  }
+  .swatch-display::before {
+    content: 'one\Aphrase.';
+    white-space: pre;
+    font-family: var(--font-sans);
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.04em;
+    line-height: 0.9;
+    text-align: left;
+  }
+
+  .swatch-mono {
+    background: var(--color-cream);
+    display: flex;
+    align-items: center;
+    padding: 30% 14%;
+  }
+  .swatch-mono::before {
+    content: '— PLATE I.  ·  A WINDOW';
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .swatch-hand {
+    background: var(--color-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22%;
+  }
+  .swatch-hand::before {
+    content: 'this one.';
+    font-family: var(--font-hand);
+    font-size: 26px;
+    color: var(--color-navy);
+    transform: rotate(-3deg);
+    line-height: 1;
+  }
+
+  .swatch-stamp {
+    background: var(--color-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .swatch-stamp::before {
+    content: '';
+    width: 22%;
+    height: 30%;
+    background: var(--color-lavender-pale);
+    border: 1px solid var(--color-lavender);
+    transform: rotate(2deg);
+  }
+  .swatch-stamp::after {
+    content: 'M.';
+    position: absolute;
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-navy);
+    letter-spacing: -0.02em;
+    transform: rotate(2deg);
+  }
+
+  .swatch-paper {
+    background: var(--color-cream);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.11 0 0 0 0 0.10 0 0 0 0.10 0' /></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* m.11 — image constellation */
+  .swatch-constellation {
+    background: var(--color-cream);
+    position: relative;
+    overflow: hidden;
+  }
+  .swatch-constellation .c-img {
+    position: absolute;
+    border: 1px solid var(--color-rule-soft);
+  }
+  .swatch-constellation .c-img-1 {
+    top: 18%; left: 22%;
+    width: 16%; height: 14%;
+    background: linear-gradient(135deg, #6B7390 0%, #4A5570 100%);
+  }
+  .swatch-constellation .c-img-2 {
+    bottom: 22%; right: 25%;
+    width: 14%; height: 16%;
+    background: linear-gradient(135deg, #98A880, #708A60);
+  }
+  .swatch-constellation .c-img-3 {
+    top: 38%; right: 32%;
+    width: 10%; height: 10%;
+    background: linear-gradient(135deg, #C2CCB0, #98A880);
+  }
+  .swatch-constellation .c-img-4 {
+    top: 50%; left: 38%;
+    width: 8%; height: 12%;
+    background: linear-gradient(135deg, #C8C0D8, #A89DBD);
+  }
+  .swatch-constellation .c-img-5 {
+    bottom: 30%; left: 24%;
+    width: 10%; height: 8%;
+    background: linear-gradient(135deg, #C2CCB0, #98A880);
+  }
+  .swatch-constellation .c-line {
+    position: absolute;
+    background: rgba(28, 28, 26, 0.18);
+    height: 1px;
+    transform-origin: left center;
+  }
+  .swatch-constellation .c-line-1 {
+    top: 30%; left: 36%; width: 18%;
+    transform: rotate(20deg);
+  }
+  .swatch-constellation .c-line-2 {
+    top: 48%; left: 48%; width: 14%;
+    transform: rotate(40deg);
+  }
+
+  /* m.12 — catalogued grid */
+  .swatch-catalog {
+    background: var(--color-cream);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 6%;
+    padding: 14%;
+  }
+  .swatch-catalog > div {
+    background: var(--color-cream-deep);
+    border: 1px solid var(--color-rule-soft);
+  }
+  .swatch-catalog .cg-1 {
+    background: linear-gradient(135deg, #98A880, #708A60);
+  }
+  .swatch-catalog .cg-3 {
+    background: linear-gradient(135deg, #6B7390, #4A5570);
+  }
+  .swatch-catalog .cg-5 {
+    background: linear-gradient(135deg, #C8C0D8, #A89DBD);
+  }
+  .swatch-catalog .cg-7 {
+    background: linear-gradient(135deg, #C2CCB0, #98A880);
+  }
+  .swatch-catalog .cg-9 {
+    background: linear-gradient(135deg, #B0A890, #908070);
+  }
+
+  /* m.13 — connecting line */
+  .swatch-line {
+    background: var(--color-cream);
+    position: relative;
+  }
+  .swatch-line::before {
+    content: '';
+    position: absolute;
+    top: 30%; left: 22%;
+    width: 16%; height: 16%;
+    background: linear-gradient(135deg, #C2CCB0, #98A880);
+    border: 1px solid var(--color-rule-soft);
+  }
+  .swatch-line::after {
+    content: '';
+    position: absolute;
+    bottom: 30%; right: 22%;
+    width: 16%; height: 16%;
+    background: linear-gradient(135deg, #6B7390, #4A5570);
+    border: 1px solid var(--color-rule-soft);
+  }
+  .swatch-line .l-line {
+    position: absolute;
+    top: 38%;
+    left: 38%;
+    width: 24%;
+    height: 1px;
+    background: rgba(140, 60, 50, 0.5);
+    transform: rotate(20deg);
+    transform-origin: left center;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* WIREFRAMES                                                        */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .spread-block {
+    margin-bottom: 56px;
+    border: 1px solid var(--doc-rule);
+    background: var(--doc-surface);
+    overflow: hidden;
+  }
+
+  .spread-meta-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--doc-rule);
+    background: var(--doc-bg);
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .spread-meta-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .spread-meta-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .spread-meta-title {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.01em;
+  }
+
+  .spread-meta-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--doc-text-faint);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .spread-body {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 0;
+  }
+
+  /* ─── WIREFRAME — brand colors live ONLY inside this surface */
+  .wireframe {
+    aspect-ratio: 8 / 6;
+    background: var(--color-cream);
+    position: relative;
+    overflow: hidden;
+    border-right: 1px solid var(--doc-rule);
+    container-type: size;
+    container-name: wf;
+  }
+
+  .wireframe.cover {
+    aspect-ratio: 4 / 6;
+  }
+
+  .wireframe::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.25;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.11 0 0 0 0 0.10 0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+  }
+
+  .wireframe.has-fold::after {
+    content: '';
+    position: absolute;
+    left: 50%; top: 0; bottom: 0;
+    width: 1px;
+    border-left: 1px dashed rgba(28, 28, 26, 0.14);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .wf-trim {
+    position: absolute;
+    width: 1cqw;
+    height: 1cqw;
+    z-index: 2;
+  }
+  .wf-trim::before, .wf-trim::after {
+    content: '';
+    position: absolute;
+    background: rgba(122, 116, 102, 0.4);
+  }
+  .wf-trim::before { top: 0; bottom: 0; width: 1px; left: 50%; }
+  .wf-trim::after { left: 0; right: 0; height: 1px; top: 50%; }
+  .wf-trim.tl { top: 0.5cqw; left: 0.5cqw; }
+  .wf-trim.tr { top: 0.5cqw; right: 0.5cqw; }
+  .wf-trim.bl { bottom: 0.5cqw; left: 0.5cqw; }
+  .wf-trim.br { bottom: 0.5cqw; right: 0.5cqw; }
+
+  /* margin guide — neutral grey, not lavender */
+  .wf-margin-guide {
+    position: absolute;
+    inset: 7cqw;
+    border: 1px dashed rgba(28, 28, 26, 0.15);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .wireframe.cover .wf-margin-guide {
+    inset: 8cqw;
+  }
+
+  /* placeholder boxes */
+  .ph {
+    position: absolute;
+    border: 1.2px dashed rgba(28, 28, 26, 0.4);
+    background: rgba(28, 28, 26, 0.025);
+    padding: 0.7cqw 0.9cqw;
+    z-index: 2;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .ph-image {
+    border-color: rgba(122, 116, 102, 0.5);
+    background: rgba(229, 220, 196, 0.35);
+  }
+
+  .ph-image::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 50%; height: 1px;
+    background: rgba(122, 116, 102, 0.3);
+    transform: translate(-50%, -50%) rotate(35deg);
+  }
+  .ph-image::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 50%; height: 1px;
+    background: rgba(122, 116, 102, 0.3);
+    transform: translate(-50%, -50%) rotate(-35deg);
+  }
+
+  .ph-text {
+    border-color: rgba(28, 28, 26, 0.35);
+    background: rgba(28, 28, 26, 0.02);
+  }
+
+  .ph-display {
+    border-color: rgba(28, 28, 26, 0.5);
+    background: rgba(28, 28, 26, 0.04);
+  }
+
+  .ph-hand {
+    border-color: rgba(168, 157, 189, 0.7);
+    border-style: dotted;
+    background: rgba(168, 157, 189, 0.08);
+  }
+
+  .ph-lavender {
+    border-color: rgba(168, 157, 189, 0.85);
+    background: rgba(168, 157, 189, 0.16);
+  }
+
+  .ph-meta {
+    border-color: rgba(122, 116, 102, 0.4);
+    background: transparent;
+    border-style: dotted;
+  }
+
+  .ph-label {
+    font-family: var(--font-mono);
+    font-size: 0.72cqw;
+    color: var(--color-ink);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 1.3;
+    z-index: 2;
+    position: relative;
+  }
+
+  .ph-image .ph-label { color: var(--color-muted); }
+  .ph-hand .ph-label, .ph-lavender .ph-label { color: var(--color-navy); }
+
+  .ph-spec {
+    font-family: var(--font-mono);
+    font-size: 0.62cqw;
+    color: var(--color-ink-soft);
+    letter-spacing: 0.06em;
+    line-height: 1.5;
+    margin-top: 0.4cqw;
+    z-index: 2;
+    position: relative;
+  }
+
+  .ph-spec strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  .ph-image .ph-spec { color: var(--color-muted); }
+
+  .wf-margin-label {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 0.55cqw;
+    color: rgba(28, 28, 26, 0.35);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+
+  /* ─── density-spread specific elements */
+
+  /* small image placeholder for grid/constellation use */
+  .ph-img-sm {
+    position: absolute;
+    border: 1px solid rgba(122, 116, 102, 0.5);
+    background: rgba(229, 220, 196, 0.5);
+    z-index: 2;
+  }
+
+  .ph-img-sm::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 60%; height: 1px;
+    background: rgba(122, 116, 102, 0.3);
+    transform: translate(-50%, -50%) rotate(35deg);
+  }
+  .ph-img-sm::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 60%; height: 1px;
+    background: rgba(122, 116, 102, 0.3);
+    transform: translate(-50%, -50%) rotate(-35deg);
+  }
+
+  /* small caption beneath grid/constellation image */
+  .ph-cap-sm {
+    position: absolute;
+    font-family: var(--font-mono);
+    font-size: 0.55cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    z-index: 2;
+    line-height: 1.3;
+  }
+
+  /* connecting line for constellation */
+  .ph-connect {
+    position: absolute;
+    height: 1px;
+    background: rgba(140, 60, 50, 0.45);
+    transform-origin: left center;
+    z-index: 1;
+  }
+
+  /* ─── SPEC SIDEBAR — clean documentation, not brand-colored */
+  .spread-spec {
+    padding: 28px 30px 32px;
+    overflow-y: auto;
+    background: var(--doc-surface);
+  }
+
+  .spread-spec h4 {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.005em;
+    margin-bottom: 12px;
+    margin-top: 24px;
+    line-height: 1.3;
+  }
+  .spread-spec h4:first-child { margin-top: 0; }
+
+  .spread-spec h4 .num {
+    color: var(--doc-text-mute);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-right: 8px;
+    font-weight: 500;
+  }
+
+  .spread-spec p {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--doc-text-soft);
+    line-height: 1.65;
+    margin-bottom: 10px;
+  }
+
+  .spread-spec p em {
+    color: var(--doc-text);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .spread-spec ul {
+    list-style: none;
+    margin: 8px 0 12px;
+    padding: 0;
+  }
+
+  .spread-spec li {
+    padding: 7px 0;
+    border-bottom: 1px dashed var(--doc-rule);
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--doc-text-soft);
+    line-height: 1.55;
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+  .spread-spec li:last-child { border-bottom: none; }
+
+  .spread-spec li .key {
+    color: var(--doc-text-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 9px;
+    flex-shrink: 0;
+    min-width: 70px;
+    font-family: var(--font-mono);
+  }
+
+  .spread-spec li .val {
+    color: var(--doc-text-soft);
+    flex: 1;
+  }
+
+  .spread-spec li .val strong {
+    color: var(--doc-text);
+    font-weight: 500;
+  }
+
+  .spread-spec li .val em {
+    color: var(--doc-text);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .ref-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .ref-pill {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 4px 9px;
+    border: 1px solid var(--doc-rule);
+    background: var(--doc-bg);
+    border-radius: 2px;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* COPY GUIDE                                                        */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .copy-guide {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+  }
+
+  .copy-card {
+    background: var(--doc-surface);
+    border: 1px solid var(--doc-rule);
+    overflow: hidden;
+  }
+
+  .copy-card-meta {
+    padding: 22px 24px 16px;
+  }
+
+  .copy-card-num {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  .copy-card-name {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.005em;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .copy-card-desc {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--doc-text-soft);
+    line-height: 1.6;
+  }
+
+  /* example sits inside cream surface — brand color allowed here */
+  .copy-card-example {
+    padding: 20px 24px 22px;
+    background: var(--color-cream);
+    color: var(--color-ink);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.11 0 0 0 0 0.10 0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    border-top: 1px solid var(--doc-rule);
+  }
+
+  .copy-card-example.mono {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--color-ink);
+    letter-spacing: 0.02em;
+  }
+
+  .copy-card-example.sans {
+    font-family: var(--font-sans);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--color-ink-soft);
+  }
+
+  .copy-card-example.italic {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-style: italic;
+    color: var(--color-ink);
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+
+  .copy-card-example.display {
+    font-family: var(--font-sans);
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--color-ink);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+
+  .copy-card-example.hand {
+    font-family: var(--font-hand);
+    font-size: 26px;
+    color: var(--color-navy);
+    line-height: 1.05;
+  }
+
+  .copy-card-example.caption {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--color-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* PRODUCTION                                                        */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .prod-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 0;
+    border: 1px solid var(--doc-rule);
+    background: var(--doc-surface);
+  }
+
+  .prod-cell {
+    padding: 24px 26px 26px;
+    border-right: 1px solid var(--doc-rule);
+    border-bottom: 1px solid var(--doc-rule);
+  }
+
+  .prod-cell:last-child { border-right: none; }
+
+  .prod-key {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .prod-val {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.005em;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .prod-note {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--doc-text-soft);
+    line-height: 1.6;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* RESPONSIVE                                                        */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  @media (max-width: 900px) {
+    .doc { padding: 40px 16px 80px; }
+    .doc-title { font-size: 28px; }
+    .section { margin-bottom: 64px; }
+    .spread-body { grid-template-columns: 1fr; }
+    .wireframe { border-right: none; border-bottom: 1px solid var(--doc-rule); }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc">
+
+  <header class="doc-head">
+    <div class="doc-filename">marginalia / zine_design_brief.html</div>
+    <h1 class="doc-title">Marginalia · zine — design brief and wireframes.</h1>
+    <p class="doc-sub">Production brief for the printed essay-object that ships in the BOTM box. Built around restraint as the operating principle — single-image-per-page chapbook, white space as compositional element, type set with care. Extends the locked Marginalia design system v2. To be handed to Claude Design or used as the working document for an in-Canva build. Not a finished mockup.</p>
+    <div class="doc-meta">
+      <span><strong>format</strong> A6 closed (~4×6") · folded chapbook</span>
+      <span><strong>open spread</strong> ~8×6"</span>
+      <span><strong>spreads</strong> 6 quiet + 2 density (8 total available)</span>
+      <span><strong>register</strong> small literary monograph</span>
+      <span><strong>operating principle</strong> restraint, with earned exceptions</span>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 01 · GUIDING PRINCIPLES                              -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-num">01 · principles</div>
+        <h2 class="section-title">What this object is, and what it isn't.</h2>
+      </div>
+      <div class="section-tag">core constraints</div>
+    </div>
+    <p class="section-intro">Five rules that hold the publication together. Every page must answer to them. If any layout decision violates one of these, the decision is wrong.</p>
+
+    <div class="principles">
+
+      <div class="principle">
+        <div class="principle-num">i.</div>
+        <div class="principle-rule">White space is the design.</div>
+        <p class="principle-body">Each page should feel as though most of it is intentionally empty. The cream paper is not background — it is composition. Generous margins on every edge. If a page feels full, something must come off it.</p>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">ii.</div>
+        <div class="principle-rule">One precious thing per page.</div>
+        <p class="principle-body">Each page holds one image, or one block of type, or one quiet typographic moment — and then it stops. Pages are not collections. <em>The thing on the page is the page.</em> A second element only earns its place if it is small, supporting, and obviously secondary.</p>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">iii.</div>
+        <div class="principle-rule">Real photography. Treated. Small.</div>
+        <p class="principle-body">When images appear, they are real (a pressed plant, a window, a hand on a book) and they are treated (halftone, duotone, scan-edged). They are placed at modest scale within a wide cream field. They never bleed to the edge. They never overlap each other. <em>They are not collaged. They are placed.</em></p>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">iv.</div>
+        <div class="principle-rule">Type with care.</div>
+        <p class="principle-body">Body text in modest sans, set in narrow measure, generous leading. Captions in small mono, set with conviction. One display moment per spread at most — and only when the spread truly needs one. Italic is used sparingly and always means something. <em>Spacing and scale carry the meaning, not weight or ornament.</em></p>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">v.</div>
+        <div class="principle-rule">Hand element used once. Across the whole publication.</div>
+        <p class="principle-body">There is exactly one handwritten moment in the entire object — Mia's signature on the colophon. That is the only Reenie Beanie. No marginalia annotations, no scattered hand notes, no curved arrows. The publication is named Marginalia; it does not need to perform marginalia. <em>The handwriting is reserved for the closing signature, where it lands.</em></p>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">vi.</div>
+        <div class="principle-rule">Density when it earns its place.</div>
+        <p class="principle-body">Up to two spreads in the publication may break rules i. and ii. — they may be visually denser, with multiple elements organized as constellation, catalog, or index. <em>These spreads earn their density by doing work the quiet spreads cannot</em> — showing many things in relation, mapping connections, indexing a chain of references. Density is not decoration. If a dense spread can't justify why it is busy, it should be quiet.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 02 · MATERIALS                                       -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-num">02 · materials</div>
+        <h2 class="section-title">The vocabulary, kept small.</h2>
+      </div>
+      <div class="section-tag">treatment swatches</div>
+    </div>
+    <p class="section-intro">Ten treatments — fewer than before, intentionally. Each swatch shows its element at its actual relative scale within a cream field. Notice how much cream sits around each element. That ratio is the design.</p>
+
+    <div class="materials-grid">
+
+      <div class="material">
+        <div class="material-swatch swatch-pressed"></div>
+        <div class="material-meta">
+          <div class="material-num">m.01 · primary</div>
+          <div class="material-name">Pressed plant scan</div>
+          <p class="material-desc">A single botanical specimen scanned flat against cream. Modest scale — occupies roughly 25–35% of the page area, surrounded by generous cream margin. The image is centered or slightly offset, never bleeding. <em>Reference: Echter Arznei-Baldrian, herbarium plates, Carson's Nox botanicals.</em></p>
+        </div>
+      </div>
+
+      <div class="material">
+        <div class="material-swatch swatch-photo"></div>
+        <div class="material-meta">
+          <div class="material-num">m.02 · primary</div>
+          <div class="material-name">Single treated photograph</div>
+          <p class="material-desc">A photograph treated to halftone or duotone (forest green, navy, or ink). Placed at modest scale on cream. A single element. No tape, no rotation, no overlap. <em>Reference: Beuys in Kleve photo trio, "iterations" landscape thumbnails, the Lots Sheppard duotone landscapes.</em></p>
+        </div>
+      </div>
+
+      <div class="material">
+        <div class="material-swatch swatch-duotone"></div>
+        <div class="material-meta">
+          <div class="material-num">m.03</div>
+          <div class="material-name">Duotone landscape</div>
+          <p class="material-desc">A landscape photograph reduced to two tones — typically navy + cream, or forest green + cream. Used once across the publication, at slightly larger scale than m.02, when an opening or closing breath is called for. <em>Reference: ARC'TERYX hill, the green forest spread, mental health awareness 2023 landscape.</em></p>
+        </div>
+      </div>
+
+      <div class="material">
+        <div class="material-swatch swatch-index"></div>
+        <div class="material-meta">
+          <div class="material-num">m.04</div>
+          <div class="material-name">Single image plate</div>
+          <p class="material-desc">A single contained image with thin border, treated. The most architectural use of an image — when the page wants to feel like a museum plate. Generous cream around all four sides. <em>Reference: Earth Era cover, the Sebald-style photographic plates with captions.</em></p>
+        </div>
+      </div>
+
+      <div class="material">
+        <div class="material-swatch swatch-text-block"></div>
+        <div class="material-meta">
+          <div class="material-num">m.05</div>
+          <div class="material-name">Italic body text in narrow measure</div>
+          <p class="material-desc">Sans italic, set narrow, generous leading, sitting in a wide cream field. Used for quoted passages, observations, voice-of-the-reader fragments. The text is typically 30–40% of the page width, surrounded by margin. <em>Reference: literary chapbook spreads, the Earth Era body text.</em></p>
+        </div>
+      </div>
+
+      <div class="material">
+        <div class="material-swatch swatch-display"></div>
+        <div class="material-meta">
+          <div class="material-num">m.06</div>
+          <div class="material-name">Display moment</div>
+          <p class="material-desc">A single short phrase set at display scale — large sans, tight letter spacing, dropped into a sea of cream. Used at most once per spread, often only once or twice across the whole publication. The page's quiet declaration. <em>Reference: "less is more or less," "the tongue is an eye," chapbook openers.</em></p>
+        </div>
+      </div>
+
+      <div class="material">
+        <div class="material-swatch swatch-mono"></div>
+        <div class="material-meta">
+          <div class="material-num">m.07</div>
+          <div class="material-name">Mono caption / metadata</div>
+          <p class="material-desc">Small uppercase mono with wide letter spacing. Plate numbers, captions, folio marks, dates. Sits low and small, never competing with primary content. The connective tissue of the object. <em>Reference: every literary monograph caption convention.</em></p>
+        </div>
+      </div>
+
+      <div class="material">
+        <div class="material-swatch swatch-hand"></div>
+        <div class="material-meta">
+          <div class="material-num">m.08 · once only</div>
+          <div class="material-name">Handwritten signature</div>
+          <p class="material-desc">Reenie Beanie, navy, slight rotation. Used <em>exactly once</em> across the publication — Mia's signature on the colophon. Not a marginalia annotation, not a scattered note, not a margin arrow. One moment of hand, where it belongs. <em>Reference: a real signed letter, a real handwritten sign-off.</em></p>
+        </div>
+      </div>
+
+      <div class="material">
+        <div class="material-swatch swatch-stamp"></div>
+        <div class="material-meta">
+          <div class="material-num">m.09 · the lavender</div>
+          <div class="material-name">Edition stamp</div>
+          <p class="material-desc">Small lavender-pale rectangle with thin border and "M." monogram inside. Slight tilt. Used <em>twice</em> in the publication — once on the cover, once on the colophon. The lavender moment. Never appears on interior spreads. <em>Reference: postal artifacts, edition marks on small-press publications, the deck's closing-slide postage stamp.</em></p>
+        </div>
+      </div>
+
+      <div class="material">
+        <div class="material-swatch swatch-paper"></div>
+        <div class="material-meta">
+          <div class="material-num">m.10 · base</div>
+          <div class="material-name">Paper texture</div>
+          <p class="material-desc">Subtle SVG noise at low opacity, multiply blend. Applied as a base layer to every spread. Suggests uncoated stock under print. Always present, never noticed. Carries the warmth of real paper through a digital surface.</p>
+        </div>
+      </div>
+
+      <div class="material">
+        <div class="material-swatch swatch-constellation">
+          <div class="c-img c-img-1"></div>
+          <div class="c-img c-img-2"></div>
+          <div class="c-img c-img-3"></div>
+          <div class="c-img c-img-4"></div>
+          <div class="c-img c-img-5"></div>
+          <div class="c-line c-line-1"></div>
+          <div class="c-line c-line-2"></div>
+        </div>
+        <div class="material-meta">
+          <div class="material-num">m.11 · density</div>
+          <div class="material-name">Image constellation</div>
+          <p class="material-desc">Multiple small treated images placed sparsely on a cream field, with implied geometry between them — sometimes thin connecting lines, sometimes just spatial relationships. Reads as constellation chart or archaeological diagram. Used on density spreads only. <em>Reference: "signs from the past" plate, the marble "essence of the ordinary" composition.</em></p>
+        </div>
+      </div>
+
+      <div class="material">
+        <div class="material-swatch swatch-catalog">
+          <div class="cg-1"></div><div class="cg-2"></div><div class="cg-3"></div>
+          <div class="cg-4"></div><div class="cg-5"></div><div class="cg-6"></div>
+          <div class="cg-7"></div><div class="cg-8"></div><div class="cg-9"></div>
+        </div>
+        <div class="material-meta">
+          <div class="material-num">m.12 · density</div>
+          <div class="material-name">Catalogued grid</div>
+          <p class="material-desc">A strict grid of small treated images (typically 3×3 or 4×3), each with a small mono caption beneath identifying it. Reads as plate index from a natural-history monograph or as a personal catalog of the reading. Used on density spreads only. <em>Reference: Polaroid contact sheet with handwritten labels, the table-of-contents object inventory.</em></p>
+        </div>
+      </div>
+
+      <div class="material">
+        <div class="material-swatch swatch-line">
+          <div class="l-line"></div>
+        </div>
+        <div class="material-meta">
+          <div class="material-num">m.13 · density</div>
+          <div class="material-name">Connecting line</div>
+          <p class="material-desc">A thin red-brown line drawn between two small images, suggesting connection or chronological link. Used only on the constellation spread to draw the eye along an implied chain. Color is a single muted red-brown — not navy, not lavender, not ink. The line is doing diagrammatic work, not decoration. <em>Reference: archaeological plate diagrams, scholarly notation lines.</em></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 03 · WIREFRAMES                                      -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-num">03 · wireframes</div>
+        <h2 class="section-title">Eight spreads. Six quiet, two earned-dense.</h2>
+      </div>
+      <div class="section-tag">layout instructions · arc not yet locked</div>
+    </div>
+    <p class="section-intro">Each wireframe is a placement diagram. The dashed border on each spread is the safe-zone margin — content lives inside it, white space lives outside it. Spreads 01–06 are quiet — single-image-per-page chapbook compositions following the restraint rules. Spreads 07–08 are the publication's density moments — constellation and catalog — earned by doing work the quiet spreads cannot. <em>The order in which these spreads appear in the final publication is a separate decision. The brief presents all eight as options.</em></p>
+
+    <!-- ────────────────────────────── SPREAD 01 — COVER -->
+    <div class="spread-block">
+      <div class="spread-meta-bar">
+        <div class="spread-meta-left">
+          <span class="spread-meta-num">spread 01</span>
+          <span class="spread-meta-title">Cover · front face</span>
+        </div>
+        <span class="spread-meta-tag">single page · A6 portrait · density very low</span>
+      </div>
+      <div class="spread-body">
+        <div class="wireframe cover">
+          <div class="wf-trim tl"></div><div class="wf-trim tr"></div>
+          <div class="wf-trim bl"></div><div class="wf-trim br"></div>
+          <div class="wf-margin-guide"></div>
+
+          <div class="ph ph-meta" style="top: 11cqw; left: 9cqw; right: 9cqw; height: 2.4cqw;">
+            <div class="ph-label">m.07 · eyebrow · mono</div>
+            <div class="ph-spec">"a reading of —"</div>
+          </div>
+
+          <div class="ph ph-display" style="top: 17cqw; left: 9cqw; right: 9cqw; height: 9cqw;">
+            <div class="ph-label">title · sans 500 · 7cqw</div>
+            <div class="ph-spec">"Marginalia."  ·  <strong>period intentional</strong></div>
+          </div>
+
+          <div class="ph ph-text" style="top: 38cqw; left: 9cqw; right: 9cqw; height: 11cqw;">
+            <div class="ph-label">cluster · 3 lines</div>
+            <div class="ph-spec">
+              <strong>vol 0 · piece 01</strong> · mono navy<br>
+              <em>Lost Lambs</em> · sans italic<br>
+              — Madeline Cash · mono ink-soft
+            </div>
+          </div>
+
+          <div class="ph ph-meta" style="bottom: 11cqw; left: 9cqw; right: 9cqw; height: 4.5cqw;">
+            <div class="ph-label">m.07 · bottom row · over rule</div>
+            <div class="ph-spec">left: <strong>BOTM · Jan '26</strong>  ·  right: Mia Jones</div>
+          </div>
+
+          <div class="ph ph-lavender" style="top: 11cqw; right: 9cqw; width: 5cqw; height: 6cqw; transform: rotate(2deg);">
+            <div class="ph-label">m.09</div>
+            <div class="ph-spec">edition stamp · "M." · 01</div>
+          </div>
+        </div>
+        <div class="spread-spec">
+          <h4><span class="num">job</span>The face of the object as it arrives in the box.</h4>
+          <p>Single page, very low density. Reads as a small literary chapbook cover. Same typographic treatment as deck Slide 01 — period after "Marginalia." preserved.</p>
+
+          <h4><span class="num">elements</span>Five total. Counted.</h4>
+          <ul>
+            <li><span class="key">01</span><span class="val">eyebrow ("a reading of —")</span></li>
+            <li><span class="key">02</span><span class="val">title ("Marginalia.")</span></li>
+            <li><span class="key">03</span><span class="val">issue + book + author cluster</span></li>
+            <li><span class="key">04</span><span class="val">bottom row over rule</span></li>
+            <li><span class="key">05</span><span class="val"><strong>m.09</strong> edition stamp · the cover's lavender moment</span></li>
+          </ul>
+
+          <h4><span class="num">white space</span>≥55% of the page</h4>
+          <p>Generous margins on all four sides. Top eyebrow sits below the safe-zone line. Bottom row sits above it. Title and cluster are vertically centered with breath above and below.</p>
+
+          <h4><span class="num">no</span>What is not here</h4>
+          <p>No image. No handwriting. No additional ornament. The cover is type-only.</p>
+
+          <h4><span class="num">references</span>From the inspiration cluster</h4>
+          <div class="ref-pills">
+            <span class="ref-pill">earth era cover</span>
+            <span class="ref-pill">chloe benjamin homepage</span>
+            <span class="ref-pill">small-press chapbook covers</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────────────────────────────── SPREAD 02 — OPENING -->
+    <div class="spread-block">
+      <div class="spread-meta-bar">
+        <div class="spread-meta-left">
+          <span class="spread-meta-num">spread 02</span>
+          <span class="spread-meta-title">Interior I · Opening</span>
+        </div>
+        <span class="spread-meta-tag">double-page · density very low · image left, type right</span>
+      </div>
+      <div class="spread-body">
+        <div class="wireframe has-fold">
+          <div class="wf-trim tl"></div><div class="wf-trim tr"></div>
+          <div class="wf-trim bl"></div><div class="wf-trim br"></div>
+          <div class="wf-margin-guide"></div>
+
+          <div class="ph ph-meta" style="top: 7cqw; left: 7cqw; width: 28cqw; height: 1.6cqw;">
+            <div class="ph-label">m.07 · masthead</div>
+          </div>
+
+          <div class="ph ph-image" style="top: 14cqw; left: 13cqw; width: 24cqw; height: 24cqw;">
+            <div class="ph-label">m.01 · pressed plant scan</div>
+            <div class="ph-spec"><strong>modest scale.</strong> centered horizontally in left page. ≥30% margin on all sides. surrounded by cream.</div>
+          </div>
+
+          <div class="ph ph-meta" style="top: 41cqw; left: 13cqw; width: 24cqw; height: 1.5cqw;">
+            <div class="ph-label">m.07 · "— PLATE I."</div>
+          </div>
+
+          <div class="ph ph-meta" style="bottom: 7cqw; left: 7cqw; width: 8cqw; height: 1.5cqw;">
+            <div class="ph-label">iv ·  ·  ·</div>
+          </div>
+
+          <div class="ph ph-meta" style="top: 7cqw; right: 7cqw; width: 28cqw; height: 1.6cqw;">
+            <div class="ph-label">m.07 · "i. opening"</div>
+          </div>
+
+          <div class="ph ph-text" style="top: 18cqw; left: 56cqw; width: 32cqw; height: 16cqw;">
+            <div class="ph-label">m.05 · italic body · narrow measure</div>
+            <div class="ph-spec"><strong>quoted line from the book.</strong> sans italic · 1.4cqw · max 22ch · centered or left-aligned in column</div>
+          </div>
+
+          <div class="ph ph-meta" style="bottom: 7cqw; right: 7cqw; width: 10cqw; height: 1.5cqw;">
+            <div class="ph-label">·  ·  · v</div>
+          </div>
+
+          <div class="wf-margin-label" style="top: 9cqw; left: 1.5cqw;">margin</div>
+          <div class="wf-margin-label" style="bottom: 9cqw; right: 1.5cqw;">margin</div>
+        </div>
+        <div class="spread-spec">
+          <h4><span class="num">job</span>The room before reading.</h4>
+          <p>Establish the world quietly. The reader meets a single botanical image on the left and a single quoted line on the right. Calm, image-led, very low density. Most of the spread is cream.</p>
+
+          <h4><span class="num">elements</span>Six total. Counted.</h4>
+          <ul>
+            <li><span class="key">left 01</span><span class="val">masthead at top</span></li>
+            <li><span class="key">left 02</span><span class="val">pressed plant scan, modest scale</span></li>
+            <li><span class="key">left 03</span><span class="val">caption beneath plant</span></li>
+            <li><span class="key">left 04</span><span class="val">folio at bottom</span></li>
+            <li><span class="key">right 05</span><span class="val">section tag at top</span></li>
+            <li><span class="key">right 06</span><span class="val">italic pulled quote in narrow column</span></li>
+          </ul>
+
+          <h4><span class="num">white space</span>≥60% of the spread</h4>
+          <p>The plant takes a small portion of the left page, surrounded by cream on all four sides. The quote sits in a narrow column on the right, surrounded by generous margin. The center fold falls through cream — no element crosses it.</p>
+
+          <h4><span class="num">no</span>What is not here</h4>
+          <p>No instruction text. No hand annotation. No lavender. No tape, scrap, ghost type, or rotation. The page does its work through what is absent.</p>
+
+          <h4><span class="num">copy register</span>What goes in each text slot</h4>
+          <ul>
+            <li><span class="key">masthead</span><span class="val">"MARGINALIA · vol 0 · piece 01"</span></li>
+            <li><span class="key">caption</span><span class="val">"— PLATE I."</span></li>
+            <li><span class="key">section tag</span><span class="val">"i. opening"</span></li>
+            <li><span class="key">quote</span><span class="val">single quoted sentence from <em>Lost Lambs</em></span></li>
+          </ul>
+
+          <h4><span class="num">references</span>From the inspiration cluster</h4>
+          <div class="ref-pills">
+            <span class="ref-pill">echter arznei-baldrian</span>
+            <span class="ref-pill">"explanation of plate I" botanical</span>
+            <span class="ref-pill">birch tree spread</span>
+            <span class="ref-pill">listening for silence</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────────────────────────────── SPREAD 03 — TRIBUTARY -->
+    <div class="spread-block">
+      <div class="spread-meta-bar">
+        <div class="spread-meta-left">
+          <span class="spread-meta-num">spread 03</span>
+          <span class="spread-meta-title">Interior II · Tributary</span>
+        </div>
+        <span class="spread-meta-tag">double-page · density low · two small photographs · text right</span>
+      </div>
+      <div class="spread-body">
+        <div class="wireframe has-fold">
+          <div class="wf-trim tl"></div><div class="wf-trim tr"></div>
+          <div class="wf-trim bl"></div><div class="wf-trim br"></div>
+          <div class="wf-margin-guide"></div>
+
+          <div class="ph ph-meta" style="top: 7cqw; left: 7cqw; width: 28cqw; height: 1.6cqw;">
+            <div class="ph-label">m.07 · "ii. tributary"</div>
+          </div>
+
+          <div class="ph ph-image" style="top: 13cqw; left: 14cqw; width: 22cqw; height: 14cqw;">
+            <div class="ph-label">m.02 · treated photograph</div>
+            <div class="ph-spec"><strong>photo one.</strong> a window, an interior, a chair. duotone or halftone.</div>
+          </div>
+
+          <div class="ph ph-image" style="top: 31cqw; left: 14cqw; width: 22cqw; height: 14cqw;">
+            <div class="ph-label">m.02 · treated photograph</div>
+            <div class="ph-spec"><strong>photo two.</strong> a leaf, a small plant. echoes photo one in tone.</div>
+          </div>
+
+          <div class="ph ph-meta" style="top: 47cqw; left: 14cqw; width: 22cqw; height: 1.4cqw;">
+            <div class="ph-label">m.07 · "— PLATES II–III."</div>
+          </div>
+
+          <div class="ph ph-meta" style="bottom: 7cqw; left: 7cqw; width: 8cqw; height: 1.5cqw;">
+            <div class="ph-label">vi ·  ·  ·</div>
+          </div>
+
+          <div class="ph ph-text" style="top: 26cqw; left: 56cqw; width: 32cqw; height: 18cqw;">
+            <div class="ph-label">m.05 · sans body · narrow measure · 3 short paragraphs</div>
+            <div class="ph-spec">the chain — a memory, an other-text, a return to the book. ≤90 words total.</div>
+          </div>
+
+          <div class="ph ph-meta" style="bottom: 7cqw; right: 7cqw; width: 10cqw; height: 1.5cqw;">
+            <div class="ph-label">·  ·  · vii</div>
+          </div>
+
+          <div class="wf-margin-label" style="top: 9cqw; left: 1.5cqw;">margin</div>
+          <div class="wf-margin-label" style="bottom: 9cqw; right: 1.5cqw;">margin</div>
+        </div>
+        <div class="spread-spec">
+          <h4><span class="num">job</span>What the book opens.</h4>
+          <p>The tributary spread. Reading as association. Two small photographs stacked vertically on the left, a short body of text on the right. The photographs don't overlap, don't rotate, don't tape — they sit, breathing, with cream between them.</p>
+
+          <h4><span class="num">elements</span>Six total. Counted.</h4>
+          <ul>
+            <li><span class="key">left 01</span><span class="val">section tag at top</span></li>
+            <li><span class="key">left 02</span><span class="val">photo one (upper)</span></li>
+            <li><span class="key">left 03</span><span class="val">photo two (lower)</span></li>
+            <li><span class="key">left 04</span><span class="val">shared caption beneath</span></li>
+            <li><span class="key">right 05</span><span class="val">body text in narrow column</span></li>
+            <li><span class="key">left+right</span><span class="val">folio numbers at bottom</span></li>
+          </ul>
+
+          <h4><span class="num">white space</span>≥55% of the spread</h4>
+          <p>Cream space between the two photographs is intentional and generous — at least the height of one photograph between them. Right page upper half is intentionally empty.</p>
+
+          <h4><span class="num">no</span>What is not here</h4>
+          <p>No tape. No rotation. No overlap. No hand annotation. No lavender. No display moment. The two photographs and one paragraph are sufficient.</p>
+
+          <h4><span class="num">copy register</span>What goes in each text slot</h4>
+          <ul>
+            <li><span class="key">section tag</span><span class="val">"ii. tributary"</span></li>
+            <li><span class="key">caption</span><span class="val">"— PLATES II–III."</span></li>
+            <li><span class="key">body</span><span class="val">three short paragraphs · the chain of associations · 60–90 words</span></li>
+          </ul>
+
+          <h4><span class="num">references</span>From the inspiration cluster</h4>
+          <div class="ref-pills">
+            <span class="ref-pill">beuys in kleve trio</span>
+            <span class="ref-pill">"iterations" landscape pairs</span>
+            <span class="ref-pill">lots sheppard duotones</span>
+            <span class="ref-pill">listening for silence</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────────────────────────────── SPREAD 04 — DISPLAY MOMENT -->
+    <div class="spread-block">
+      <div class="spread-meta-bar">
+        <div class="spread-meta-left">
+          <span class="spread-meta-num">spread 04</span>
+          <span class="spread-meta-title">Interior III · The line</span>
+        </div>
+        <span class="spread-meta-tag">double-page · density very low · the publication's display moment</span>
+      </div>
+      <div class="spread-body">
+        <div class="wireframe has-fold">
+          <div class="wf-trim tl"></div><div class="wf-trim tr"></div>
+          <div class="wf-trim bl"></div><div class="wf-trim br"></div>
+          <div class="wf-margin-guide"></div>
+
+          <div class="ph ph-meta" style="top: 7cqw; left: 7cqw; width: 28cqw; height: 1.6cqw;">
+            <div class="ph-label">m.07 · "iii. the line"</div>
+          </div>
+
+          <div class="ph ph-meta" style="bottom: 7cqw; left: 7cqw; width: 8cqw; height: 1.5cqw;">
+            <div class="ph-label">viii ·  ·  ·</div>
+          </div>
+
+          <div class="ph ph-meta" style="bottom: 12cqw; left: 7cqw; width: 28cqw; height: 2cqw;">
+            <div class="ph-label">m.07 · attribution</div>
+            <div class="ph-spec">— from <em>Lost Lambs</em>, p. 47</div>
+          </div>
+
+          <div class="ph ph-display" style="top: 18cqw; left: 51cqw; width: 38cqw; height: 24cqw;">
+            <div class="ph-label">m.06 · display moment · 4cqw sans 500</div>
+            <div class="ph-spec">
+              <strong>the heart line.</strong> the single quoted line that anchors the issue. set in display sans, 3 short lines maximum. left-aligned.<br>
+              max 14ch per line. <em>this is the spread's only real element.</em>
+            </div>
+          </div>
+
+          <div class="ph ph-meta" style="bottom: 7cqw; right: 7cqw; width: 10cqw; height: 1.5cqw;">
+            <div class="ph-label">·  ·  · ix</div>
+          </div>
+
+          <div class="wf-margin-label" style="top: 9cqw; left: 1.5cqw;">margin</div>
+          <div class="wf-margin-label" style="bottom: 9cqw; right: 1.5cqw;">margin</div>
+          <div class="wf-margin-label" style="top: 30cqw; left: 28cqw;">empty page · intentional</div>
+        </div>
+        <div class="spread-spec">
+          <h4><span class="num">job</span>The publication's quiet declaration.</h4>
+          <p>The center spread. The whole publication has been moving toward this — a single line set at display scale, given the room of an entire spread to land. The left page is almost entirely empty (section tag, attribution, folio). The right page holds the line.</p>
+
+          <h4><span class="num">elements</span>Five total. Counted.</h4>
+          <ul>
+            <li><span class="key">left 01</span><span class="val">section tag</span></li>
+            <li><span class="key">left 02</span><span class="val">small attribution low on the page</span></li>
+            <li><span class="key">left 03</span><span class="val">folio</span></li>
+            <li><span class="key">right 04</span><span class="val">display line</span></li>
+            <li><span class="key">right 05</span><span class="val">folio</span></li>
+          </ul>
+
+          <h4><span class="num">white space</span>≥75% of the spread</h4>
+          <p>The largest white-space ratio in the publication. The display line is allowed to be large precisely because it is alone. The empty left page is the deliberate breath that lets the right page land.</p>
+
+          <h4><span class="num">no</span>What is not here</h4>
+          <p>No image. No hand annotation. No body text. No lavender. No additional decoration of any kind. <em>The empty page is the design.</em></p>
+
+          <h4><span class="num">copy register</span>What goes in each text slot</h4>
+          <ul>
+            <li><span class="key">section tag</span><span class="val">"iii. the line"</span></li>
+            <li><span class="key">attribution</span><span class="val">"— from <em>Lost Lambs</em>, p. 47" · mono italics for title</span></li>
+            <li><span class="key">display line</span><span class="val">a single quoted line · 8–14 words · the heart of the issue</span></li>
+          </ul>
+
+          <h4><span class="num">references</span>From the inspiration cluster</h4>
+          <div class="ref-pills">
+            <span class="ref-pill">"the tongue is an eye"</span>
+            <span class="ref-pill">"less is more or less"</span>
+            <span class="ref-pill">chapbook center spreads</span>
+            <span class="ref-pill">poetry pamphlet displays</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────────────────────────────── SPREAD 05 — REFLECTION -->
+    <div class="spread-block">
+      <div class="spread-meta-bar">
+        <div class="spread-meta-left">
+          <span class="spread-meta-num">spread 05</span>
+          <span class="spread-meta-title">Interior IV · Reflection</span>
+        </div>
+        <span class="spread-meta-tag">double-page · density low · single image right, body left</span>
+      </div>
+      <div class="spread-body">
+        <div class="wireframe has-fold">
+          <div class="wf-trim tl"></div><div class="wf-trim tr"></div>
+          <div class="wf-trim bl"></div><div class="wf-trim br"></div>
+          <div class="wf-margin-guide"></div>
+
+          <div class="ph ph-meta" style="top: 7cqw; left: 7cqw; width: 28cqw; height: 1.6cqw;">
+            <div class="ph-label">m.07 · "iv. reflection"</div>
+          </div>
+
+          <div class="ph ph-text" style="top: 17cqw; left: 7cqw; width: 32cqw; height: 22cqw;">
+            <div class="ph-label">m.05 · sans body · narrow measure · 4–5 short paragraphs</div>
+            <div class="ph-spec">a brief reflection on the book's effect — what stayed, what changed. ≤140 words.</div>
+          </div>
+
+          <div class="ph ph-meta" style="bottom: 7cqw; left: 7cqw; width: 8cqw; height: 1.5cqw;">
+            <div class="ph-label">x ·  ·  ·</div>
+          </div>
+
+          <div class="ph ph-image" style="top: 18cqw; left: 56cqw; width: 32cqw; height: 22cqw;">
+            <div class="ph-label">m.03 · duotone landscape</div>
+            <div class="ph-spec"><strong>single image.</strong> larger than m.02 photos but still margined. duotone in navy + cream or forest green + cream.</div>
+          </div>
+
+          <div class="ph ph-meta" style="top: 41cqw; left: 56cqw; width: 32cqw; height: 1.4cqw;">
+            <div class="ph-label">m.07 · "— PLATE IV."</div>
+          </div>
+
+          <div class="ph ph-meta" style="bottom: 7cqw; right: 7cqw; width: 10cqw; height: 1.5cqw;">
+            <div class="ph-label">·  ·  · xi</div>
+          </div>
+
+          <div class="wf-margin-label" style="top: 9cqw; left: 1.5cqw;">margin</div>
+          <div class="wf-margin-label" style="bottom: 9cqw; right: 1.5cqw;">margin</div>
+        </div>
+        <div class="spread-spec">
+          <h4><span class="num">job</span>What stays after the book closes.</h4>
+          <p>The reader's reflection. A short body of writing on the left, a single duotone landscape on the right. The image is larger than the small photographs from spread 03 — it gets to breathe at scale because it is alone on its page.</p>
+
+          <h4><span class="num">elements</span>Six total. Counted.</h4>
+          <ul>
+            <li><span class="key">left 01</span><span class="val">section tag</span></li>
+            <li><span class="key">left 02</span><span class="val">body text in narrow column</span></li>
+            <li><span class="key">left 03</span><span class="val">folio</span></li>
+            <li><span class="key">right 04</span><span class="val">duotone landscape</span></li>
+            <li><span class="key">right 05</span><span class="val">caption beneath landscape</span></li>
+            <li><span class="key">right 06</span><span class="val">folio</span></li>
+          </ul>
+
+          <h4><span class="num">white space</span>≥55% of the spread</h4>
+          <p>The image and the body text don't compete — they sit on opposite pages with the fold between them.</p>
+
+          <h4><span class="num">no</span>What is not here</h4>
+          <p>No second image, no hand annotation, no lavender, no display moment. The reflection text and the landscape are sufficient.</p>
+
+          <h4><span class="num">copy register</span>What goes in each text slot</h4>
+          <ul>
+            <li><span class="key">section tag</span><span class="val">"iv. reflection"</span></li>
+            <li><span class="key">body</span><span class="val">4–5 short paragraphs · what stayed after the book closed · ≤140 words</span></li>
+            <li><span class="key">caption</span><span class="val">"— PLATE IV."</span></li>
+          </ul>
+
+          <h4><span class="num">references</span>From the inspiration cluster</h4>
+          <div class="ref-pills">
+            <span class="ref-pill">ARC'TERYX hill</span>
+            <span class="ref-pill">mental health awareness landscape</span>
+            <span class="ref-pill">jacquesgreene lonely hearts</span>
+            <span class="ref-pill">two-day hiking poster</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────────────────────────────── SPREAD 06 — COLOPHON -->
+    <div class="spread-block">
+      <div class="spread-meta-bar">
+        <div class="spread-meta-left">
+          <span class="spread-meta-num">spread 06</span>
+          <span class="spread-meta-title">Colophon · closing</span>
+        </div>
+        <span class="spread-meta-tag">double-page · density low · the one hand moment lives here</span>
+      </div>
+      <div class="spread-body">
+        <div class="wireframe has-fold">
+          <div class="wf-trim tl"></div><div class="wf-trim tr"></div>
+          <div class="wf-trim bl"></div><div class="wf-trim br"></div>
+          <div class="wf-margin-guide"></div>
+
+          <div class="ph ph-meta" style="top: 7cqw; left: 7cqw; width: 28cqw; height: 1.6cqw;">
+            <div class="ph-label">m.07 · "v. closing"</div>
+          </div>
+
+          <div class="ph ph-text" style="top: 18cqw; left: 7cqw; width: 35cqw; height: 10cqw;">
+            <div class="ph-label">m.05 · italic body · 1.6cqw · 3 lines</div>
+            <div class="ph-spec"><strong>"One book. One reader. A month."</strong> · matches deck Slide 05 · sans italic, NOT hand</div>
+          </div>
+
+          <div class="ph ph-hand" style="top: 36cqw; left: 18cqw; width: 18cqw; height: 4.5cqw;">
+            <div class="ph-label">m.08 · the one hand moment</div>
+            <div class="ph-spec"><strong>"— with thanks, Mia"</strong> · the only handwriting in the publication</div>
+          </div>
+
+          <div class="ph ph-meta" style="bottom: 7cqw; left: 7cqw; width: 8cqw; height: 1.5cqw;">
+            <div class="ph-label">xii ·  ·  ·</div>
+          </div>
+
+          <div class="ph ph-meta" style="top: 7cqw; right: 7cqw; width: 28cqw; height: 1.6cqw;">
+            <div class="ph-label">m.07 · "colophon"</div>
+          </div>
+
+          <div class="ph ph-text" style="top: 14cqw; right: 7cqw; width: 32cqw; height: 6cqw;">
+            <div class="ph-label">"a reading of"</div>
+            <div class="ph-spec">book + author + month</div>
+          </div>
+
+          <div class="ph ph-text" style="top: 22cqw; right: 7cqw; width: 32cqw; height: 6cqw;">
+            <div class="ph-label">"made by"</div>
+            <div class="ph-spec">Mia + role + city</div>
+          </div>
+
+          <div class="ph ph-text" style="top: 30cqw; right: 7cqw; width: 32cqw; height: 8cqw;">
+            <div class="ph-label">"specifications"</div>
+            <div class="ph-spec">stock · color · dimensions · fold</div>
+          </div>
+
+          <div class="ph ph-lavender" style="bottom: 13cqw; right: 7cqw; width: 5cqw; height: 6cqw;">
+            <div class="ph-label">m.09</div>
+            <div class="ph-spec">edition stamp · "M."</div>
+          </div>
+
+          <div class="ph ph-meta" style="bottom: 7cqw; right: 7cqw; width: 32cqw; height: 1.5cqw;">
+            <div class="ph-label">dedication · italic · over rule</div>
+          </div>
+
+          <div class="wf-margin-label" style="top: 9cqw; left: 1.5cqw;">margin</div>
+          <div class="wf-margin-label" style="bottom: 9cqw; right: 1.5cqw;">margin</div>
+        </div>
+        <div class="spread-spec">
+          <h4><span class="num">job</span>Close the object. Couple to the deck.</h4>
+          <p>The closing line on the left matches the deck's Slide 05 closing line exactly — but here it is set in sans italic at modest scale, not in handwriting. The handwriting is reserved for the signature beneath. The right page is a proper literary colophon — credits, specs, dedication.</p>
+
+          <h4><span class="num">elements</span>Eight total. Counted.</h4>
+          <ul>
+            <li><span class="key">left 01</span><span class="val">section tag</span></li>
+            <li><span class="key">left 02</span><span class="val">closing line in sans italic</span></li>
+            <li><span class="key">left 03</span><span class="val"><strong>m.08</strong> handwritten signature · the one hand moment</span></li>
+            <li><span class="key">right 04</span><span class="val">colophon header</span></li>
+            <li><span class="key">right 05</span><span class="val">"a reading of" block</span></li>
+            <li><span class="key">right 06</span><span class="val">"made by" block</span></li>
+            <li><span class="key">right 07</span><span class="val">"specifications" block</span></li>
+            <li><span class="key">right 08</span><span class="val"><strong>m.09</strong> edition stamp · the second lavender moment</span></li>
+          </ul>
+
+          <h4><span class="num">white space</span>≥50% of the spread</h4>
+          <p>Densest spread in the publication, but still mostly empty. The colophon block on the right is information that needs to be there — it earns its density by being functional.</p>
+
+          <h4><span class="num">the one hand moment</span>Why it lives here</h4>
+          <p>The handwriting is reserved across the entire publication for this single moment. After five spreads of restraint and quiet typography, the signature lands as a small personal gesture — Mia's hand, signing off. <em>If the hand appeared earlier, this moment would lose its weight.</em></p>
+
+          <h4><span class="num">copy register</span>What goes in each text slot</h4>
+          <ul>
+            <li><span class="key">section tag</span><span class="val">"v. closing"</span></li>
+            <li><span class="key">closing line</span><span class="val">"One book. One reader. A month." · sans italic · MUST match deck Slide 05 verbatim</span></li>
+            <li><span class="key">signature</span><span class="val">"— with thanks, Mia" · in hand · the only handwriting</span></li>
+            <li><span class="key">a reading of</span><span class="val">book title italic, author, BOTM month</span></li>
+            <li><span class="key">made by</span><span class="val">Mia Jones — writer, director, creative-technologist. San Diego.</span></li>
+            <li><span class="key">specifications</span><span class="val">A6 closed · uncoated 100lb · 2-color · lavender accent · saddle-stitched</span></li>
+            <li><span class="key">dedication</span><span class="val">italic, single line, over thin rule</span></li>
+          </ul>
+
+          <h4><span class="num">references</span>From the inspiration cluster</h4>
+          <div class="ref-pills">
+            <span class="ref-pill">deck slide 05 postcard</span>
+            <span class="ref-pill">small-press chapbook colophons</span>
+            <span class="ref-pill">handwritten sign-offs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────────────────────────────── SPREAD 07 — CONSTELLATION -->
+    <div class="spread-block">
+      <div class="spread-meta-bar">
+        <div class="spread-meta-left">
+          <span class="spread-meta-num">spread 07</span>
+          <span class="spread-meta-title">Density · Constellation</span>
+        </div>
+        <span class="spread-meta-tag">double-page · density medium-high · earned · the chain made visible</span>
+      </div>
+      <div class="spread-body">
+        <div class="wireframe has-fold">
+          <div class="wf-trim tl"></div><div class="wf-trim tr"></div>
+          <div class="wf-trim bl"></div><div class="wf-trim br"></div>
+          <div class="wf-margin-guide"></div>
+
+          <!-- LEFT — section tag + scattered images with connecting lines -->
+          <div class="ph ph-meta" style="top: 7cqw; left: 7cqw; width: 28cqw; height: 1.6cqw;">
+            <div class="ph-label">m.07 · "constellation — the chain"</div>
+          </div>
+
+          <!-- 5 small images on left page, sparsely placed -->
+          <div class="ph-img-sm" style="top: 14cqw; left: 12cqw; width: 7cqw; height: 9cqw;"></div>
+          <div class="ph-cap-sm" style="top: 23.5cqw; left: 12cqw; width: 7cqw;">— i.</div>
+
+          <div class="ph-img-sm" style="top: 16cqw; left: 28cqw; width: 6cqw; height: 6cqw;"></div>
+          <div class="ph-cap-sm" style="top: 22.5cqw; left: 28cqw; width: 6cqw;">— ii.</div>
+
+          <div class="ph-img-sm" style="top: 27cqw; left: 18cqw; width: 8cqw; height: 7cqw;"></div>
+          <div class="ph-cap-sm" style="top: 34.5cqw; left: 18cqw; width: 8cqw;">— iii.</div>
+
+          <div class="ph-img-sm" style="top: 31cqw; left: 32cqw; width: 6cqw; height: 8cqw;"></div>
+          <div class="ph-cap-sm" style="top: 39.5cqw; left: 32cqw; width: 6cqw;">— iv.</div>
+
+          <div class="ph-img-sm" style="top: 41cqw; left: 14cqw; width: 7cqw; height: 6cqw;"></div>
+          <div class="ph-cap-sm" style="top: 47.5cqw; left: 14cqw; width: 7cqw;">— v.</div>
+
+          <!-- connecting lines, m.13 -->
+          <div class="ph-connect" style="top: 18cqw; left: 19cqw; width: 9cqw; transform: rotate(8deg);"></div>
+          <div class="ph-connect" style="top: 21cqw; left: 30cqw; width: 6cqw; transform: rotate(50deg);"></div>
+          <div class="ph-connect" style="top: 31cqw; left: 26cqw; width: 6cqw; transform: rotate(20deg);"></div>
+          <div class="ph-connect" style="top: 38cqw; left: 22cqw; width: 9cqw; transform: rotate(-25deg);"></div>
+
+          <div class="ph ph-meta" style="bottom: 7cqw; left: 7cqw; width: 8cqw; height: 1.5cqw;">
+            <div class="ph-label">xiv ·  ·  ·</div>
+          </div>
+
+          <!-- RIGHT — title block + numbered key -->
+          <div class="ph ph-meta" style="top: 7cqw; right: 7cqw; width: 28cqw; height: 1.6cqw;">
+            <div class="ph-label">m.07 · "field key"</div>
+          </div>
+
+          <div class="ph ph-display" style="top: 14cqw; right: 7cqw; width: 32cqw; height: 7cqw;">
+            <div class="ph-label">heading · sans 500 · 2.4cqw</div>
+            <div class="ph-spec">"What the book opens to."</div>
+          </div>
+
+          <!-- numbered key entries — small mono attribution rows -->
+          <div class="ph ph-text" style="top: 24cqw; right: 7cqw; width: 32cqw; height: 22cqw;">
+            <div class="ph-label">key · 5 numbered entries · mono · 0.85cqw</div>
+            <div class="ph-spec">
+              <strong>i.</strong> the room before reading<br>
+              <strong>ii.</strong> a remembered other-text<br>
+              <strong>iii.</strong> the chair, then the year<br>
+              <strong>iv.</strong> a letter from someone else<br>
+              <strong>v.</strong> the book, returned to
+            </div>
+          </div>
+
+          <div class="ph ph-meta" style="bottom: 7cqw; right: 7cqw; width: 10cqw; height: 1.5cqw;">
+            <div class="ph-label">·  ·  · xv</div>
+          </div>
+
+          <div class="wf-margin-label" style="top: 9cqw; left: 1.5cqw;">margin</div>
+          <div class="wf-margin-label" style="bottom: 9cqw; right: 1.5cqw;">margin</div>
+        </div>
+        <div class="spread-spec">
+          <h4><span class="num">job</span>The chain of associations made visible.</h4>
+          <p>The publication's first density spread. Five small treated images placed sparsely on the left page, each numbered, with thin red-brown lines drawn between them suggesting connection. The right page holds a numbered key — a list of what each image is, in mono. The spread reads as constellation chart or scholarly diagram. <em>The density is earned because mapping a chain of associations is exactly what a quiet single-image spread cannot do.</em></p>
+
+          <h4><span class="num">elements</span>Twelve total. Counted.</h4>
+          <ul>
+            <li><span class="key">left 01</span><span class="val">section tag at top</span></li>
+            <li><span class="key">left 02–06</span><span class="val">five small images, each with mono caption beneath</span></li>
+            <li><span class="key">left 07</span><span class="val"><strong>m.13</strong> four connecting lines drawn between images</span></li>
+            <li><span class="key">left 08</span><span class="val">folio at bottom</span></li>
+            <li><span class="key">right 09</span><span class="val">section tag</span></li>
+            <li><span class="key">right 10</span><span class="val">heading "What the book opens to."</span></li>
+            <li><span class="key">right 11</span><span class="val">numbered key (5 entries)</span></li>
+            <li><span class="key">right 12</span><span class="val">folio</span></li>
+          </ul>
+
+          <h4><span class="num">white space</span>≥40% of the spread</h4>
+          <p>Lower than the chapbook spreads. The images are small and the lines connect through cream — but the left page reads as visually dense compared to spreads 02–05. This is the point. <em>The right page is quieter to balance.</em></p>
+
+          <h4><span class="num">why this earns its density</span></h4>
+          <p>The whole publication is a meditation on reading as an act that opens onto other things — other texts, other rooms, other years. A quiet single-image spread can show one of those things. Only a constellation can show the chain. <em>The form does work the form requires.</em></p>
+
+          <h4><span class="num">no</span>What is not here</h4>
+          <p>No body paragraphs (the key is the text). No display moment. No hand annotation. No lavender. No tape, no rotation, no overlap. Each image is contained, each line is intentional, each caption is small.</p>
+
+          <h4><span class="num">copy register</span>What goes in each text slot</h4>
+          <ul>
+            <li><span class="key">section tag left</span><span class="val">"constellation — the chain"</span></li>
+            <li><span class="key">image captions</span><span class="val">"— i." through "— v." · mono · single small caption beneath each</span></li>
+            <li><span class="key">section tag right</span><span class="val">"field key"</span></li>
+            <li><span class="key">heading</span><span class="val">single short phrase · "What the book opens to." or similar</span></li>
+            <li><span class="key">key entries</span><span class="val">5 numbered entries · 4–8 words each · descriptive, not commentary · mono</span></li>
+          </ul>
+
+          <h4><span class="num">references</span>From the inspiration cluster</h4>
+          <div class="ref-pills">
+            <span class="ref-pill">"signs from the past"</span>
+            <span class="ref-pill">essence of the ordinary plate</span>
+            <span class="ref-pill">stefanie posavec dear data</span>
+            <span class="ref-pill">archaeological diagram conventions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ────────────────────────────── SPREAD 08 — CATALOG -->
+    <div class="spread-block">
+      <div class="spread-meta-bar">
+        <div class="spread-meta-left">
+          <span class="spread-meta-num">spread 08</span>
+          <span class="spread-meta-title">Density · Catalog</span>
+        </div>
+        <span class="spread-meta-tag">double-page · density high · earned · the field guide spread</span>
+      </div>
+      <div class="spread-body">
+        <div class="wireframe has-fold">
+          <div class="wf-trim tl"></div><div class="wf-trim tr"></div>
+          <div class="wf-trim bl"></div><div class="wf-trim br"></div>
+          <div class="wf-margin-guide"></div>
+
+          <!-- LEFT — title + lead-in text -->
+          <div class="ph ph-meta" style="top: 7cqw; left: 7cqw; width: 28cqw; height: 1.6cqw;">
+            <div class="ph-label">m.07 · "field guide · index"</div>
+          </div>
+
+          <div class="ph ph-display" style="top: 14cqw; left: 7cqw; width: 32cqw; height: 7cqw;">
+            <div class="ph-label">heading · sans 500 · 2.4cqw</div>
+            <div class="ph-spec">"Twelve plates, in order of return."</div>
+          </div>
+
+          <div class="ph ph-text" style="top: 24cqw; left: 7cqw; width: 30cqw; height: 18cqw;">
+            <div class="ph-label">m.05 · sans body · narrow measure</div>
+            <div class="ph-spec">3–4 sentences introducing the catalog. brief description of what the reader is looking at and why the index exists. ≤80 words.</div>
+          </div>
+
+          <div class="ph ph-meta" style="bottom: 7cqw; left: 7cqw; width: 8cqw; height: 1.5cqw;">
+            <div class="ph-label">xvi ·  ·  ·</div>
+          </div>
+
+          <!-- RIGHT — strict 4×3 grid of small treated images, each captioned -->
+          <div class="ph ph-meta" style="top: 7cqw; right: 7cqw; width: 28cqw; height: 1.6cqw;">
+            <div class="ph-label">m.12 · catalog · 4 × 3 grid</div>
+          </div>
+
+          <!-- row 1 -->
+          <div class="ph-img-sm" style="top: 12cqw; left: 56cqw; width: 6.5cqw; height: 6cqw;"></div>
+          <div class="ph-cap-sm" style="top: 18.5cqw; left: 56cqw; width: 6.5cqw;">i.</div>
+
+          <div class="ph-img-sm" style="top: 12cqw; left: 64cqw; width: 6.5cqw; height: 6cqw;"></div>
+          <div class="ph-cap-sm" style="top: 18.5cqw; left: 64cqw; width: 6.5cqw;">ii.</div>
+
+          <div class="ph-img-sm" style="top: 12cqw; left: 72cqw; width: 6.5cqw; height: 6cqw;"></div>
+          <div class="ph-cap-sm" style="top: 18.5cqw; left: 72cqw; width: 6.5cqw;">iii.</div>
+
+          <div class="ph-img-sm" style="top: 12cqw; left: 80cqw; width: 6.5cqw; height: 6cqw;"></div>
+          <div class="ph-cap-sm" style="top: 18.5cqw; left: 80cqw; width: 6.5cqw;">iv.</div>
+
+          <!-- row 2 -->
+          <div class="ph-img-sm" style="top: 22cqw; left: 56cqw; width: 6.5cqw; height: 6cqw;"></div>
+          <div class="ph-cap-sm" style="top: 28.5cqw; left: 56cqw; width: 6.5cqw;">v.</div>
+
+          <div class="ph-img-sm" style="top: 22cqw; left: 64cqw; width: 6.5cqw; height: 6cqw;"></div>
+          <div class="ph-cap-sm" style="top: 28.5cqw; left: 64cqw; width: 6.5cqw;">vi.</div>
+
+          <div class="ph-img-sm" style="top: 22cqw; left: 72cqw; width: 6.5cqw; height: 6cqw;"></div>
+          <div class="ph-cap-sm" style="top: 28.5cqw; left: 72cqw; width: 6.5cqw;">vii.</div>
+
+          <div class="ph-img-sm" style="top: 22cqw; left: 80cqw; width: 6.5cqw; height: 6cqw;"></div>
+          <div class="ph-cap-sm" style="top: 28.5cqw; left: 80cqw; width: 6.5cqw;">viii.</div>
+
+          <!-- row 3 -->
+          <div class="ph-img-sm" style="top: 32cqw; left: 56cqw; width: 6.5cqw; height: 6cqw;"></div>
+          <div class="ph-cap-sm" style="top: 38.5cqw; left: 56cqw; width: 6.5cqw;">ix.</div>
+
+          <div class="ph-img-sm" style="top: 32cqw; left: 64cqw; width: 6.5cqw; height: 6cqw;"></div>
+          <div class="ph-cap-sm" style="top: 38.5cqw; left: 64cqw; width: 6.5cqw;">x.</div>
+
+          <div class="ph-img-sm" style="top: 32cqw; left: 72cqw; width: 6.5cqw; height: 6cqw;"></div>
+          <div class="ph-cap-sm" style="top: 38.5cqw; left: 72cqw; width: 6.5cqw;">xi.</div>
+
+          <div class="ph-img-sm" style="top: 32cqw; left: 80cqw; width: 6.5cqw; height: 6cqw;"></div>
+          <div class="ph-cap-sm" style="top: 38.5cqw; left: 80cqw; width: 6.5cqw;">xii.</div>
+
+          <div class="ph ph-meta" style="bottom: 7cqw; right: 7cqw; width: 10cqw; height: 1.5cqw;">
+            <div class="ph-label">·  ·  · xvii</div>
+          </div>
+
+          <div class="wf-margin-label" style="top: 9cqw; left: 1.5cqw;">margin</div>
+          <div class="wf-margin-label" style="bottom: 9cqw; right: 1.5cqw;">margin</div>
+        </div>
+        <div class="spread-spec">
+          <h4><span class="num">job</span>The reader's catalog. The publication's index of returns.</h4>
+          <p>The publication's second density spread. The right page holds a strict 4×3 grid of twelve small treated images, each numbered i. through xii., reading as a personal field-guide-style index. The left page holds the heading and a brief introductory paragraph framing the catalog. <em>The grid does the work of showing many things in relation — the pleasure of inventory, the act of indexing what the reading produced.</em></p>
+
+          <h4><span class="num">elements</span>Eighteen total. Counted.</h4>
+          <ul>
+            <li><span class="key">left 01</span><span class="val">section tag at top</span></li>
+            <li><span class="key">left 02</span><span class="val">heading "Twelve plates, in order of return."</span></li>
+            <li><span class="key">left 03</span><span class="val">introductory body paragraph</span></li>
+            <li><span class="key">left 04</span><span class="val">folio at bottom</span></li>
+            <li><span class="key">right 05</span><span class="val">section tag at top</span></li>
+            <li><span class="key">right 06–17</span><span class="val">twelve small images in 4×3 grid, each with mono numeral caption</span></li>
+            <li><span class="key">right 18</span><span class="val">folio at bottom</span></li>
+          </ul>
+
+          <h4><span class="num">white space</span>≥35% of the spread</h4>
+          <p>The lowest white-space ratio in the publication, but still above one-third. The grid is held within the safe-zone margin. The cream gaps between grid cells are tight but consistent — the rhythm of the grid is itself a kind of breathing.</p>
+
+          <h4><span class="num">why this earns its density</span></h4>
+          <p>The catalogue spread does what a single quiet image cannot — it shows the <em>cumulative</em> nature of reading. After the book closes, what remains is not one image but an inventory of small returns. The grid form is the only form that can hold "twelve plates, in order of return."</p>
+
+          <h4><span class="num">no</span>What is not here</h4>
+          <p>No display moment. No hand annotation. No lavender. No connecting lines (this is catalog, not constellation). The images are evenly spaced, evenly sized, evenly captioned. The discipline of the grid does the work.</p>
+
+          <h4><span class="num">copy register</span>What goes in each text slot</h4>
+          <ul>
+            <li><span class="key">section tag left</span><span class="val">"field guide · index"</span></li>
+            <li><span class="key">heading</span><span class="val">single short phrase introducing the catalog · "Twelve plates, in order of return." or similar</span></li>
+            <li><span class="key">body</span><span class="val">3–4 sentences · ≤80 words · why the index exists</span></li>
+            <li><span class="key">section tag right</span><span class="val">no separate tag — the grid is the page</span></li>
+            <li><span class="key">grid captions</span><span class="val">"i." through "xii." · mono · numeral only, no description</span></li>
+          </ul>
+
+          <h4><span class="num">references</span>From the inspiration cluster</h4>
+          <div class="ref-pills">
+            <span class="ref-pill">polaroid contact sheet</span>
+            <span class="ref-pill">table of contents object inventory</span>
+            <span class="ref-pill">september page thumbnails</span>
+            <span class="ref-pill">linwoodwood mood plate</span>
+            <span class="ref-pill">natural-history field guide indexes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 04 · COPY REGISTER GUIDE                             -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-num">04 · copy</div>
+        <h2 class="section-title">The kind of writing that goes in each slot.</h2>
+      </div>
+      <div class="section-tag">register reference</div>
+    </div>
+    <p class="section-intro">Each slot in the wireframes calls for a different register of writing. The actual copy is Mia's to write. The examples below are illustrative — they show the voice and length that fits each slot.</p>
+
+    <div class="copy-guide">
+
+      <div class="copy-card">
+        <div class="copy-card-meta">
+          <div class="copy-card-num">slot · masthead</div>
+          <div class="copy-card-name">Publication marker</div>
+          <div class="copy-card-desc">Small mono uppercase, set with wide letter spacing. Identifies the publication and issue. Sits at the top of every interior spread.</div>
+        </div>
+        <div class="copy-card-example caption">MARGINALIA · vol 0 · piece 01</div>
+      </div>
+
+      <div class="copy-card">
+        <div class="copy-card-meta">
+          <div class="copy-card-num">slot · section tag</div>
+          <div class="copy-card-name">Section identifier</div>
+          <div class="copy-card-desc">Small mono lowercase with roman numeral. Names the section without ceremony. Quiet, low, under the masthead.</div>
+        </div>
+        <div class="copy-card-example caption">i. opening</div>
+      </div>
+
+      <div class="copy-card">
+        <div class="copy-card-meta">
+          <div class="copy-card-num">slot · plate caption</div>
+          <div class="copy-card-name">Image caption</div>
+          <div class="copy-card-desc">Small mono uppercase, sits beneath any image. Roman numeral plate number, sometimes followed by a 2–4 word description.</div>
+        </div>
+        <div class="copy-card-example caption">— PLATE I.  ·  A WINDOW</div>
+      </div>
+
+      <div class="copy-card">
+        <div class="copy-card-meta">
+          <div class="copy-card-num">slot · pulled quote</div>
+          <div class="copy-card-name">Line from the book</div>
+          <div class="copy-card-desc">A single line drawn from the actual book. Sans italic. Set in a narrow column on a wide cream field.</div>
+        </div>
+        <div class="copy-card-example italic">She was always in the act of becoming someone she had not yet met.</div>
+      </div>
+
+      <div class="copy-card">
+        <div class="copy-card-meta">
+          <div class="copy-card-num">slot · body</div>
+          <div class="copy-card-name">Reader's prose</div>
+          <div class="copy-card-desc">Short paragraphs in sans body. Narrow measure, generous leading. Present tense, observational, sensory. ≤140 words per spread.</div>
+        </div>
+        <div class="copy-card-example sans">The book remembers another book. You first read that one in a country you were not from. The rooms in that book had no doors, and so you sat in the chair you sat in then, and tried to remember what door you came through.</div>
+      </div>
+
+      <div class="copy-card">
+        <div class="copy-card-meta">
+          <div class="copy-card-num">slot · display line</div>
+          <div class="copy-card-name">The center spread's only element</div>
+          <div class="copy-card-desc">A single short line set at large display scale. Sans, weight 500. The publication's quiet declaration. Used once. The whole spread builds toward it.</div>
+        </div>
+        <div class="copy-card-example display">The book is the room<br>where we meet.</div>
+      </div>
+
+      <div class="copy-card">
+        <div class="copy-card-meta">
+          <div class="copy-card-num">slot · attribution</div>
+          <div class="copy-card-name">Source mark</div>
+          <div class="copy-card-desc">Small mono with italic for book title. Sits low on the page, beneath the display line or pulled quote, identifying the source.</div>
+        </div>
+        <div class="copy-card-example caption">— from <em style="font-family: var(--font-sans); font-style: italic; text-transform: none; letter-spacing: 0; font-size: 13px; color: var(--color-ink);">Lost Lambs</em>, p. 47</div>
+      </div>
+
+      <div class="copy-card">
+        <div class="copy-card-meta">
+          <div class="copy-card-num">slot · signature</div>
+          <div class="copy-card-name">The one handwriting</div>
+          <div class="copy-card-desc">Reenie Beanie, navy. Slight rotation. Mia's signature on the colophon. The only handwritten element in the entire publication. Used exactly once.</div>
+        </div>
+        <div class="copy-card-example hand">— with thanks, Mia</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 05 · PRODUCTION SPECIFICATIONS                       -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-num">05 · production</div>
+        <h2 class="section-title">How this object actually gets made.</h2>
+      </div>
+      <div class="section-tag">specs for printer</div>
+    </div>
+    <p class="section-intro">The physical specifications. Hand to a small-press printer or to BOTM's existing production partner. Restrained to keep cost reasonable while feeling printed-with-intention.</p>
+
+    <div class="prod-grid">
+      <div class="prod-cell">
+        <div class="prod-key">closed dimension</div>
+        <div class="prod-val">A6 / ~4 × 6"</div>
+        <div class="prod-note">slips between pages of the book it accompanies. fits in the BOTM box without changing carton size.</div>
+      </div>
+      <div class="prod-cell">
+        <div class="prod-key">open spread</div>
+        <div class="prod-val">~8 × 6"</div>
+        <div class="prod-note">single horizontal fold at center. left page + right page = one composition.</div>
+      </div>
+      <div class="prod-cell">
+        <div class="prod-key">page count</div>
+        <div class="prod-val">12 pages</div>
+        <div class="prod-note">cover + 4 interior spreads + colophon. saddle-stitched at the fold.</div>
+      </div>
+      <div class="prod-cell">
+        <div class="prod-key">stock</div>
+        <div class="prod-val">uncoated · 100lb cover</div>
+        <div class="prod-note">cream tone. matte finish. ink sits flat. paper texture remains tactile.</div>
+      </div>
+      <div class="prod-cell">
+        <div class="prod-key">color</div>
+        <div class="prod-val">2-color · ink + navy</div>
+        <div class="prod-note">PMS or process. base type and rules in ink (#1C1C1A). secondary type, illustrations, accents in navy (#3E4A66).</div>
+      </div>
+      <div class="prod-cell">
+        <div class="prod-key">accent</div>
+        <div class="prod-val">lavender · twice only</div>
+        <div class="prod-note">3rd color. used twice across the publication — cover stamp and colophon stamp. never on interior spreads.</div>
+      </div>
+      <div class="prod-cell">
+        <div class="prod-key">imagery</div>
+        <div class="prod-val">halftone or duotone</div>
+        <div class="prod-note">photographs reduced to halftone (single ink) or duotone (ink + navy or ink + green). no full-color photography.</div>
+      </div>
+      <div class="prod-cell">
+        <div class="prod-key">binding</div>
+        <div class="prod-val">saddle-stitched</div>
+        <div class="prod-note">two-staple binding at fold. simple, low-cost, opens flat.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════════════════ -->
+  <!-- 06 · HANDOFF NOTES                                   -->
+  <!-- ════════════════════════════════════════════════════ -->
+
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <div class="section-num">06 · handoff</div>
+        <h2 class="section-title">For Claude Design or in-Canva build.</h2>
+      </div>
+      <div class="section-tag">execution notes</div>
+    </div>
+    <p class="section-intro">Practical instructions for whoever picks this up next.</p>
+
+    <div class="principles">
+
+      <div class="principle">
+        <div class="principle-num">a.</div>
+        <div class="principle-rule">Start by counting elements.</div>
+        <p class="principle-body">For each spread, list the elements before placing them. If the count exceeds the wireframe's element count, something is wrong. The number of elements per spread is itself a design constraint.</p>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">b.</div>
+        <div class="principle-rule">Source images first. Treat before placing.</div>
+        <p class="principle-body">Gather or shoot real photographic content (pressed plant scan, treated landscape, single object). Apply halftone or duotone treatment in Photoshop or via Canva effects before placing into layout. Untreated photography reads wrong even on a right layout.</p>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">c.</div>
+        <div class="principle-rule">Treat the margin as sacred.</div>
+        <p class="principle-body">The dashed border on each wireframe is the safe-zone — content lives inside it, white space lives outside it. Do not push elements into the margin. The breathing room is not negotiable.</p>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">d.</div>
+        <div class="principle-rule">Lock copy before laying out.</div>
+        <p class="principle-body">Use the copy register guide to draft each slot's writing before opening Canva. Layout against finished copy is faster and produces better composition than layout against placeholder Lorem ipsum.</p>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">e.</div>
+        <div class="principle-rule">Build cover last.</div>
+        <p class="principle-body">The cover is the simplest spread but should reflect the issue's interior. Build interior spreads first; let the cover absorb their tone. The closing line on the colophon must match the deck's Slide 05 verbatim — this is the link between formats.</p>
+      </div>
+
+      <div class="principle">
+        <div class="principle-num">f.</div>
+        <div class="principle-rule">If a page feels full, remove something.</div>
+        <p class="principle-body">When in doubt, take an element off. The publication's strength comes from what it withholds. The reader fills the cream space with their own attention — which is the only kind of attention worth having.</p>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>

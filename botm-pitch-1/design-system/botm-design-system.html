@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>botm_design_system / v2</title>
+
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap" rel="stylesheet">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Reenie+Beanie&display=swap');
+
+  :root {
+    --color-ink:           #1C1C1A;
+    --color-ink-soft:      #3A3A36;
+    --color-cream:         #FAF6ED;
+    --color-cream-warm:    #F2EBDC;
+    --color-cream-deep:    #E5DCC4;
+    --color-navy:          #3E4A66;
+    --color-navy-soft:     #5A6680;
+    --color-lavender:      #A89DBD;
+    --color-lavender-pale: #E0DAE8;
+    --color-rule:          #1C1C1A;
+    --color-rule-soft:     #C8BFA8;
+    --color-muted:         #7A7466;
+    --color-faint:         #A8A18E;
+
+    --font-sans: 'General Sans', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    --font-hand: 'Reenie Beanie', cursive;
+
+    --type-micro:   10px;
+    --type-small:   11px;
+    --type-base:    13px;
+    --type-body:    15px;
+    --type-lift:    17px;
+    --type-h4:      20px;
+    --type-h3:      26px;
+    --type-h2:      36px;
+    --type-h1:      52px;
+    --type-display: 76px;
+
+    --space-1:  4px;
+    --space-2:  8px;
+    --space-3:  12px;
+    --space-4:  16px;
+    --space-5:  24px;
+    --space-6:  32px;
+    --space-7:  48px;
+    --space-8:  72px;
+    --space-9:  112px;
+
+    --rule-thin:   1px solid var(--color-rule-soft);
+    --rule-mid:    1px solid var(--color-ink);
+    --rule-accent: 2px solid var(--color-navy);
+    --rule-dashed: 1px dashed var(--color-rule-soft);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    line-height: 1.55;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.11 0 0 0 0 0.10 0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+  }
+
+  body {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-5) var(--space-9);
+    position: relative;
+  }
+
+  body > * { position: relative; z-index: 1; }
+
+  ::selection { background: var(--color-navy); color: var(--color-cream); }
+
+  .doc-header {
+    border-bottom: var(--rule-mid);
+    padding-bottom: var(--space-7);
+    margin-bottom: var(--space-8);
+    position: relative;
+  }
+
+  .filename {
+    font-family: var(--font-mono);
+    color: var(--color-muted);
+    font-size: var(--type-small);
+    letter-spacing: 0.02em;
+    margin-bottom: var(--space-6);
+  }
+  .filename::before { content: '> '; color: var(--color-navy); }
+
+  .meta-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    padding: 4px 10px;
+    background: var(--color-navy);
+    color: var(--color-cream);
+    margin-bottom: var(--space-5);
+    font-weight: 500;
+  }
+
+  .doc-title {
+    font-family: var(--font-sans);
+    font-size: var(--type-h1);
+    font-weight: 500;
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin-bottom: var(--space-4);
+    color: var(--color-ink);
+    max-width: 20ch;
+  }
+
+  .doc-title em {
+    font-style: normal;
+    color: var(--color-navy);
+    font-weight: 500;
+  }
+
+  .doc-sub {
+    font-family: var(--font-sans);
+    font-size: var(--type-lift);
+    font-weight: 400;
+    color: var(--color-ink-soft);
+    max-width: 58ch;
+    line-height: 1.5;
+    margin-bottom: var(--space-7);
+  }
+
+  .meta-grid {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: var(--space-2) var(--space-5);
+    font-family: var(--font-mono);
+    font-size: var(--type-small);
+  }
+  .meta-key {
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .meta-val { color: var(--color-ink); }
+
+  .hand-note {
+    position: absolute;
+    top: var(--space-4);
+    right: 0;
+    font-family: var(--font-hand);
+    font-size: 28px;
+    color: var(--color-navy);
+    transform: rotate(-2.5deg);
+    line-height: 1.1;
+    text-align: right;
+    max-width: 200px;
+  }
+
+  .toc {
+    margin-bottom: var(--space-9);
+    padding: var(--space-5) var(--space-6);
+    background: var(--color-cream-warm);
+    border-left: var(--rule-accent);
+  }
+
+  .toc-label {
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--color-navy);
+    margin-bottom: var(--space-4);
+    font-weight: 500;
+  }
+
+  .toc ol {
+    list-style: none;
+    padding: 0;
+    counter-reset: toc;
+  }
+
+  .toc li {
+    counter-increment: toc;
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    font-weight: 400;
+    padding: 5px 0;
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+  }
+
+  .toc li::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: var(--font-mono);
+    color: var(--color-navy);
+    font-size: var(--type-small);
+    min-width: 28px;
+    letter-spacing: 0.04em;
+  }
+
+  .toc a {
+    color: var(--color-ink);
+    text-decoration: none;
+    border-bottom: 1px dotted transparent;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .toc a:hover {
+    border-bottom-color: var(--color-navy);
+    color: var(--color-navy);
+  }
+
+  section {
+    margin-bottom: var(--space-9);
+    scroll-margin-top: var(--space-5);
+  }
+
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-navy);
+    margin-bottom: var(--space-3);
+    font-weight: 500;
+  }
+
+  h2 {
+    font-family: var(--font-sans);
+    font-size: var(--type-h2);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: var(--space-3);
+    color: var(--color-ink);
+    max-width: 24ch;
+  }
+
+  .section-sub {
+    font-family: var(--font-sans);
+    font-size: var(--type-lift);
+    font-weight: 400;
+    color: var(--color-ink-soft);
+    margin-bottom: var(--space-7);
+    padding-bottom: var(--space-5);
+    border-bottom: var(--rule-thin);
+    max-width: 58ch;
+    line-height: 1.5;
+  }
+
+  h3 {
+    font-family: var(--font-sans);
+    font-size: var(--type-h3);
+    font-weight: 500;
+    margin: var(--space-7) 0 var(--space-3);
+    color: var(--color-ink);
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+  }
+
+  h4 {
+    font-family: var(--font-mono);
+    font-size: var(--type-small);
+    font-weight: 500;
+    margin: var(--space-6) 0 var(--space-3);
+    color: var(--color-navy);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+
+  p {
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    font-weight: 400;
+    margin-bottom: var(--space-4);
+    color: var(--color-ink);
+    max-width: 62ch;
+    line-height: 1.6;
+  }
+
+  p.lift {
+    font-family: var(--font-sans);
+    font-size: var(--type-h4);
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--color-ink);
+    margin: var(--space-6) 0;
+    max-width: 48ch;
+    letter-spacing: -0.005em;
+  }
+
+  em { font-style: italic; }
+  strong { font-weight: 600; color: var(--color-ink); }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    background: var(--color-cream-deep);
+    padding: 1px 7px;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
+    border-radius: 1px;
+  }
+
+  ul, ol {
+    margin: var(--space-3) 0 var(--space-5) var(--space-5);
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+  }
+
+  li { margin-bottom: var(--space-2); color: var(--color-ink); line-height: 1.55; }
+
+  ul.bare {
+    list-style: none;
+    margin-left: 0;
+  }
+  ul.bare li {
+    padding-left: var(--space-5);
+    position: relative;
+    margin-bottom: var(--space-3);
+  }
+  ul.bare li::before {
+    content: '—';
+    color: var(--color-navy);
+    position: absolute;
+    left: 0;
+  }
+
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-4);
+    margin: var(--space-5) 0 var(--space-6);
+  }
+
+  .swatch {
+    background: var(--color-cream);
+    border: var(--rule-thin);
+    overflow: hidden;
+  }
+
+  .swatch-color {
+    height: 120px;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--space-3);
+  }
+
+  .swatch-token-tag {
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    color: rgba(255,255,255,0.65);
+    letter-spacing: 0.06em;
+  }
+
+  .swatch--ink .swatch-color { background: var(--color-ink); }
+  .swatch--ink-soft .swatch-color { background: var(--color-ink-soft); }
+  .swatch--cream .swatch-color {
+    background: var(--color-cream);
+    border-bottom: var(--rule-thin);
+  }
+  .swatch--cream .swatch-token-tag { color: var(--color-muted); }
+  .swatch--cream-warm .swatch-color {
+    background: var(--color-cream-warm);
+    border-bottom: var(--rule-thin);
+  }
+  .swatch--cream-warm .swatch-token-tag { color: var(--color-muted); }
+  .swatch--cream-deep .swatch-color {
+    background: var(--color-cream-deep);
+    border-bottom: var(--rule-thin);
+  }
+  .swatch--cream-deep .swatch-token-tag { color: var(--color-muted); }
+  .swatch--navy .swatch-color { background: var(--color-navy); }
+  .swatch--navy-soft .swatch-color { background: var(--color-navy-soft); }
+  .swatch--lavender .swatch-color { background: var(--color-lavender); }
+  .swatch--lavender-pale .swatch-color {
+    background: var(--color-lavender-pale);
+    border-bottom: var(--rule-thin);
+  }
+  .swatch--lavender-pale .swatch-token-tag { color: var(--color-muted); }
+
+  .swatch-meta {
+    padding: var(--space-3) var(--space-4);
+    border-top: var(--rule-thin);
+  }
+
+  .swatch-name {
+    font-family: var(--font-sans);
+    font-size: var(--type-base);
+    font-weight: 500;
+    color: var(--color-ink);
+    margin-bottom: 2px;
+    letter-spacing: -0.005em;
+  }
+
+  .swatch-token {
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    color: var(--color-navy);
+    letter-spacing: 0.04em;
+    margin-bottom: var(--space-2);
+  }
+
+  .swatch-hex {
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    color: var(--color-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .swatch-use {
+    font-family: var(--font-sans);
+    font-size: var(--type-small);
+    color: var(--color-muted);
+    line-height: 1.5;
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: var(--rule-dashed);
+  }
+
+  .type-specimen {
+    background: var(--color-cream);
+    border: var(--rule-thin);
+    border-left: var(--rule-accent);
+    padding: var(--space-5) var(--space-6);
+    margin: var(--space-3) 0;
+  }
+
+  .type-specimen-meta {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: var(--rule-dashed);
+  }
+
+  .type-specimen-meta strong {
+    color: var(--color-navy);
+    font-weight: 500;
+  }
+
+  .type-display-1 {
+    font-family: var(--font-sans);
+    font-size: var(--type-display);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    color: var(--color-ink);
+  }
+
+  .type-display-2 {
+    font-family: var(--font-sans);
+    font-size: var(--type-h1);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--color-navy);
+  }
+
+  .type-h-spec {
+    font-family: var(--font-sans);
+    font-size: var(--type-h2);
+    font-weight: 500;
+    line-height: 1.1;
+    color: var(--color-ink);
+    letter-spacing: -0.02em;
+  }
+
+  .type-body-primary {
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    line-height: 1.6;
+    color: var(--color-ink);
+    max-width: 60ch;
+    font-weight: 400;
+  }
+
+  .type-body-lift {
+    font-family: var(--font-sans);
+    font-size: var(--type-lift);
+    line-height: 1.5;
+    color: var(--color-ink);
+    max-width: 52ch;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+  }
+
+  .type-meta-mono {
+    font-family: var(--font-mono);
+    font-size: var(--type-small);
+    color: var(--color-muted);
+    letter-spacing: 0.06em;
+  }
+
+  .type-micro-mono {
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    color: var(--color-navy);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .type-hand {
+    font-family: var(--font-hand);
+    font-size: 32px;
+    line-height: 1.15;
+    color: var(--color-navy);
+    transform: rotate(-1.5deg);
+    display: inline-block;
+  }
+
+  .component-card {
+    border: var(--rule-thin);
+    background: var(--color-cream);
+    margin-bottom: var(--space-5);
+  }
+
+  .component-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-4);
+    padding: var(--space-3) var(--space-5);
+    background: var(--color-cream-warm);
+    border-bottom: var(--rule-thin);
+  }
+
+  .component-card-title {
+    font-family: var(--font-sans);
+    font-size: var(--type-base);
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: -0.005em;
+  }
+
+  .component-card-token {
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    color: var(--color-navy);
+    letter-spacing: 0.06em;
+  }
+
+  .component-card-body {
+    padding: var(--space-5) var(--space-6);
+  }
+
+  .component-card-demo {
+    margin-bottom: var(--space-4);
+    padding: var(--space-5);
+    background: var(--color-cream-warm);
+    border: var(--rule-dashed);
+  }
+
+  .component-card-notes {
+    font-family: var(--font-sans);
+    font-size: var(--type-base);
+    color: var(--color-muted);
+    line-height: 1.55;
+  }
+
+  .component-card-notes em {
+    color: var(--color-navy);
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  .demo-callout {
+    padding: var(--space-4) var(--space-5);
+    background: var(--color-cream);
+    border-left: 2px solid var(--color-navy);
+    font-family: var(--font-sans);
+    font-size: var(--type-body);
+    line-height: 1.55;
+  }
+  .demo-callout-label {
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--color-muted);
+    font-weight: 500;
+    margin-bottom: var(--space-2);
+  }
+
+  .demo-callout--lavender {
+    background: var(--color-lavender-pale);
+    border-left-color: var(--color-lavender);
+  }
+  .demo-callout--lavender .demo-callout-label { color: var(--color-navy); }
+
+  .demo-pull-quote {
+    font-family: var(--font-sans);
+    font-size: var(--type-h4);
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--color-ink);
+    padding: var(--space-4) var(--space-5);
+    border-left: 2px solid var(--color-lavender);
+    background: var(--color-cream);
+    letter-spacing: -0.01em;
+  }
+
+  .demo-image-frame {
+    background: var(--color-cream-deep);
+    border: var(--rule-thin);
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: var(--type-small);
+    position: relative;
+  }
+  .demo-image-frame::before {
+    content: 'image';
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--color-faint);
+  }
+
+  .demo-meta-line {
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    border-top: var(--rule-thin);
+    padding-top: var(--space-3);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .demo-rule {
+    height: 1px;
+    background: var(--color-rule-soft);
+    margin: var(--space-3) 0;
+  }
+  .demo-rule--accent {
+    height: 2px;
+    background: var(--color-navy);
+  }
+  .demo-rule--dashed {
+    height: 0;
+    border-top: 1px dashed var(--color-rule-soft);
+    background: none;
+  }
+
+  .demo-hand-annotation {
+    font-family: var(--font-hand);
+    font-size: 30px;
+    color: var(--color-navy);
+    transform: rotate(-2deg);
+    display: inline-block;
+    line-height: 1.15;
+  }
+
+  .doxdont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin: var(--space-5) 0;
+  }
+
+  .do-card, .dont-card {
+    padding: var(--space-5) var(--space-5);
+    background: var(--color-cream);
+    border: var(--rule-thin);
+    border-left-width: 2px;
+  }
+
+  .do-card { border-left-color: var(--color-navy); }
+  .dont-card { border-left-color: var(--color-ink); }
+
+  .doxdont-label {
+    font-family: var(--font-mono);
+    font-size: var(--type-micro);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    margin-bottom: var(--space-4);
+    font-weight: 500;
+    padding-bottom: var(--space-3);
+    border-bottom: var(--rule-dashed);
+  }
+
+  .do-card .doxdont-label { color: var(--color-navy); }
+  .dont-card .doxdont-label { color: var(--color-ink); }
+
+  .doxdont ul.bare {
+    margin: 0;
+  }
+  .doxdont ul.bare li {
+    font-size: var(--type-base);
+    line-height: 1.55;
+    margin-bottom: var(--space-3);
+  }
+
+  footer {
+    margin-top: var(--space-9);
+    padding-top: var(--space-5);
+    border-top: var(--rule-mid);
+    font-family: var(--font-mono);
+    font-size: var(--type-small);
+    color: var(--color-muted);
+    line-height: 1.6;
+  }
+
+  footer p { font-size: var(--type-small); margin-bottom: var(--space-2); font-family: var(--font-mono); max-width: none; }
+
+  .footer-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: var(--space-5);
+    padding-top: var(--space-3);
+    border-top: var(--rule-dashed);
+    font-size: var(--type-micro);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+  }
+
+  @media (max-width: 720px) {
+    body { padding: var(--space-5) var(--space-4) var(--space-8); }
+    .doc-title { font-size: 36px; }
+    h2 { font-size: 26px; }
+    h3 { font-size: 20px; }
+    .type-display-1 { font-size: 42px; }
+    .type-display-2 { font-size: 28px; }
+    .type-h-spec { font-size: 22px; }
+    .doxdont { grid-template-columns: 1fr; }
+    .meta-grid { grid-template-columns: 1fr; }
+    .hand-note { display: none; }
+    .swatch-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="doc-header">
+  <div class="filename">botm_design_system / v2.html</div>
+  <span class="meta-tag">design system &middot; v2</span>
+  <h1 class="doc-title">A creative-direction system for <em>a pitch.</em></h1>
+  <p class="doc-sub">
+    The visual and verbal language for the BOTM Creator-in-Residence pitch — deck, written pitch, video sensibility one-sheet, and zine spread one-sheet. Built to be ingested by Claude Design and applied across all pitch artifacts.
+  </p>
+  <div class="meta-grid">
+    <span class="meta-key">project</span>
+    <span class="meta-val">BOTM Creator-in-Residence pitch</span>
+    <span class="meta-key">version</span>
+    <span class="meta-val">v2 &middot; April 21, 2026</span>
+    <span class="meta-key">scope</span>
+    <span class="meta-val">deck &middot; written pitch &middot; video one-sheet &middot; zine spread</span>
+    <span class="meta-key">register</span>
+    <span class="meta-val">contemporary editorial, BOTM-resonant restraint</span>
+  </div>
+  <div class="hand-note">the doc embodies<br>the system it<br>describes.</div>
+</header>
+
+<nav class="toc">
+  <div class="toc-label">Contents</div>
+  <ol>
+    <li><a href="#foundations">Foundations — principles &amp; through-line</a></li>
+    <li><a href="#color">Color — tokens &amp; usage</a></li>
+    <li><a href="#typography">Typography — faces, scale, voice</a></li>
+    <li><a href="#spatial">Spatial system — spacing, rules, density</a></li>
+    <li><a href="#components">Components — the working vocabulary</a></li>
+    <li><a href="#voice">Voice &amp; register — how this thing sounds</a></li>
+    <li><a href="#dosanddonts">Do's &amp; don'ts</a></li>
+    <li><a href="#applied">Applied — where this gets used</a></li>
+  </ol>
+</nav>
+
+<section id="foundations">
+  <div class="section-num">section 01</div>
+  <h2>Foundations — principles &amp; through-line</h2>
+  <p class="section-sub">What this design system is for, what it's <em>not</em> for, and the four principles every applied artifact follows.</p>
+
+  <p class="lift">An intellectually serious zine that lives between the contemporary literary magazine, the field guide, the experimental score, and the parts of the early internet that raised us — produced with editorial restraint that sits comfortably alongside Volume 0.</p>
+
+  <h3>Principles</h3>
+
+  <h4>01 · Editorial restraint over decorative density</h4>
+  <p>Generous negative space. Few elements per page, each placed with intent. When in doubt, cut. The work should look like it was art-directed, not assembled. Restraint signals confidence.</p>
+
+  <h4>02 · Sans as voice, mono as architecture</h4>
+  <p>General Sans carries the working voice — body, display, headers, the language the reader is meant to hear. IBM Plex Mono is the architecture around the voice — metadata, captions, labels, file names, the scaffolding that holds the page. Two faces, two clear jobs.</p>
+
+  <h4>03 · Personality in two small places</h4>
+  <p>The lavender accent appears once per artifact. A simulated handwritten annotation appears once per artifact. These are signatures, not patterns. Used sparingly, they identify the work; used everywhere, they become noise.</p>
+
+  <h4>04 · BOTM-resonant, not BOTM-derivative</h4>
+  <p>The cream and ink baseline sits in conversation with BOTM's existing visual identity (warm cream, near-black, occasional cobalt). The dusty navy and soft lavender accents are the creative-direction signature — recognizably <em>not</em> their house style, but not jarring against it.</p>
+
+  <h3>What this system is <em>not</em></h3>
+  <ul class="bare">
+    <li>Not a magazine layout. Density and column structure belong to magazines; this is zine-spread sensibility, professionally executed.</li>
+    <li>Not a corporate brand guide. There is no logo system, no scaled mark, no app-screen treatment.</li>
+    <li>Not a moodboard. Every element here is functional — tokens that get applied, components that get reused.</li>
+    <li>Not exhaustive. This is a working system for one pitch, not a library for ongoing brand work.</li>
+  </ul>
+</section>
+
+<section id="color">
+  <div class="section-num">section 02</div>
+  <h2>Color — tokens &amp; usage</h2>
+  <p class="section-sub">Four primary tokens carry the whole system. Supporting variants exist for depth and hierarchy, used with restraint.</p>
+
+  <h3>Primary palette</h3>
+
+  <div class="swatch-grid">
+    <div class="swatch swatch--ink">
+      <div class="swatch-color"><span class="swatch-token-tag">--color-ink</span></div>
+      <div class="swatch-meta">
+        <div class="swatch-name">Ink</div>
+        <div class="swatch-token">color.ink</div>
+        <div class="swatch-hex">#1C1C1A</div>
+        <div class="swatch-use">All primary type. Rules. The grounding tone. Warm-black, never pure black.</div>
+      </div>
+    </div>
+    <div class="swatch swatch--cream">
+      <div class="swatch-color"><span class="swatch-token-tag">--color-cream</span></div>
+      <div class="swatch-meta">
+        <div class="swatch-name">Cream</div>
+        <div class="swatch-token">color.cream</div>
+        <div class="swatch-hex">#FAF6ED</div>
+        <div class="swatch-use">Primary background across all artifacts. Eggy, warm, alive. Never pure white.</div>
+      </div>
+    </div>
+    <div class="swatch swatch--navy">
+      <div class="swatch-color"><span class="swatch-token-tag">--color-navy</span></div>
+      <div class="swatch-meta">
+        <div class="swatch-name">Dusty Navy</div>
+        <div class="swatch-token">color.navy</div>
+        <div class="swatch-hex">#3E4A66</div>
+        <div class="swatch-use">Primary accent. Section markers, callout borders, simulated handwriting, hover states, accent type.</div>
+      </div>
+    </div>
+    <div class="swatch swatch--lavender">
+      <div class="swatch-color"><span class="swatch-token-tag">--color-lavender</span></div>
+      <div class="swatch-meta">
+        <div class="swatch-name">Soft Lavender</div>
+        <div class="swatch-token">color.lavender</div>
+        <div class="swatch-hex">#A89DBD</div>
+        <div class="swatch-use">Secondary accent. Once per artifact. Pull-quote borders, one display moment. The quiet signature.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Supporting variants</h3>
+
+  <div class="swatch-grid">
+    <div class="swatch swatch--ink-soft">
+      <div class="swatch-color"><span class="swatch-token-tag">--color-ink-soft</span></div>
+      <div class="swatch-meta">
+        <div class="swatch-name">Ink Soft</div>
+        <div class="swatch-token">color.ink.soft</div>
+        <div class="swatch-hex">#3A3A36</div>
+        <div class="swatch-use">Secondary type. When ink is too heavy.</div>
+      </div>
+    </div>
+    <div class="swatch swatch--cream-warm">
+      <div class="swatch-color"><span class="swatch-token-tag">--color-cream-warm</span></div>
+      <div class="swatch-meta">
+        <div class="swatch-name">Cream Warm</div>
+        <div class="swatch-token">color.cream.warm</div>
+        <div class="swatch-hex">#F2EBDC</div>
+        <div class="swatch-use">Card backgrounds, callout fills. One step warmer than base cream.</div>
+      </div>
+    </div>
+    <div class="swatch swatch--cream-deep">
+      <div class="swatch-color"><span class="swatch-token-tag">--color-cream-deep</span></div>
+      <div class="swatch-meta">
+        <div class="swatch-name">Cream Deep</div>
+        <div class="swatch-token">color.cream.deep</div>
+        <div class="swatch-hex">#E5DCC4</div>
+        <div class="swatch-use">Image-frame backgrounds, code blocks, deepest cream tier.</div>
+      </div>
+    </div>
+    <div class="swatch swatch--navy-soft">
+      <div class="swatch-color"><span class="swatch-token-tag">--color-navy-soft</span></div>
+      <div class="swatch-meta">
+        <div class="swatch-name">Navy Soft</div>
+        <div class="swatch-token">color.navy.soft</div>
+        <div class="swatch-hex">#5A6680</div>
+        <div class="swatch-use">Lighter navy for secondary accents, hover states, subtle highlights.</div>
+      </div>
+    </div>
+    <div class="swatch swatch--lavender-pale">
+      <div class="swatch-color"><span class="swatch-token-tag">--color-lavender-pale</span></div>
+      <div class="swatch-meta">
+        <div class="swatch-name">Lavender Pale</div>
+        <div class="swatch-token">color.lavender.pale</div>
+        <div class="swatch-hex">#E0DAE8</div>
+        <div class="swatch-use">Soft lavender fills for callouts. Used for the one quietest moment.</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Color rules</h3>
+  <ul class="bare">
+    <li><strong>Never use pure white</strong> (<code>#FFFFFF</code>) or pure black (<code>#000000</code>). Both break the warm-alive baseline.</li>
+    <li><strong>Lavender appears once per artifact, maximum.</strong> Used everywhere, it becomes kitsch. Used sparingly, it identifies the work.</li>
+    <li><strong>Navy carries all primary accent work.</strong> If an element needs accent emphasis and it's not the lavender moment, it's navy.</li>
+    <li><strong>Photographic moments may include iridescence as content.</strong> Oil-on-water, mother-of-pearl, sunlight on glass — held in the image, not added as graphic treatment.</li>
+    <li><strong>BOTM resonance, not derivative.</strong> Cream + ink + occasional blue echoes BOTM's house language. Lavender + dusty navy is the signature.</li>
+  </ul>
+</section>
+
+<section id="typography">
+  <div class="section-num">section 03</div>
+  <h2>Typography — faces, scale, voice</h2>
+  <p class="section-sub">Two working faces, one signature face. Sans does the voice. Mono does the architecture. Hand does the signature.</p>
+
+  <h3>Faces</h3>
+
+  <div class="type-specimen">
+    <div class="type-specimen-meta">
+      <span><strong>face</strong> General Sans &middot; medium</span>
+      <span><strong>role</strong> primary display</span>
+      <span><strong>token</strong> font.sans</span>
+    </div>
+    <div class="type-display-1">A working title.</div>
+  </div>
+
+  <div class="type-specimen">
+    <div class="type-specimen-meta">
+      <span><strong>face</strong> General Sans &middot; regular, navy</span>
+      <span><strong>role</strong> secondary display, emphasis</span>
+    </div>
+    <div class="type-display-2">Held as breath — not as decoration.</div>
+  </div>
+
+  <div class="type-specimen">
+    <div class="type-specimen-meta">
+      <span><strong>face</strong> General Sans &middot; medium</span>
+      <span><strong>role</strong> section headers</span>
+    </div>
+    <div class="type-h-spec">Section — the working voice.</div>
+  </div>
+
+  <div class="type-specimen">
+    <div class="type-specimen-meta">
+      <span><strong>face</strong> General Sans &middot; regular</span>
+      <span><strong>role</strong> lift body, pull statements</span>
+    </div>
+    <div class="type-body-lift">A monthly-viable collage-essay on the interior life of reading — film and companion printed essay, tied to your literary fiction selections.</div>
+  </div>
+
+  <div class="type-specimen">
+    <div class="type-specimen-meta">
+      <span><strong>face</strong> General Sans &middot; regular</span>
+      <span><strong>role</strong> body copy</span>
+    </div>
+    <div class="type-body-primary">The primary body face. Carries the language the reader is meant to hear — the Field 3 pitch, the deck copy, the treatment notes, the one-sheet descriptions. Sans signals contemporary-editorial, not retro-literary. It reads current without reading corporate, and that's the line.</div>
+  </div>
+
+  <div class="type-specimen">
+    <div class="type-specimen-meta">
+      <span><strong>face</strong> IBM Plex Mono &middot; regular</span>
+      <span><strong>role</strong> metadata, captions, labels</span>
+      <span><strong>token</strong> font.mono</span>
+    </div>
+    <div class="type-meta-mono">Section 03 &middot; Typography &middot; April 2026 &middot; pg. 07 / 12</div>
+  </div>
+
+  <div class="type-specimen">
+    <div class="type-specimen-meta">
+      <span><strong>face</strong> IBM Plex Mono &middot; uppercase tracked</span>
+      <span><strong>role</strong> micro-labels, meta tags</span>
+    </div>
+    <div class="type-micro-mono">FIELD GUIDE &middot; VOLUME ZERO &middot; WORKING TITLE</div>
+  </div>
+
+  <div class="type-specimen">
+    <div class="type-specimen-meta">
+      <span><strong>face</strong> Reenie Beanie</span>
+      <span><strong>role</strong> simulated handwriting, marginalia</span>
+      <span><strong>token</strong> font.hand</span>
+    </div>
+    <div class="type-hand">one annotation per artifact — no more</div>
+  </div>
+
+  <h3>Type scale</h3>
+  <p>Modular scale anchored to 15px base for body (sans reads smaller than mono, so base bumps up).</p>
+
+  <ul class="bare">
+    <li><code>--type-display</code>&nbsp;&middot;&nbsp; 76px &nbsp;&middot;&nbsp; Slide 1 atmosphere, working-title moments</li>
+    <li><code>--type-h1</code>&nbsp;&middot;&nbsp; 52px &nbsp;&middot;&nbsp; Document titles, primary display</li>
+    <li><code>--type-h2</code>&nbsp;&middot;&nbsp; 36px &nbsp;&middot;&nbsp; Section headers</li>
+    <li><code>--type-h3</code>&nbsp;&middot;&nbsp; 26px &nbsp;&middot;&nbsp; Subsection headers</li>
+    <li><code>--type-h4</code>&nbsp;&middot;&nbsp; 20px &nbsp;&middot;&nbsp; Pull quotes, lift emphasis</li>
+    <li><code>--type-lift</code>&nbsp;&middot;&nbsp; 17px &nbsp;&middot;&nbsp; Emphasized body, lead paragraphs</li>
+    <li><code>--type-body</code>&nbsp;&middot;&nbsp; 15px &nbsp;&middot;&nbsp; Body copy (sans)</li>
+    <li><code>--type-base</code>&nbsp;&middot;&nbsp; 13px &nbsp;&middot;&nbsp; Standard mono body</li>
+    <li><code>--type-small</code>&nbsp;&middot;&nbsp; 11px &nbsp;&middot;&nbsp; Captions, metadata</li>
+    <li><code>--type-micro</code>&nbsp;&middot;&nbsp; 10px &nbsp;&middot;&nbsp; Meta tags, micro-labels (uppercase, tracked)</li>
+  </ul>
+</section>
+
+<section id="spatial">
+  <div class="section-num">section 04</div>
+  <h2>Spatial system — spacing, rules, density</h2>
+  <p class="section-sub">The grid is invisible, but it exists. Spacing is generous. Rules carry hierarchy. Density varies by artifact.</p>
+
+  <h3>Spacing scale</h3>
+  <p>4px base unit. Used for all margins, padding, gaps. Named for hierarchy, not for size.</p>
+
+  <ul class="bare">
+    <li><code>--space-1</code>&nbsp;&middot;&nbsp; 4px &nbsp;&middot;&nbsp; tightest detail spacing</li>
+    <li><code>--space-2</code>&nbsp;&middot;&nbsp; 8px &nbsp;&middot;&nbsp; tight pairing</li>
+    <li><code>--space-3</code>&nbsp;&middot;&nbsp; 12px &nbsp;&middot;&nbsp; component internal spacing</li>
+    <li><code>--space-4</code>&nbsp;&middot;&nbsp; 16px &nbsp;&middot;&nbsp; standard rhythm</li>
+    <li><code>--space-5</code>&nbsp;&middot;&nbsp; 24px &nbsp;&middot;&nbsp; section sub-spacing</li>
+    <li><code>--space-6</code>&nbsp;&middot;&nbsp; 32px &nbsp;&middot;&nbsp; major component spacing</li>
+    <li><code>--space-7</code>&nbsp;&middot;&nbsp; 48px &nbsp;&middot;&nbsp; section spacing</li>
+    <li><code>--space-8</code>&nbsp;&middot;&nbsp; 72px &nbsp;&middot;&nbsp; major section breaks</li>
+    <li><code>--space-9</code>&nbsp;&middot;&nbsp; 112px &nbsp;&middot;&nbsp; document-level breaks</li>
+  </ul>
+
+  <h3>Rules</h3>
+
+  <div class="component-card">
+    <div class="component-card-header">
+      <div class="component-card-title">rule.thin</div>
+      <div class="component-card-token">1px solid color.rule.soft</div>
+    </div>
+    <div class="component-card-body">
+      <div class="component-card-demo">
+        <div class="demo-rule"></div>
+      </div>
+      <div class="component-card-notes">Component dividers. Card edges. Subtle hierarchy. <em>Used most often.</em></div>
+    </div>
+  </div>
+
+  <div class="component-card">
+    <div class="component-card-header">
+      <div class="component-card-title">rule.accent</div>
+      <div class="component-card-token">2px solid color.navy</div>
+    </div>
+    <div class="component-card-body">
+      <div class="component-card-demo">
+        <div class="demo-rule demo-rule--accent"></div>
+      </div>
+      <div class="component-card-notes">Section emphasis. Callout left-borders. <em>Maximum 2–3 per page.</em></div>
+    </div>
+  </div>
+
+  <div class="component-card">
+    <div class="component-card-header">
+      <div class="component-card-title">rule.dashed</div>
+      <div class="component-card-token">1px dashed color.rule.soft</div>
+    </div>
+    <div class="component-card-body">
+      <div class="component-card-demo">
+        <div class="demo-rule demo-rule--dashed"></div>
+      </div>
+      <div class="component-card-notes">Soft dividers within components. Visually quieter than thin rule. <em>Indicates continuation, not break.</em></div>
+    </div>
+  </div>
+
+  <h3>Density principles</h3>
+  <ul class="bare">
+    <li><strong>Slide 1 (atmosphere)</strong> — very low density. One image, one phrase. Cream carries most of the page.</li>
+    <li><strong>Slide 2 (concept)</strong> — medium density. Title, lift quote, body paragraph, breath room.</li>
+    <li><strong>Slide 3 (sample episode)</strong> — highest density. Multi-fragment grid, image cells, captions. Earned density — the slide that proves the work.</li>
+    <li><strong>Slide 4 (system)</strong> — medium density. Five-stop diagram with breath between elements.</li>
+    <li><strong>Slide 5 (close)</strong> — low density. Bio + closing line. Returns to breath.</li>
+  </ul>
+</section>
+
+<section id="components">
+  <div class="section-num">section 05</div>
+  <h2>Components — the working vocabulary</h2>
+  <p class="section-sub">Reusable elements that appear across pitch artifacts. Each has a clear job, a token name, and rules of use.</p>
+
+  <div class="component-card">
+    <div class="component-card-header">
+      <div class="component-card-title">callout.accent</div>
+      <div class="component-card-token">component.callout.accent</div>
+    </div>
+    <div class="component-card-body">
+      <div class="component-card-demo">
+        <div class="demo-callout">
+          <div class="demo-callout-label">Note</div>
+          The standard accent callout. Cream fill, navy left-border. Used for key information, sidebars, structural emphasis.
+        </div>
+      </div>
+      <div class="component-card-notes">Use for primary structural emphasis. <em>2–3 per artifact maximum.</em></div>
+    </div>
+  </div>
+
+  <div class="component-card">
+    <div class="component-card-header">
+      <div class="component-card-title">callout.lavender</div>
+      <div class="component-card-token">component.callout.lavender</div>
+    </div>
+    <div class="component-card-body">
+      <div class="component-card-demo">
+        <div class="demo-callout demo-callout--lavender">
+          <div class="demo-callout-label">Quietly held</div>
+          The lavender callout. Lavender-pale fill, lavender left-border. The signature moment.
+        </div>
+      </div>
+      <div class="component-card-notes">Used <em>once per artifact maximum.</em> The sparing-use rule for lavender applies here strictly.</div>
+    </div>
+  </div>
+
+  <div class="component-card">
+    <div class="component-card-header">
+      <div class="component-card-title">pull-quote</div>
+      <div class="component-card-token">component.pullquote</div>
+    </div>
+    <div class="component-card-body">
+      <div class="component-card-demo">
+        <div class="demo-pull-quote">
+          The reading life of any woman, anywhere — filmed and written with craft.
+        </div>
+      </div>
+      <div class="component-card-notes">Sans regular at h4, lavender border. The line you want them to remember. <em>One per artifact, in the position of strongest emphasis.</em></div>
+    </div>
+  </div>
+
+  <div class="component-card">
+    <div class="component-card-header">
+      <div class="component-card-title">image-frame</div>
+      <div class="component-card-token">component.imageframe</div>
+    </div>
+    <div class="component-card-body">
+      <div class="component-card-demo">
+        <div class="demo-image-frame">
+          placeholder — image goes here
+        </div>
+      </div>
+      <div class="component-card-notes">Cream-deep fill with thin rule. Aspect ratios held to 4:3 or 1:1 for grid coherence. <em>Always captioned in mono micro-type below.</em></div>
+    </div>
+  </div>
+
+  <div class="component-card">
+    <div class="component-card-header">
+      <div class="component-card-title">meta-line</div>
+      <div class="component-card-token">component.metaline</div>
+    </div>
+    <div class="component-card-body">
+      <div class="component-card-demo">
+        <div class="demo-meta-line">
+          <span>Section 05 &middot; Components</span>
+          <span>pg. 07 / 12</span>
+        </div>
+      </div>
+      <div class="component-card-notes">Mono micro-type, uppercase, tracked. Used for slide footers, page meta, section markers. <em>Never decorative — always functional.</em></div>
+    </div>
+  </div>
+
+  <div class="component-card">
+    <div class="component-card-header">
+      <div class="component-card-title">hand-annotation</div>
+      <div class="component-card-token">component.handnote</div>
+    </div>
+    <div class="component-card-body">
+      <div class="component-card-demo">
+        <div class="demo-hand-annotation">read aloud — check the rhythm</div>
+      </div>
+      <div class="component-card-notes">Reenie Beanie, navy color, slight rotation. <em>One annotation per artifact, max two.</em> Adds the layer of voice the typeset system can't carry.</div>
+    </div>
+  </div>
+</section>
+
+<section id="voice">
+  <div class="section-num">section 06</div>
+  <h2>Voice &amp; register — how this thing sounds</h2>
+  <p class="section-sub">Visual register and verbal register are the same thing, expressed in different mediums. The voice rules apply to all written language across all artifacts.</p>
+
+  <h3>The register, in one paragraph</h3>
+  <p class="lift">Direct, considered, unfussy. Sentences earn their length. Trust the reader. Avoid pitch-deck corporate language at all costs — "synergy," "leverage," "engagement metrics," "audience" used as a faceless mass. Speak about <em>readers</em>, not <em>users</em>; about <em>the work</em>, not <em>content</em>; about <em>readers carrying a book around all month</em>, not <em>monthly active engagement.</em></p>
+
+  <h3>Voice rules</h3>
+  <ul class="bare">
+    <li><strong>Open with sensibility, not concept.</strong> The first sentence puts the reader inside the register. "I propose to make..." is dead on arrival.</li>
+    <li><strong>Use the word <em>reader</em> when you mean reader.</strong> Never <em>user, audience, consumer, viewer.</em></li>
+    <li><strong>Use the word <em>work</em> when you mean work.</strong> Never <em>content, asset, deliverable, IP.</em></li>
+    <li><strong>Specifics over abstractions.</strong> "A balcony in Paris, smoking, talking to a friend" beats "an immersive contemplative reading experience."</li>
+    <li><strong>Name authors and books by name.</strong> Madeline Cash, Aja Gabel, Kiran Millwood Hargrave, Emma Cline. Specificity is credibility.</li>
+    <li><strong>Cut every adverb that doesn't earn its place.</strong> Especially <em>really, truly, deeply, profoundly.</em></li>
+    <li><strong>End on a settled line, not a conclusive one.</strong> The piece is contemplative; the closing line should rest, not declare.</li>
+  </ul>
+
+  <h3>One pull-quote, anchoring the voice</h3>
+
+  <div class="demo-pull-quote">
+    Sitting out on a balcony in Paris, watching the sitting reading and thinking and drinking coffee and smoking and writing in your journal — how it feels to hold a book close to your heart, your mind, for it to inspire deep thought, feeling, and discussion, how it connects to the world.
+  </div>
+</section>
+
+<section id="dosanddonts">
+  <div class="section-num">section 07</div>
+  <h2>Do's &amp; don'ts</h2>
+  <p class="section-sub">The shortest, most-violatable rules. Reference before every applied build.</p>
+
+  <div class="doxdont">
+    <div class="do-card">
+      <div class="doxdont-label">Do</div>
+      <ul class="bare">
+        <li>Lead with breath. Slide 1 should hold one image and one short phrase, with cream carrying most of the page.</li>
+        <li>Use sans for all primary working type — body, display, headers.</li>
+        <li>Use mono for all metadata, captions, labels, file names, section markers.</li>
+        <li>Cite specific authors, specific books, specific lines.</li>
+        <li>Pair every image with a mono micro-caption.</li>
+        <li>Allow asymmetry — nothing needs to be centered.</li>
+        <li>Use the lavender once per artifact, deliberately.</li>
+        <li>Use the handwritten annotation once per artifact, deliberately.</li>
+      </ul>
+    </div>
+    <div class="dont-card">
+      <div class="doxdont-label">Don't</div>
+      <ul class="bare">
+        <li>Use pure white or pure black anywhere.</li>
+        <li>Use lavender on more than one element per artifact.</li>
+        <li>Center-align everything. Asymmetry signals art-direction; symmetry signals corporate template.</li>
+        <li>Open Field 3 with "I propose," "I want to make," or "My idea is."</li>
+        <li>Use any sans-serif other than General Sans. No Inter, no system sans, no Helvetica fallback.</li>
+        <li>Use serif typefaces anywhere in the pitch.</li>
+        <li>Drop in stock photography. If a real image isn't available, use a captioned placeholder frame.</li>
+        <li>Use the words <em>content, audience, deliverable, asset, leverage, synergy</em> anywhere.</li>
+        <li>Include a headshot of Mia. The deck does not contain a headshot. The bio carries credibility.</li>
+        <li>Add gradients, drop shadows, soft glows, or any 2010s product-design effects.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="applied">
+  <div class="section-num">section 08</div>
+  <h2>Applied — where this gets used</h2>
+  <p class="section-sub">The four pitch artifacts that consume this design system, and how each one applies the tokens.</p>
+
+  <h3>01 · Pitch deck (5 slides)</h3>
+  <p>PDF, hosted on Drive, link embedded in Field 3. Built in Canva using these tokens. Each slide applies the system to a different density level (see Spatial — Density principles).</p>
+
+  <h3>02 · Field 3 written pitch</h3>
+  <p>Lives inline in the application as plain text. The voice rules and register principles apply — even though typography doesn't render in the form field, the <em>writing</em> embodies the system.</p>
+
+  <h3>03 · Video sensibility one-sheet</h3>
+  <p>One page. Image-frame grid (placeholder-captioned), single pull-quote describing the film's air, brief paragraph of voice/treatment notes. Uses the standard component vocabulary at low density.</p>
+
+  <h3>04 · Zine spread one-sheet</h3>
+  <p>One double-page spread mockup of the companion essay-object, structured as event-score / spatial poem. Uses sans and mono together, plus the option of a concrete-poetry moment as the form's signature.</p>
+
+  <p class="lift">All four artifacts consume the same token system. If a future BOTM piece extends the work, the system extends with it — same colors, same faces, same components, same voice.</p>
+</section>
+
+<footer>
+  <p>botm_design_system / v2.html &middot; April 21, 2026</p>
+  <p>For ingestion by Claude Design and reference across all pitch artifacts. Tokens, components, and rules are the source of truth; applied artifacts (deck, video one-sheet, zine spread) consume from this system.</p>
+  <div class="footer-meta">
+    <span>v2 &middot; design system</span>
+    <span>BOTM creator-in-residence</span>
+    <span>mia jones</span>
+  </div>
+</footer>
+
+</body>
+</html>

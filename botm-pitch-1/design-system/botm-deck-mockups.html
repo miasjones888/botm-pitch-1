@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marginalia · pitch deck mockups v4</title>
+
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap" rel="stylesheet">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Reenie+Beanie&display=swap');
+
+  :root {
+    --color-ink:           #1C1C1A;
+    --color-ink-soft:      #3A3A36;
+    --color-cream:         #FAF6ED;
+    --color-cream-warm:    #F2EBDC;
+    --color-cream-deep:    #E5DCC4;
+    --color-navy:          #3E4A66;
+    --color-navy-soft:     #5A6680;
+    --color-lavender:      #A89DBD;
+    --color-lavender-pale: #E0DAE8;
+    --color-rule-soft:     #C8BFA8;
+    --color-muted:         #7A7466;
+    --color-faint:         #A8A18E;
+
+    --font-sans: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    --font-hand: 'Reenie Beanie', cursive;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    background: #1A1A18;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: #7A7466;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    z-index: 10;
+    border-bottom: 1px solid #2C2C2A;
+    background: #1A1A18;
+  }
+
+  .top-bar-left {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .top-bar-left strong {
+    color: #C8BFA8;
+    font-weight: 500;
+  }
+
+  .top-bar-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    color: #5A5650;
+  }
+
+  .alt-toggle {
+    background: transparent;
+    border: 1px solid #444440;
+    color: #C8BFA8;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: none;
+  }
+
+  .alt-toggle.visible { display: inline-block; }
+
+  .alt-toggle:hover {
+    border-color: #A89DBD;
+    color: #A89DBD;
+    background: #252522;
+  }
+
+  .alt-toggle.active {
+    background: #A89DBD;
+    color: #1A1A18;
+    border-color: #A89DBD;
+  }
+
+  .toggle-notes {
+    background: transparent;
+    border: 1px solid #444440;
+    color: #A89DBD;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .toggle-notes:hover {
+    border-color: #A89DBD;
+    background: #252522;
+  }
+
+  .toggle-notes.active {
+    background: #A89DBD;
+    color: #1A1A18;
+    border-color: #A89DBD;
+  }
+
+  .deck {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 56px 64px 88px;
+  }
+
+  .stage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .slide-container {
+    width: 100%;
+    max-width: min(calc(100vw - 128px), calc((100vh - 200px) * 16 / 9));
+    aspect-ratio: 16 / 9;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    background: var(--color-cream);
+    overflow: hidden;
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,0.6), 0 12px 24px -12px rgba(0,0,0,0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    container-type: size;
+    container-name: slide;
+  }
+
+  .slide.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .slide::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.11 0 0 0 0 0.11 0 0 0 0 0.10 0 0 0 0.04 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode: multiply;
+  }
+
+  .slide-inner {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* SLIDE 01                                                         */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .slide-01 .slide-inner {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 0;
+    height: 100%;
+  }
+
+  .s01-image-col {
+    background: var(--color-cream-deep);
+    height: 100%;
+    position: relative;
+    border-right: 1px solid var(--color-rule-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.95cqw;
+    font-style: italic;
+    text-align: center;
+    padding: 0 2cqw;
+  }
+
+  .s01-image-col::before {
+    content: 'image — atmospheric · domestic interior · real natural light';
+    position: absolute;
+    top: 1.5cqw;
+    left: 1.5cqw;
+    font-family: var(--font-mono);
+    font-size: 0.7cqw;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-faint);
+    font-style: normal;
+    text-align: left;
+    max-width: 30ch;
+  }
+
+  .s01-text-col {
+    padding: 5cqw 5cqw 5cqw 4.5cqw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .s01-top {
+    display: flex;
+    flex-direction: column;
+    gap: 2cqw;
+    margin-top: 4cqw;
+  }
+
+  .s01-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.85cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    line-height: 1.5;
+    max-width: 30ch;
+  }
+
+  .s01-eyebrow strong {
+    color: var(--color-navy);
+    font-weight: 500;
+  }
+
+  .s01-title {
+    font-family: var(--font-sans);
+    font-size: 9.4cqw;
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.045em;
+    color: var(--color-ink);
+  }
+
+  .s01-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5cqw;
+    margin-bottom: 1.5cqw;
+  }
+
+  .s01-tagline {
+    font-family: var(--font-sans);
+    font-size: 1.6cqw;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--color-ink-soft);
+    max-width: 28ch;
+    letter-spacing: -0.005em;
+  }
+
+  .s01-byline {
+    font-family: var(--font-mono);
+    font-size: 0.85cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.06em;
+    padding-top: 1.5cqw;
+    border-top: 1px solid var(--color-rule-soft);
+    max-width: 36ch;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* SLIDE 02                                                         */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .slide-02 .slide-inner {
+    padding: 5.5cqw 5.6cqw;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 3cqw;
+  }
+
+  .s02-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 1.5cqw;
+    border-bottom: 1px solid var(--color-rule-soft);
+  }
+
+  .s02-top-label {
+    font-family: var(--font-mono);
+    font-size: 0.9cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .s02-top-label strong {
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+
+  .s02-top-meta {
+    font-family: var(--font-mono);
+    font-size: 0.85cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.04em;
+  }
+
+  .s02-grid {
+    display: grid;
+    grid-template-columns: 2.2fr 1fr;
+    gap: 4cqw;
+    align-items: start;
+  }
+
+  .s02-quote-col {
+    position: relative;
+    padding-left: 2.8cqw;
+  }
+
+  .s02-quote-col::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5cqw;
+    bottom: 0.5cqw;
+    width: 3px;
+    background: var(--color-lavender);
+  }
+
+  .s02-pull-quote {
+    font-family: var(--font-sans);
+    font-size: 4.6cqw;
+    font-weight: 400;
+    line-height: 1.08;
+    color: var(--color-ink);
+    letter-spacing: -0.025em;
+    max-width: 18ch;
+  }
+
+  .s02-pull-quote em {
+    font-style: normal;
+    color: var(--color-navy);
+  }
+
+  .s02-body-col {
+    padding-top: 0.8cqw;
+    display: flex;
+    flex-direction: column;
+    gap: 2cqw;
+  }
+
+  .s02-body-label {
+    font-family: var(--font-mono);
+    font-size: 0.78cqw;
+    color: var(--color-navy);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .s02-body {
+    font-family: var(--font-sans);
+    font-size: 1.18cqw;
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--color-ink-soft);
+  }
+
+  .s02-hand-note {
+    font-family: var(--font-hand);
+    font-size: 2.4cqw;
+    color: var(--color-navy);
+    transform: rotate(-2.5deg);
+    align-self: flex-start;
+    line-height: 1.1;
+    margin-top: 0.5cqw;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* SLIDE 03                                                         */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .slide-03 .slide-inner {
+    padding: 4.5cqw 5.6cqw;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .s03-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2.6cqw;
+    padding-bottom: 1.4cqw;
+    border-bottom: 1px solid var(--color-rule-soft);
+  }
+
+  .s03-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4cqw;
+  }
+
+  .s03-header-meta {
+    font-family: var(--font-mono);
+    font-size: 0.85cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .s03-header-meta strong {
+    color: var(--color-navy);
+    font-weight: 500;
+  }
+
+  .s03-header-title {
+    font-family: var(--font-sans);
+    font-size: 2.7cqw;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+  }
+
+  .s03-header-title em {
+    font-style: italic;
+    color: var(--color-ink);
+  }
+
+  .s03-header-byline {
+    font-family: var(--font-mono);
+    font-size: 0.9cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.04em;
+    text-align: right;
+    line-height: 1.5;
+  }
+
+  .s03-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.9cqw;
+    margin-bottom: 2.2cqw;
+  }
+
+  .s03-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6cqw;
+  }
+
+  .s03-cell-image {
+    aspect-ratio: 1/1;
+    background: var(--color-cream-deep);
+    border: 1px solid var(--color-rule-soft);
+    position: relative;
+  }
+
+  .s03-cell-image::before {
+    content: 'image';
+    position: absolute;
+    top: 0.6cqw;
+    left: 0.6cqw;
+    font-family: var(--font-mono);
+    font-size: 0.65cqw;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--color-faint);
+  }
+
+  .s03-cell-num {
+    font-family: var(--font-mono);
+    font-size: 0.72cqw;
+    color: var(--color-navy);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 0.2cqw;
+  }
+
+  .s03-cell-title {
+    font-family: var(--font-sans);
+    font-size: 1.15cqw;
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: -0.005em;
+    line-height: 1.2;
+  }
+
+  .s03-cell-body {
+    font-family: var(--font-sans);
+    font-size: 0.98cqw;
+    font-weight: 400;
+    color: var(--color-ink-soft);
+    line-height: 1.45;
+  }
+
+  .s03-companion {
+    padding: 1.5cqw 2cqw;
+    background: var(--color-lavender-pale);
+    border-left: 2px solid var(--color-lavender);
+    display: flex;
+    align-items: baseline;
+    gap: 2cqw;
+  }
+
+  .s03-companion-label {
+    font-family: var(--font-mono);
+    font-size: 0.72cqw;
+    color: var(--color-navy);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .s03-companion-text {
+    font-family: var(--font-sans);
+    font-size: 1.05cqw;
+    font-weight: 400;
+    color: var(--color-ink);
+    line-height: 1.5;
+  }
+
+  .s03-companion-text em {
+    font-style: italic;
+    color: var(--color-navy);
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* SLIDE 04                                                         */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .slide-04 .slide-inner {
+    padding: 5cqw 5.6cqw;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .s04-header-row {
+    margin-bottom: 4.5cqw;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 4.5cqw;
+    align-items: end;
+    padding-bottom: 1.5cqw;
+    border-bottom: 1px solid var(--color-rule-soft);
+  }
+
+  .s04-header-meta {
+    font-family: var(--font-mono);
+    font-size: 0.85cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 1cqw;
+  }
+
+  .s04-header-meta strong {
+    color: var(--color-navy);
+    font-weight: 500;
+  }
+
+  .s04-title {
+    font-family: var(--font-sans);
+    font-size: 4cqw;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    color: var(--color-ink);
+    max-width: 18ch;
+  }
+
+  .s04-subtitle {
+    font-family: var(--font-sans);
+    font-size: 1.18cqw;
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--color-muted);
+    max-width: 36ch;
+    padding-bottom: 0.5cqw;
+  }
+
+  .s04-stops {
+    display: grid;
+    grid-template-columns: 1.7fr 1fr 1fr 1fr 0.85fr;
+    gap: 2cqw;
+    flex: 1;
+  }
+
+  .s04-stop {
+    display: flex;
+    flex-direction: column;
+    gap: 0.95cqw;
+    padding-top: 1.6cqw;
+    border-top: 2px solid var(--color-navy);
+    position: relative;
+  }
+
+  .s04-stop:nth-child(1) {
+    padding-right: 1.5cqw;
+    border-right: 1px dashed var(--color-rule-soft);
+  }
+
+  .s04-stop:last-child {
+    border-top-color: var(--color-lavender);
+    padding-left: 1.5cqw;
+    border-left: 1px dashed var(--color-rule-soft);
+    margin-left: 1cqw;
+  }
+
+  .s04-stop-num {
+    font-family: var(--font-mono);
+    font-size: 0.78cqw;
+    color: var(--color-navy);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .s04-stop:last-child .s04-stop-num {
+    color: var(--color-lavender);
+  }
+
+  .s04-stop-title {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+    font-size: 1.5cqw;
+  }
+
+  .s04-stop:nth-child(1) .s04-stop-title {
+    font-size: 2.4cqw;
+    letter-spacing: -0.02em;
+  }
+
+  .s04-stop-body {
+    font-family: var(--font-sans);
+    font-size: 0.98cqw;
+    font-weight: 400;
+    color: var(--color-ink-soft);
+    line-height: 1.5;
+  }
+
+  .s04-stop:nth-child(1) .s04-stop-body {
+    font-size: 1.18cqw;
+    color: var(--color-ink);
+  }
+
+  .s04-stop-meta {
+    font-family: var(--font-mono);
+    font-size: 0.7cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-top: auto;
+    padding-top: 0.95cqw;
+    border-top: 1px dashed var(--color-rule-soft);
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* SLIDE 05 — POSTCARD (alt A, default)                             */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .slide-05.postcard .slide-inner {
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    height: 100%;
+  }
+
+  /* Postal-style outer frame */
+  .slide-05.postcard .slide-inner::before {
+    content: '';
+    position: absolute;
+    inset: 4cqw 4cqw 4cqw 4cqw;
+    border: 1px solid var(--color-rule-soft);
+    pointer-events: none;
+  }
+
+  /* ── left side: the message side */
+  .s05-message-side {
+    padding: 6cqw 4cqw 6cqw 6cqw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+  }
+
+  .s05-message-meta {
+    font-family: var(--font-mono);
+    font-size: 0.78cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 2cqw;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 1cqw;
+    border-bottom: 1px dashed var(--color-rule-soft);
+  }
+
+  .s05-message-meta strong {
+    color: var(--color-navy);
+    font-weight: 500;
+  }
+
+  .s05-message-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2cqw;
+  }
+
+  .s05-message-line {
+    font-family: var(--font-hand);
+    font-size: 4.2cqw;
+    color: var(--color-ink);
+    line-height: 1.05;
+    transform: rotate(-1deg);
+    max-width: 14ch;
+  }
+
+  .s05-message-line em {
+    font-style: italic;
+    color: var(--color-navy);
+  }
+
+  .s05-message-sign {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8cqw;
+    margin-top: 2cqw;
+    align-self: flex-end;
+    text-align: right;
+  }
+
+  .s05-message-sign-dash {
+    font-family: var(--font-hand);
+    font-size: 2.2cqw;
+    color: var(--color-navy);
+    transform: rotate(-2deg);
+    line-height: 1;
+  }
+
+  .s05-message-sign-name {
+    font-family: var(--font-hand);
+    font-size: 2.6cqw;
+    color: var(--color-navy);
+    transform: rotate(-3deg);
+    line-height: 1;
+  }
+
+  /* ── center vertical rule, like a real postcard divider */
+  .s05-divider {
+    position: absolute;
+    left: 50%;
+    top: 8cqw;
+    bottom: 8cqw;
+    width: 1px;
+    border-left: 1px dashed var(--color-rule-soft);
+    z-index: 1;
+  }
+
+  /* ── right side: the address side */
+  .s05-address-side {
+    padding: 6cqw 6cqw 6cqw 4cqw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* postage stamp area top-right */
+  .s05-stamp {
+    align-self: flex-end;
+    width: 8cqw;
+    height: 9.5cqw;
+    background: var(--color-lavender-pale);
+    border: 1px solid var(--color-lavender);
+    padding: 0.8cqw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .s05-stamp::before {
+    content: '';
+    position: absolute;
+    inset: 0.4cqw;
+    border: 1px dashed var(--color-lavender);
+    pointer-events: none;
+  }
+
+  .s05-stamp-top {
+    font-family: var(--font-mono);
+    font-size: 0.6cqw;
+    color: var(--color-navy);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+    font-weight: 500;
+  }
+
+  .s05-stamp-mark {
+    font-family: var(--font-sans);
+    font-size: 1.8cqw;
+    color: var(--color-navy);
+    text-align: center;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    z-index: 1;
+    position: relative;
+    line-height: 1;
+  }
+
+  .s05-stamp-bottom {
+    font-family: var(--font-mono);
+    font-size: 0.55cqw;
+    color: var(--color-navy);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    z-index: 1;
+    position: relative;
+  }
+
+  /* address block */
+  .s05-address {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4cqw;
+    margin-top: -2cqw;
+  }
+
+  .s05-address-label {
+    font-family: var(--font-mono);
+    font-size: 0.7cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 0.6cqw;
+    padding-bottom: 0.4cqw;
+    border-bottom: 1px solid var(--color-rule-soft);
+    width: fit-content;
+    padding-right: 4cqw;
+  }
+
+  .s05-address-line-1 {
+    font-family: var(--font-sans);
+    font-size: 1.6cqw;
+    font-weight: 500;
+    color: var(--color-ink);
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+
+  .s05-address-line-2 {
+    font-family: var(--font-mono);
+    font-size: 0.85cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.06em;
+    margin-top: 0.4cqw;
+  }
+
+  .s05-address-line-3 {
+    font-family: var(--font-sans);
+    font-size: 0.95cqw;
+    color: var(--color-ink-soft);
+    line-height: 1.5;
+    margin-top: 1.2cqw;
+    max-width: 36ch;
+  }
+
+  /* contact lines like postal services */
+  .s05-postmark {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3cqw;
+    margin-top: 1.5cqw;
+    padding-top: 1cqw;
+    border-top: 1px dashed var(--color-rule-soft);
+  }
+
+  .s05-postmark-row {
+    display: flex;
+    gap: 1cqw;
+    font-family: var(--font-mono);
+    font-size: 0.78cqw;
+    color: var(--color-ink);
+    letter-spacing: 0.04em;
+  }
+
+  .s05-postmark-key {
+    color: var(--color-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.65cqw;
+    min-width: 5cqw;
+    padding-top: 0.2cqw;
+  }
+
+  /* corner postmark */
+  .s05-corner-stamp {
+    position: absolute;
+    bottom: 6.5cqw;
+    right: 6cqw;
+    width: 7cqw;
+    height: 7cqw;
+    border: 1px dashed var(--color-navy-soft);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-12deg);
+    opacity: 0.45;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .s05-corner-stamp-text {
+    font-family: var(--font-mono);
+    font-size: 0.6cqw;
+    color: var(--color-navy);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.2;
+    font-weight: 500;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* SLIDE 05 — MINIMAL CLOSE (alt B)                                 */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .slide-05.minimal .slide-inner {
+    padding: 5cqw 5.6cqw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3cqw;
+  }
+
+  .s05min-close-line {
+    font-family: var(--font-sans);
+    font-size: 10cqw;
+    font-weight: 500;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    color: var(--color-ink);
+    max-width: 13ch;
+    padding-left: 2cqw;
+  }
+
+  .s05min-close-line em {
+    font-style: normal;
+    color: var(--color-navy);
+  }
+
+  .s05min-hand-sign {
+    font-family: var(--font-hand);
+    font-size: 3cqw;
+    color: var(--color-navy);
+    transform: rotate(-2deg);
+    line-height: 1.1;
+    margin-left: 12cqw;
+    margin-top: 1cqw;
+  }
+
+  .s05min-byline {
+    position: absolute;
+    bottom: 4cqw;
+    left: 5.6cqw;
+    right: 5.6cqw;
+    font-family: var(--font-mono);
+    font-size: 0.78cqw;
+    color: var(--color-muted);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding-top: 1cqw;
+    border-top: 1px solid var(--color-rule-soft);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .s05min-byline strong {
+    color: var(--color-ink);
+    font-weight: 500;
+  }
+
+  /* ════════════════════════════════════════════════════════════════ */
+  /* NAV                                                              */
+  /* ════════════════════════════════════════════════════════════════ */
+
+  .nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 10;
+    border-top: 1px solid #2C2C2A;
+    background: #1A1A18;
+  }
+
+  .nav-arrow {
+    background: transparent;
+    border: 1px solid #444440;
+    color: #C8BFA8;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.15s;
+    min-width: 100px;
+  }
+
+  .nav-arrow:hover:not(:disabled) {
+    border-color: #A89DBD;
+    color: #A89DBD;
+    background: #252522;
+  }
+
+  .nav-arrow:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+  }
+
+  .nav-dots {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+    background: #444440;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    padding: 0;
+    border-radius: 50%;
+  }
+
+  .nav-dot:hover { background: #7A7466; }
+
+  .nav-dot.active {
+    background: #A89DBD;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  .notes-panel {
+    position: fixed;
+    bottom: 56px;
+    left: 0;
+    right: 0;
+    background: #232320;
+    border-top: 1px solid #3A3A36;
+    padding: 24px 32px;
+    transform: translateY(100%);
+    transition: transform 0.25s ease;
+    z-index: 9;
+    max-height: 40vh;
+    overflow-y: auto;
+  }
+
+  .notes-panel.open {
+    transform: translateY(0);
+  }
+
+  .notes-content {
+    display: none;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .notes-content.active { display: block; }
+
+  .notes-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: #A89DBD;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .notes-content h3 {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 500;
+    color: #E8E0C8;
+    margin-bottom: 12px;
+    letter-spacing: -0.005em;
+  }
+
+  .notes-content p {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #A8A18E;
+    line-height: 1.65;
+    margin-bottom: 8px;
+  }
+
+  .notes-content em {
+    color: #C8BFA8;
+    font-style: normal;
+    font-weight: 500;
+  }
+
+  @media (max-width: 720px) {
+    .deck { padding: 48px 12px 64px; }
+    .top-bar { padding: 0 12px; font-size: 9px; }
+    .top-bar-left { gap: 12px; }
+    .top-bar-right { gap: 8px; }
+    .alt-toggle, .toggle-notes { font-size: 8px; padding: 4px 8px; }
+    .nav-bar { padding: 0 12px; height: 48px; }
+    .nav-arrow { min-width: 70px; padding: 6px 10px; font-size: 10px; }
+    .notes-panel { padding: 16px; bottom: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="top-bar-left">
+    <span><strong>Marginalia</strong></span>
+    <span>·</span>
+    <span>pitch deck mockups</span>
+    <span>·</span>
+    <span>v4</span>
+  </div>
+  <div class="top-bar-right">
+    <span><span id="current">01</span> / 05</span>
+    <button class="alt-toggle" id="altToggle">close: postcard</button>
+    <button class="toggle-notes" id="toggleNotes">show notes</button>
+  </div>
+</div>
+
+<div class="deck">
+  <div class="stage">
+    <div class="slide-container">
+
+      <!-- ═════════════════════════════════════════════════════ -->
+      <!-- SLIDE 01                                               -->
+      <!-- ═════════════════════════════════════════════════════ -->
+      <div class="slide slide-01 active" data-slide="1">
+        <div class="slide-inner">
+          <div class="s01-image-col">
+            (atmospheric image — to be sourced)
+          </div>
+          <div class="s01-text-col">
+            <div class="s01-top">
+              <div class="s01-eyebrow">a creator-in-residence proposal — <strong>for Book of the Month</strong></div>
+              <h1 class="s01-title">Marginalia.</h1>
+            </div>
+            <div class="s01-bottom">
+              <p class="s01-tagline">A monthly collage-essay on the interior life of reading.</p>
+              <div class="s01-byline">Mia Jones — April 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═════════════════════════════════════════════════════ -->
+      <!-- SLIDE 02                                               -->
+      <!-- ═════════════════════════════════════════════════════ -->
+      <div class="slide slide-02" data-slide="2">
+        <div class="slide-inner">
+          <div class="s02-top">
+            <div class="s02-top-label"><strong>Marginalia</strong> — what the work is</div>
+            <div class="s02-top-meta">a monthly piece · film + printed essay</div>
+          </div>
+          <div class="s02-grid">
+            <div class="s02-quote-col">
+              <p class="s02-pull-quote">The reading life of any woman, anywhere — <em>filmed and written with craft.</em></p>
+            </div>
+            <div class="s02-body-col">
+              <div class="s02-body-label">form</div>
+              <p class="s02-body">A monthly collage-essay held by a characterized reader-figure. One book as occasion, the reading as subject. A 6–9 minute film, collaged across image, voice, writing, and sound. A companion printed essay that ships in the BOTM box. Three short cuts for social.</p>
+              <div class="s02-hand-note">tied to Volume 0's lane —<br>not the whole catalog</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═════════════════════════════════════════════════════ -->
+      <!-- SLIDE 03                                               -->
+      <!-- ═════════════════════════════════════════════════════ -->
+      <div class="slide slide-03" data-slide="3">
+        <div class="slide-inner">
+          <div class="s03-header-row">
+            <div class="s03-header-left">
+              <div class="s03-header-meta"><strong>sample episode</strong> — for a real BOTM book</div>
+              <h2 class="s03-header-title"><em>Lost Lambs</em> by Madeline Cash</h2>
+            </div>
+            <div class="s03-header-byline">BOTM · January 2026<br>treatment · drift movements</div>
+          </div>
+          <div class="s03-grid">
+            <div class="s03-cell">
+              <div class="s03-cell-image"></div>
+              <div class="s03-cell-num">drift 01 · interior</div>
+              <div class="s03-cell-title">The line that catches</div>
+              <p class="s03-cell-body">Open on a held shot — a hand on the book, a window beyond. The voice reads one line aloud. The line opens the room.</p>
+            </div>
+            <div class="s03-cell">
+              <div class="s03-cell-image"></div>
+              <div class="s03-cell-num">drift 02 · outward</div>
+              <div class="s03-cell-title">First tributary</div>
+              <p class="s03-cell-body">An association the book opens — a memory, an image, another text. The film moves away from the book and back to it.</p>
+            </div>
+            <div class="s03-cell">
+              <div class="s03-cell-image"></div>
+              <div class="s03-cell-num">drift 03 · written</div>
+              <div class="s03-cell-title">Where writing surfaces</div>
+              <p class="s03-cell-body">A line of original prose appears on screen — written in response, not commentary. The reader becomes a writer for a moment.</p>
+            </div>
+            <div class="s03-cell">
+              <div class="s03-cell-image"></div>
+              <div class="s03-cell-num">drift 04 · social</div>
+              <div class="s03-cell-title">A conversation</div>
+              <p class="s03-cell-body">A fragment of a letter, a recorded voice memo from a friend. Reading as something held between people.</p>
+            </div>
+          </div>
+          <div class="s03-companion">
+            <span class="s03-companion-label">Companion essay-object</span>
+            <span class="s03-companion-text">A printed insert in the BOTM box — structured as event-score / spatial poem. Roughly the size of a postcard, printed on uncoated stock. <em>Volume-Ø adjacent in publishing register.</em></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═════════════════════════════════════════════════════ -->
+      <!-- SLIDE 04                                               -->
+      <!-- ═════════════════════════════════════════════════════ -->
+      <div class="slide slide-04" data-slide="4">
+        <div class="slide-inner">
+          <div class="s04-header-row">
+            <div>
+              <div class="s04-header-meta"><strong>what gets made</strong> — across surfaces</div>
+              <h2 class="s04-title">Five surfaces, one piece.</h2>
+            </div>
+            <p class="s04-subtitle">Each Marginalia episode produces a film, a printed essay, three short cuts, an optional reader loop, and — over time — a possible quarterly collected zine.</p>
+          </div>
+          <div class="s04-stops">
+            <div class="s04-stop">
+              <div class="s04-stop-num">01 · primary</div>
+              <h3 class="s04-stop-title">Film</h3>
+              <p class="s04-stop-body">6–9 minute collage-essay per piece. Direction, voice, sound design, edit. The center of gravity for everything else.</p>
+              <div class="s04-stop-meta">monthly · core deliverable</div>
+            </div>
+            <div class="s04-stop">
+              <div class="s04-stop-num">02 · object</div>
+              <h3 class="s04-stop-title">Printed essay</h3>
+              <p class="s04-stop-body">Companion essay-object in the BOTM box. Volume-Ø adjacent.</p>
+              <div class="s04-stop-meta">monthly · in-box</div>
+            </div>
+            <div class="s04-stop">
+              <div class="s04-stop-num">03 · social</div>
+              <h3 class="s04-stop-title">Short cuts</h3>
+              <p class="s04-stop-body">Three vertical cuts per piece. TikTok, Instagram, Reels.</p>
+              <div class="s04-stop-meta">monthly · 3 per piece</div>
+            </div>
+            <div class="s04-stop">
+              <div class="s04-stop-num">04 · loop</div>
+              <h3 class="s04-stop-title">Reader loop</h3>
+              <p class="s04-stop-body">Optional invitation — readers send their drift; selections curated.</p>
+              <div class="s04-stop-meta">optional · ongoing</div>
+            </div>
+            <div class="s04-stop">
+              <div class="s04-stop-num">05 · collected</div>
+              <h3 class="s04-stop-title">Zine</h3>
+              <p class="s04-stop-body">Quarterly collected edition.</p>
+              <div class="s04-stop-meta">possible · later</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═════════════════════════════════════════════════════ -->
+      <!-- SLIDE 05 — POSTCARD (default)                          -->
+      <!-- ═════════════════════════════════════════════════════ -->
+      <div class="slide slide-05 postcard" data-slide="5" id="slide5">
+        <div class="slide-inner">
+
+          <div class="s05-message-side">
+            <div class="s05-message-meta">
+              <span><strong>Marginalia</strong> · vol 0, postcard 01</span>
+              <span>April 2026</span>
+            </div>
+            <div class="s05-message-body">
+              <p class="s05-message-line">One book. One reader. <em>A month.</em></p>
+            </div>
+            <div class="s05-message-sign">
+              <div class="s05-message-sign-dash">— with thanks,</div>
+              <div class="s05-message-sign-name">Mia</div>
+            </div>
+          </div>
+
+          <div class="s05-divider"></div>
+
+          <div class="s05-address-side">
+
+            <div class="s05-stamp">
+              <div class="s05-stamp-top">creator</div>
+              <div class="s05-stamp-mark">M.</div>
+              <div class="s05-stamp-bottom">in residence</div>
+            </div>
+
+            <div class="s05-address">
+              <div class="s05-address-label">to</div>
+              <div class="s05-address-line-1">Book of the Month</div>
+              <div class="s05-address-line-2">editorial — creator-in-residence program</div>
+              <div class="s05-address-line-3">A proposal for a monthly collage-essay on the interior life of reading. With the hope it lands well in your hands.</div>
+            </div>
+
+            <div class="s05-postmark">
+              <div class="s05-postmark-row"><span class="s05-postmark-key">from</span><span>Mia Jones · San Diego, CA</span></div>
+              <div class="s05-postmark-row"><span class="s05-postmark-key">role</span><span>senior copywriter, Google Brand Studio</span></div>
+              <div class="s05-postmark-row"><span class="s05-postmark-key">work</span><span>—</span></div>
+              <div class="s05-postmark-row"><span class="s05-postmark-key">contact</span><span>—</span></div>
+            </div>
+
+          </div>
+
+          <div class="s05-corner-stamp">
+            <div class="s05-corner-stamp-text">posted<br>Apr · 2026<br>S.D., CA</div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="notes-panel" id="notesPanel">
+  <div class="notes-content active" data-notes="1">
+    <div class="notes-label">Slide 01 · build notes</div>
+    <h3>Atmosphere — image bleeds the left edge.</h3>
+    <p><em>Editorial move:</em> image takes a full edge of the slide with no padding. Title set larger. Eyebrow integrated into a sentence ("a creator-in-residence proposal — for Book of the Month"), not stamped as a numbered tab.</p>
+    <p><em>Lavender:</em> not on this slide.</p>
+    <p><em>Hand:</em> not on this slide.</p>
+  </div>
+  <div class="notes-content" data-notes="2">
+    <div class="notes-label">Slide 02 · build notes</div>
+    <h3>Concept — pull-quote dominates.</h3>
+    <p><em>Editorial move:</em> pull-quote scaled up to take the left two-thirds of the slide. Body paragraph reduced to a sidebar feel on the right.</p>
+    <p><em>Lavender:</em> 3px lavender border-bar to the left of the pull-quote.</p>
+    <p><em>Hand:</em> "tied to Volume 0's lane" sits beneath the body paragraph.</p>
+  </div>
+  <div class="notes-content" data-notes="3">
+    <div class="notes-label">Slide 03 · build notes</div>
+    <h3>Sample episode — earned density.</h3>
+    <p><em>Mostly preserved:</em> four-cell grid for proof-of-work. Header simplified.</p>
+    <p><em>Lavender:</em> companion-object callout.</p>
+  </div>
+  <div class="notes-content" data-notes="4">
+    <div class="notes-label">Slide 04 · build notes</div>
+    <h3>The system — asymmetric stops.</h3>
+    <p><em>Editorial move:</em> stops are not equal-width. Stop 01 (Film) is dominant. Stop 05 (Zine) is narrower with extra margin and dashed left rule.</p>
+    <p><em>Lavender:</em> stop 5 retains lavender top-rule and stop-num.</p>
+  </div>
+  <div class="notes-content" data-notes="5">
+    <div class="notes-label">Slide 05 · build notes — Postcard variant</div>
+    <h3>Closing as artifact — the back of a postcard.</h3>
+    <p><em>Editorial move:</em> the slide enacts the work it pitches. Marginalia includes printed essay-objects in the BOTM box; the closing slide is itself one of those objects. Left side = message side with handwritten closing line and signature. Right side = address-block formatted bio with postage stamp + postmark.</p>
+    <p><em>Lavender:</em> the postage stamp area top-right is the lavender moment for this slide. Pale lavender fill, lavender border, navy "M." monogram inside.</p>
+    <p><em>Hand:</em> the closing line itself is set in Reenie Beanie at large scale, with handwritten "— with thanks, Mia" sign-off. The hand is doing the closing work, not annotation work. This is the one slide where hand goes large.</p>
+    <p><em>Bio:</em> reformatted as an address block. "To Book of the Month" / "From Mia Jones, San Diego, CA" / role / contact lines. Reads like a real postcard back, not a deck "About me" slide.</p>
+    <p><em>Toggle the alt:</em> use the "close: postcard" button in the top-right to compare against the minimal close-only variant.</p>
+  </div>
+</div>
+
+<div class="nav-bar">
+  <button class="nav-arrow" id="prevBtn" disabled>← prev</button>
+  <div class="nav-dots" id="navDots">
+    <button class="nav-dot active" data-target="1"></button>
+    <button class="nav-dot" data-target="2"></button>
+    <button class="nav-dot" data-target="3"></button>
+    <button class="nav-dot" data-target="4"></button>
+    <button class="nav-dot" data-target="5"></button>
+  </div>
+  <button class="nav-arrow" id="nextBtn">next →</button>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.querySelectorAll('.nav-dot');
+  const notesContents = document.querySelectorAll('.notes-content');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const counter = document.getElementById('current');
+  const toggleNotes = document.getElementById('toggleNotes');
+  const notesPanel = document.getElementById('notesPanel');
+  const altToggle = document.getElementById('altToggle');
+  const slide5 = document.getElementById('slide5');
+
+  let currentSlide = 1;
+  let s5Variant = 'postcard'; // 'postcard' or 'minimal'
+  const totalSlides = slides.length;
+
+  function goToSlide(n) {
+    if (n < 1 || n > totalSlides) return;
+    currentSlide = n;
+    slides.forEach(s => s.classList.toggle('active', parseInt(s.dataset.slide) === n));
+    dots.forEach(d => d.classList.toggle('active', parseInt(d.dataset.target) === n));
+    notesContents.forEach(c => c.classList.toggle('active', parseInt(c.dataset.notes) === n));
+    counter.textContent = String(n).padStart(2, '0');
+    prevBtn.disabled = n === 1;
+    nextBtn.disabled = n === totalSlides;
+
+    // Show alt toggle only on slide 5
+    altToggle.classList.toggle('visible', n === 5);
+  }
+
+  function setS5Variant(v) {
+    s5Variant = v;
+    if (v === 'postcard') {
+      slide5.classList.remove('minimal');
+      slide5.classList.add('postcard');
+      slide5.innerHTML = `
+        <div class="slide-inner">
+          <div class="s05-message-side">
+            <div class="s05-message-meta">
+              <span><strong>Marginalia</strong> · vol 0, postcard 01</span>
+              <span>April 2026</span>
+            </div>
+            <div class="s05-message-body">
+              <p class="s05-message-line">One book. One reader. <em>A month.</em></p>
+            </div>
+            <div class="s05-message-sign">
+              <div class="s05-message-sign-dash">— with thanks,</div>
+              <div class="s05-message-sign-name">Mia</div>
+            </div>
+          </div>
+          <div class="s05-divider"></div>
+          <div class="s05-address-side">
+            <div class="s05-stamp">
+              <div class="s05-stamp-top">creator</div>
+              <div class="s05-stamp-mark">M.</div>
+              <div class="s05-stamp-bottom">in residence</div>
+            </div>
+            <div class="s05-address">
+              <div class="s05-address-label">to</div>
+              <div class="s05-address-line-1">Book of the Month</div>
+              <div class="s05-address-line-2">editorial — creator-in-residence program</div>
+              <div class="s05-address-line-3">A proposal for a monthly collage-essay on the interior life of reading. With the hope it lands well in your hands.</div>
+            </div>
+            <div class="s05-postmark">
+              <div class="s05-postmark-row"><span class="s05-postmark-key">from</span><span>Mia Jones · San Diego, CA</span></div>
+              <div class="s05-postmark-row"><span class="s05-postmark-key">role</span><span>senior copywriter, Google Brand Studio</span></div>
+              <div class="s05-postmark-row"><span class="s05-postmark-key">work</span><span>—</span></div>
+              <div class="s05-postmark-row"><span class="s05-postmark-key">contact</span><span>—</span></div>
+            </div>
+          </div>
+          <div class="s05-corner-stamp">
+            <div class="s05-corner-stamp-text">posted<br>Apr · 2026<br>S.D., CA</div>
+          </div>
+        </div>
+      `;
+      altToggle.textContent = 'close: postcard';
+    } else {
+      slide5.classList.remove('postcard');
+      slide5.classList.add('minimal');
+      slide5.innerHTML = `
+        <div class="slide-inner">
+          <h2 class="s05min-close-line">One book. One reader. <em>A month.</em></h2>
+          <div class="s05min-hand-sign">— thank you for reading.</div>
+        </div>
+        <div class="s05min-byline">
+          <span><strong>Marginalia</strong> · a proposal by Mia Jones</span>
+          <span>April 2026</span>
+        </div>
+      `;
+      altToggle.textContent = 'close: minimal';
+    }
+  }
+
+  altToggle.addEventListener('click', () => {
+    setS5Variant(s5Variant === 'postcard' ? 'minimal' : 'postcard');
+  });
+
+  prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+  nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+  dots.forEach(d => d.addEventListener('click', () => goToSlide(parseInt(d.dataset.target))));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goToSlide(currentSlide + 1); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); goToSlide(currentSlide - 1); }
+    if (e.key === 'n' || e.key === 'N') toggleNotes.click();
+    if ((e.key === 'a' || e.key === 'A') && currentSlide === 5) altToggle.click();
+  });
+
+  toggleNotes.addEventListener('click', () => {
+    const isOpen = notesPanel.classList.toggle('open');
+    toggleNotes.classList.toggle('active', isOpen);
+    toggleNotes.textContent = isOpen ? 'hide notes' : 'show notes';
+  });
+</script>
+
+</body>
+</html>

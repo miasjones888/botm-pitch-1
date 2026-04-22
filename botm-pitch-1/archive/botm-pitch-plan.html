@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>botm_creator_in_residence / pitch plan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
+
+  :root {
+    --bg: #F5F2EA;
+    --ink: #0A0A0A;
+    --muted: #6B6B66;
+    --faint: #A8A49A;
+    --rule: #1A1A1A;
+    --rule-soft: #C8C5BB;
+    --accent: #5C8B8C;
+    --accent-pale: #D4E0E0;
+    --done: #9AA89A;
+    --done-pale: #D8DED2;
+    --hover: #ECE7DA;
+    --warn: #B85C3C;
+    --warn-pale: #E8D0C4;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0E0E0C;
+      --ink: #E8E5DC;
+      --muted: #7A7A72;
+      --faint: #4A4A42;
+      --rule: #2A2A26;
+      --rule-soft: #1E1E1C;
+      --accent: #7AABAC;
+      --accent-pale: #2A3A3A;
+      --done: #4A5A4A;
+      --done-pale: #1E2620;
+      --hover: #1A1A18;
+      --warn: #D87A5C;
+      --warn-pale: #2E1E18;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 24px 140px;
+  }
+
+  /* ────────────────────────────── header */
+
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 28px;
+    margin-bottom: 36px;
+  }
+
+  .filename {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    margin-bottom: 18px;
+  }
+
+  .filename::before { content: '> '; color: var(--accent); }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    line-height: 1.25;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    font-style: italic;
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  .meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 28px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .meta-key { padding-right: 8px; letter-spacing: 0.02em; }
+  .meta-val { color: var(--ink); }
+
+  /* ────────────────────────────── progress */
+
+  .progress-block {
+    margin: 32px 0;
+    padding: 18px 22px;
+    background: var(--hover);
+    border-left: 2px solid var(--accent);
+  }
+
+  .progress-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .progress-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--rule);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+
+  .progress-stats {
+    font-size: 12px;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .progress-stats strong { font-weight: 600; }
+
+  .next-move {
+    font-size: 12px;
+    color: var(--ink);
+    padding-top: 10px;
+    border-top: 1px dashed var(--rule);
+    margin-top: 10px;
+  }
+
+  .next-move::before { content: 'NEXT → '; color: var(--accent); font-weight: 500; }
+
+  /* ────────────────────────────── sections */
+
+  section {
+    margin-bottom: 56px;
+  }
+
+  .section-num {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  h2 {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    margin-bottom: 6px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-sub {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 24px;
+    margin-top: 6px;
+  }
+
+  h3 {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 28px 0 12px;
+    color: var(--ink);
+    letter-spacing: 0;
+  }
+
+  h3::before {
+    content: '— ';
+    color: var(--accent);
+  }
+
+  h4 {
+    font-size: 12px;
+    font-weight: 600;
+    margin: 20px 0 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  p {
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+
+  p + p { margin-top: 0; }
+
+  em { font-style: italic; color: var(--ink); }
+  strong { font-weight: 600; }
+
+  /* ────────────────────────────── call-outs */
+
+  .callout {
+    margin: 20px 0;
+    padding: 16px 20px;
+    background: var(--hover);
+    border-left: 2px solid var(--accent);
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+
+  .callout.warn {
+    background: var(--warn-pale);
+    border-left-color: var(--warn);
+  }
+
+  .callout.done {
+    background: var(--done-pale);
+    border-left-color: var(--done);
+  }
+
+  .callout-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .callout em {
+    color: var(--muted);
+  }
+
+  .balcony {
+    margin: 24px 0;
+    padding: 20px 24px;
+    background: var(--accent-pale);
+    border-left: 2px solid var(--accent);
+    font-size: 12.5px;
+    line-height: 1.75;
+    font-style: italic;
+  }
+
+  .balcony-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    font-style: normal;
+    margin-bottom: 10px;
+  }
+
+  /* ────────────────────────────── lists */
+
+  ul, ol {
+    margin: 10px 0 18px 0;
+    padding-left: 24px;
+  }
+
+  li {
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+
+  ul.tight li, ol.tight li { margin-bottom: 4px; }
+
+  ul.bare {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  ul.bare li::before {
+    content: '— ';
+    color: var(--muted);
+  }
+
+  /* ────────────────────────────── reference list */
+
+  .ref-group {
+    margin-bottom: 24px;
+  }
+
+  .ref-group-title {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px dashed var(--rule-soft);
+  }
+
+  .ref-item {
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--rule-soft);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .ref-item:last-child { border-bottom: none; }
+
+  .ref-name {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  .ref-name .ref-type {
+    color: var(--muted);
+    font-weight: 400;
+    font-size: 11px;
+    margin-left: 8px;
+  }
+
+  .ref-why {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  .priority-tier {
+    display: inline-block;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 2px 6px;
+    border: 1px solid var(--rule-soft);
+    margin-right: 8px;
+    color: var(--muted);
+  }
+
+  .tier-must { border-color: var(--warn); color: var(--warn); }
+  .tier-useful { border-color: var(--accent); color: var(--accent); }
+  .tier-deep { border-color: var(--rule-soft); color: var(--faint); }
+
+  /* ────────────────────────────── phases & steps */
+
+  .phase {
+    margin-bottom: 40px;
+    border: 1px solid var(--rule-soft);
+    background: var(--bg);
+  }
+
+  .phase-header {
+    padding: 16px 20px;
+    background: var(--hover);
+    border-bottom: 1px solid var(--rule-soft);
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  .phase-header:hover { background: var(--accent-pale); }
+
+  .phase-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .phase-num {
+    color: var(--accent);
+    margin-right: 10px;
+  }
+
+  .phase-meta {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+    min-width: 180px;
+  }
+
+  .phase-body {
+    padding: 20px 24px;
+    display: block;
+  }
+
+  .phase.collapsed .phase-body {
+    display: none;
+  }
+
+  .phase-intro {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--rule-soft);
+  }
+
+  .session-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin: 18px 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px dashed var(--rule-soft);
+  }
+
+  .steps {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 28px 20px 1fr;
+    gap: 10px;
+    align-items: start;
+    padding: 7px 0;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .step-num {
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 500;
+    padding-top: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  .step-check {
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 3px;
+    position: relative;
+    transition: all 0.15s;
+  }
+
+  .step-check:hover { border-color: var(--accent); }
+
+  .step-check.done {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .step-check.done::after {
+    content: '✓';
+    position: absolute;
+    top: -2px;
+    left: 2px;
+    color: var(--bg);
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .step-text {
+    color: var(--ink);
+    transition: color 0.15s;
+  }
+
+  .step.done .step-text {
+    color: var(--done);
+    text-decoration: line-through;
+    text-decoration-color: var(--done);
+    text-decoration-thickness: 1px;
+  }
+
+  .step-detail {
+    font-size: 11px;
+    color: var(--muted);
+    font-style: italic;
+    display: block;
+    margin-top: 4px;
+    padding-left: 0;
+  }
+
+  .sub-steps {
+    grid-column: 3;
+    list-style: none;
+    padding: 4px 0 0 0;
+    margin: 0;
+  }
+
+  .sub-steps li {
+    font-size: 11px;
+    color: var(--muted);
+    padding: 2px 0;
+    margin: 0;
+  }
+
+  .sub-steps li::before {
+    content: '· ';
+    color: var(--faint);
+    margin-right: 4px;
+  }
+
+  /* ────────────────────────────── slide diagrams */
+
+  .slide-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 24px;
+    margin: 18px 0;
+    padding: 16px 20px;
+    background: var(--hover);
+    font-size: 12px;
+  }
+
+  .slide-key { color: var(--accent); font-weight: 600; }
+  .slide-val { color: var(--ink); }
+
+  /* ────────────────────────────── field frames */
+
+  .field-block {
+    margin: 20px 0;
+    padding: 18px 22px;
+    border: 1px solid var(--rule-soft);
+    background: var(--bg);
+  }
+
+  .field-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  .field-prompt {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 14px;
+  }
+
+  .field-scaffold {
+    font-size: 12px;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  .field-scaffold ol {
+    padding-left: 20px;
+    margin-top: 6px;
+  }
+
+  .field-scaffold .tbd {
+    color: var(--warn);
+    background: var(--warn-pale);
+    padding: 1px 6px;
+    font-size: 11px;
+  }
+
+  /* ────────────────────────────── divider */
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 48px 0;
+  }
+
+  .rule-soft {
+    border: none;
+    border-top: 1px dashed var(--rule-soft);
+    margin: 24px 0;
+  }
+
+  /* ────────────────────────────── footer */
+
+  footer {
+    margin-top: 80px;
+    padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* ────────────────────────────── utility */
+
+  .nowrap { white-space: nowrap; }
+  .small { font-size: 11px; color: var(--muted); }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  @media (max-width: 640px) {
+    body { padding: 20px 16px 120px; font-size: 12.5px; }
+    h1 { font-size: 19px; }
+    h2 { font-size: 15px; }
+    .meta { grid-template-columns: 1fr; }
+    .phase-header { flex-direction: column; gap: 6px; }
+    .phase-meta { text-align: left; min-width: 0; }
+    .step { grid-template-columns: 24px 18px 1fr; gap: 8px; font-size: 11.5px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- HEADER                                                          -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<header>
+  <div class="filename">botm_pitch / plan.html</div>
+  <h1>Book of the Month — Creator-in-Residence Pitch</h1>
+  <div class="subtitle">
+    A monthly collage-essay on the interior life of reading, pitched for one piece with expansion held in the body. Working title TBD. This is the comprehensive plan.
+  </div>
+  <div class="meta">
+    <span class="meta-key">scope</span>
+    <span class="meta-val">Side sprint — does not replace an active slot</span>
+    <span class="meta-key">target</span>
+    <span class="meta-val">BOTM Creator-in-Residence application (rolling)</span>
+    <span class="meta-key">deliverables</span>
+    <span class="meta-val">Field 3 pitch · 4–5 slide deck · sample episode sketch · application submitted</span>
+    <span class="meta-key">pace</span>
+    <span class="meta-val">~9 hours across 7 sessions · 2–6 weeks depending on energy</span>
+    <span class="meta-key">created</span>
+    <span class="meta-val">Apr 21, 2026</span>
+  </div>
+</header>
+
+<!-- progress block -->
+<div class="progress-block">
+  <div class="progress-label">Progress</div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-stats"><strong><span id="doneCount">0</span></strong>/<span id="totalCount">0</span> steps</div>
+  </div>
+  <div class="next-move" id="nextMove">Start with Phase 1 — Calibration. Read through the plan once, no writing yet.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PART 1 — WHAT WE'RE ACTUALLY PITCHING                           -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<section>
+  <div class="section-num">Part 01</div>
+  <h2>What we're actually pitching</h2>
+  <div class="section-sub">The concept locked at the scope we're pitching. One piece. Expansion held in the body.</div>
+
+  <h3>The ask, precisely</h3>
+  <p>
+    One piece. One book. Pitched as the first in an ongoing format designed to be monthly, but asking now only for the first. BOTM's program is explicit: <em>"pitch us an idea"</em> → <em>"we'll be in touch about the potential of putting our resources behind your idea"</em> → <em>"we will select creators we want to work with on an ongoing basis."</em> The initial ask is always for one. Ongoing is earned, not pitched.
+  </p>
+
+  <h3>The one-line</h3>
+  <div class="callout">
+    A collage-essay — film plus companion printed essay — on the interior life of reading one contemporary literary novel, tied to a Book of the Month literary fiction or Volume 0 selection.
+  </div>
+
+  <h3>The concept paragraph</h3>
+  <p>
+    The piece is a monthly-viable collage-essay held by a reader-figure. It runs 6–9 minutes on film and ships alongside a short printed companion essay-object in the Book of the Month box. The form is collaged: moving image, still photograph, voiceover, writing on screen, film stills, handheld and webcam footage, music, the book as physical object — all composed simultaneously rather than sequentially. No segment structure, no declared grammar, no explanatory framing. The reader-figure appears in two registers — cinematic when the piece wants to hold her, webcam or handheld when the piece wants to hear her think. Her voice runs under everything. Her writing surfaces as text on screen. The book is the occasion; the reading is the subject.
+  </p>
+
+  <h3>Scope of the first piece</h3>
+  <ul class="bare">
+    <li>Film: 6–9 min collage-essay, digital distribution (social, BOTM site, creator feeds)</li>
+    <li>Companion printed essay: short, could ship with the BOTM box or live as standalone</li>
+    <li>Short cuts: 3 vertical cuts (atmospheric, voiced, text-forward) for social</li>
+    <li>Production budget: within the Creator-in-Residence $50–$5,000 range</li>
+  </ul>
+
+  <h3>Expansion language, held in the body of the pitch — not in the ask</h3>
+  <div class="callout">
+    <em>The form is designed to be ongoing. Every piece is one artifact with durable monthly repeatability. If this first piece works, there is a natural path to a monthly column — adjacent to Volume 0 in publishing register, tied to BOTM's literary fiction selections in rhythm — which can scale or stay small depending on what lands with readers. I'm starting with one.</em>
+  </div>
+
+  <h3>Sample book for this pitch</h3>
+  <p>
+    <strong>Lost Lambs by Madeline Cash</strong> (Book of the Month, January 2026). Used throughout the plan for sample-episode work, deck proof slides, and concrete language in Field 3. Replaceable later if a different book resonates more, but anchored here for the plan's sake.
+  </p>
+
+  <div class="balcony">
+    <div class="balcony-label">Field 3 source paragraph · preserve through drafting</div>
+    Sitting out on a balcony in Paris, watching the sitting reading and thinking and drinking coffee and smoking and writing in your journal while listening to music and perhaps talking passionately with a friend about the book you're reading and how it makes you feel — what you see vs. what they see, the poetry and prose it inspires in you, the change it inspires, how it touches your own life, how you see the world when you come out of the world within the book, how it immediately becomes nostalgic and fuzzy because you can never go back to the feeling of reading the book for the first time, how it feels to hold a book close to your heart, your mind, for it to inspire deep thought, feeling, and discussion, how it connects to the world.
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-label">Register note — hold this</div>
+    This is <em>not</em> a European pitch. The balcony paragraph describes a <em>quality of attention</em> that Mia has experienced in Europe but that the piece translates into the reading life of any woman, anywhere. San Diego. Brooklyn. Mexico City. A bedroom at night. A park bench. Not aspirational — the actual reading life of BOTM's actual subscribers, filmed and written with the craft their reading deserves.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PART 2 — THE PIECE ITSELF                                       -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<section>
+  <div class="section-num">Part 02</div>
+  <h2>The piece itself</h2>
+  <div class="section-sub">What it contains, how it behaves, what the character is. Reference-free. This section is the piece described.</div>
+
+  <h3>The four positions, held by collage, never declared</h3>
+  <p>
+    The piece holds four dimensions of reading simultaneously. It does not name them. The form does the work. The viewer experiences all four without knowing the taxonomy exists.
+  </p>
+  <ul>
+    <li><strong>Interior</strong> — the reader's private consciousness during and after reading. Voiceover as thinking, held shots of the reader in her own space.</li>
+    <li><strong>Response</strong> — the writing the reader does back. Prose, poetry, fragments, marginalia. Appears as text on screen, treated as a character.</li>
+    <li><strong>Outward reading</strong> — the world the book has opened. Image-field, other texts, songs, photographs, film stills, associations. The book makes the world look different.</li>
+    <li><strong>Transformation</strong> — the reader being changed. A motif that recurs across the piece — an image, a line, a color, a music cue — registering that the reader is not who she was when the piece started.</li>
+  </ul>
+
+  <h3>Vocabulary — what appears on screen</h3>
+  <p>Not all in every piece. This is the range. A single piece draws six or eight.</p>
+
+  <h4>Cinematic footage of the reader-figure</h4>
+  <ul class="tight">
+    <li>Composed shots of her reading in a specific light and space</li>
+    <li>Her hands — turning pages, writing in the margin, holding a cup, pressing a spine flat</li>
+    <li>Her face — in profile, in shadow, through a window, rarely to camera</li>
+    <li>Her moving through a space — walking, opening a door, sitting down with a book</li>
+    <li>Objects associated with her — a specific ring, a sweater, a room — that become iconographic over time</li>
+  </ul>
+
+  <h4>Webcam, handheld, casual</h4>
+  <ul class="tight">
+    <li>Webcam squares — her talking about a book with the unguardedness of a voice memo</li>
+    <li>Phone clips — the sky she saw, the street she walked, a cat on a bed</li>
+    <li>Selfie-ish footage — mirror, laptop, bathroom with her own hand holding the phone</li>
+    <li>Voice-memo audio over a static image — the sound of her actually recording her thoughts</li>
+  </ul>
+
+  <h4>Still photography and found images</h4>
+  <ul class="tight">
+    <li>Her own photographs, if she takes them</li>
+    <li>Found photographs — archive, old family images, scans from books</li>
+    <li>Film stills from films that resonate (fair use, properly sourced)</li>
+    <li>Paintings, photographs, art images surfaced by the book</li>
+    <li>Gifs — small looping moments, the old-internet vocabulary</li>
+  </ul>
+
+  <h4>Book-as-object</h4>
+  <ul class="tight">
+    <li>The book itself — cover, spine, specific pages, typography of a passage</li>
+    <li>Her underlines and marginalia</li>
+    <li>The book in context — on a table, in a bag, next to another book, on a pillow</li>
+    <li>Multiple books — the month's pick alongside what it opened</li>
+  </ul>
+
+  <h4>Text on screen</h4>
+  <ul class="tight">
+    <li>Her own writing — prose, poetry, fragments — appearing and staying</li>
+    <li>Handwritten notes, sometimes in her actual hand</li>
+    <li>Typed fragments in a specific font family, not subtitles</li>
+    <li>Quotes from the book, treated as visual objects</li>
+    <li>Annotations, marginalia, scanned pages of her notebook</li>
+  </ul>
+
+  <h4>Audio</h4>
+  <ul class="tight">
+    <li>Her voice in voiceover, always, as the connective tissue</li>
+    <li>Music — folk, ambient, minimalist, whatever the book asks for</li>
+    <li>Ambient sound — rain, a kettle, distant city, the analog hum of a room</li>
+    <li>Silence — held, on purpose, occasionally</li>
+  </ul>
+
+  <h4>Web elements, used sparingly — not as container</h4>
+  <ul class="tight">
+    <li>Browser windows, tabs, moodboard grids — when the drift goes outward into research</li>
+    <li>Pinterest-grid moments, Are.na-feel pages, search results as visual material</li>
+    <li>Old-web textures — ASCII, low-res jpgs, lo-fi gif — when the aesthetic calls</li>
+  </ul>
+
+  <h3>The reader-figure</h3>
+  <p>
+    A characterized version of Mia. Three modalities of presence:
+  </p>
+  <ul>
+    <li><strong>Cinematic body</strong> — composed, deliberate, lit-with-intention footage. She is the subject. Camera holds.</li>
+    <li><strong>Casual body</strong> — webcam, handheld, phone-clip. She is a real person in a real life. Unguarded.</li>
+    <li><strong>Written word</strong> — her own writing appearing as text. A third form of her presence, non-bodily.</li>
+  </ul>
+  <p>
+    Voice runs under everything. The character is the constant across episodes; the book is the variable. She does not perform warmth — warmth enters when the material warrants it. She is thinking, and the viewer watches the thinking.
+  </p>
+
+  <h3>The companion printed essay-object</h3>
+  <p>
+    Short printed piece, maybe 4–16 pages or a folded broadsheet. Written essay or fragment-collection or hybrid — whatever the film asks for in print. Published under BOTM's imprint, Volume 0-adjacent in register. Shipped in the BOTM box for subscribers who select the literary fiction pick that month, or available as standalone object. This is the <em>second artifact</em> of the commission, and it is the move that converts a creator gig into a publishing credit.
+  </p>
+
+  <h3>Short cuts — three per film</h3>
+  <ol class="tight">
+    <li><strong>Atmospheric</strong> — no voice, single image or short sequence, single line of text, music. 60s max.</li>
+    <li><strong>Voiced</strong> — a single drift-movement from the film, 60–90s, voice over collaged image.</li>
+    <li><strong>Text-forward</strong> — a fragment of writing held on a single image. Almost a quote card, lifted by composition.</li>
+  </ol>
+  <p>Not edited <em>down</em> from the film. Extracted — the collage disassembles natively.</p>
+
+  <h3>Reader loop (optional, future expansion)</h3>
+  <p>
+    Each piece ends with an invitation: <em>send me your drift from this book.</em> Image, line, song, memory. Responses curated into a page on the BOTM site, a newsletter section, or a future zine. Activates the audience as co-authors. Addresses community-sentiment issues BOTM has had by making members feel <em>addressed</em>. Not in the initial pitch. Named as possible.
+  </p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PART 3 — STRATEGIC CONTEXT                                      -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<section>
+  <div class="section-num">Part 03</div>
+  <h2>Strategic context</h2>
+  <div class="section-sub">BOTM as institution. Your lane inside their audience. Why the pitch fits now. Tensions named honestly.</div>
+
+  <h3>BOTM is building an institution, not running a subscription box</h3>
+  <p>
+    Rebooted in 2016 for millennial and Gen Z women. 400,000+ members, 2M Instagram followers. In the last three years they have made four institutional moves that together change what BOTM is: the Lolly Award ($25K prize for best fiction, voted by engaged tier members, 200,000 votes per year); Volume 0 (short-fiction literary magazine, six issues a year, $35K author fees per issue, authors include Emma Cline, Nada Alic, Kristen Roupenian, Juliet Escoria, Brad Watson); the Aspen Literary Festival co-chair role (BOTM CEO John Lippman co-chairs with Editorial Director Brianna Goodman; partnership with Aspen Words, a 50-year-old literary nonprofit); and the Creator-in-Residence program itself.
+  </p>
+  <p>
+    Lippman's stated ambition for Aspen: <em>"the literary love child of Sundance and South by Southwest."</em> This is a brand positioning itself as a cultural institution with festival-scale and prize-giving-scale ambition. The Creator-in-Residence program is the content arm of that ambition. Your pitch lives in that ecosystem.
+  </p>
+
+  <h3>Your lane inside their audience</h3>
+  <p>
+    BOTM's audience is broad — it includes BookTok romantasy readers, domestic-thriller readers, celebrity memoir readers, YA fantasy readers. You are not pitching to the whole base. You are pitching to the serious-literary-fiction subset — the readers who pick Madeline Cash, Kiran Millwood Hargrave, Aja Gabel, Erin Somers, Emily Adrian, Beatriz Serrano, and the Volume 0 roster. This subset is substantial but specific. Naming your audience inside BOTM's audience is pitch maturity. Other applicants will claim universality. You will claim precision.
+  </p>
+  <p>
+    The pitch can say, explicitly or implicitly: <em>"This is for the reader who thinks about a book for weeks after. Not the scroller, not the hater, not the rater. The underline-and-return reader."</em>
+  </p>
+
+  <h3>Why this pitch fits now</h3>
+  <p>
+    BOTM has recently had reputational turbulence in the serious-reader segment of their base — the James Frey AI-novel selection drew criticism, there is ongoing subscriber frustration about credit policies. Volume 0, the Lolly, the Aspen festival, and this program are, visibly, moves to rebuild trust with serious readers. Your pitch quietly embodies the solution rather than naming the problem. You do not complain about BookTok. You do not critique their other content. You propose the thing they need to have in their content ecosystem — slow, rigorous, craft-forward, reader-centered — and let it speak for itself.
+  </p>
+
+  <h3>Tensions named honestly</h3>
+
+  <h4>Tension 1 — Not every BOTM pick suits this form</h4>
+  <p>
+    The form needs a book whose interior life is what the reader's relationship to it is about. That is true of literary fiction and much contemporary fiction. It is less true of Viking romantasy or domestic thriller. The pitch addresses this by scoping to BOTM's literary fiction / contemporary fiction / Volume 0 lane, not the whole catalog. This narrowing strengthens the pitch.
+  </p>
+
+  <h4>Tension 2 — Monthly is a real production rhythm</h4>
+  <p>
+    A 6–9 minute collage-essay with companion printed essay is real work. One per month is sustainable with resources. Twelve at once would not be. The pitch starts with one piece. Expansion is held as possibility, contingent on both sides wanting it.
+  </p>
+
+  <h4>Tension 3 — High-craft is a different production economics than BOTM's existing creator content</h4>
+  <p>
+    Most BOTM creator content is short-form and high-volume. Your piece is long-form and slow. The pitch positions this as <em>flagship</em> content, not filler. One piece a month that anchors their literary-fiction lane, promoted across formats, while their existing volume content continues. Your piece is the prestige object.
+  </p>
+
+  <h4>Tension 4 — The centennial is context, not frame</h4>
+  <p>
+    BOTM is 100 in 2026. Mentioning it once in the pitch body is fine — it signals you understand where the brand is in its institutional moment. Leading with the centennial would weaken the concept by making it campaign-tied. The piece needs to outlive the anniversary year. Keep the centennial light.
+  </p>
+
+  <div class="callout done">
+    <div class="callout-label">Strategic spine — one sentence</div>
+    <strong>The piece does for video essay what BOTM does for literary fiction: it brings real rigor into a warm, accessible, monthly-rhythm form, for readers who want depth without gatekeeping.</strong>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PART 4 — REFERENCE LIBRARY                                      -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<section>
+  <div class="section-num">Part 04</div>
+  <h2>Reference library</h2>
+  <div class="section-sub">Priority-tiered. Review the MUST-SEE items before Session 2 (sample episode sketch). Everything else feeds design and language across sessions 3–6.</div>
+
+  <!-- Films & Moving Image -->
+  <div class="ref-group">
+    <div class="ref-group-title">Films and moving image — the essay-film / collage lineage</div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-must">must-see</span> Chantal Akerman · News from Home (1977) <span class="ref-type">film</span></div>
+      <div class="ref-why">A woman alone, reading letters over static long takes of New York. The single closest structural ancestor to what you are making. The voice-over-image grammar, the trust in stillness, the refusal to rush. Free on Criterion Channel.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-must">must-see</span> Agnès Varda · The Gleaners and I (2000) <span class="ref-type">film</span></div>
+      <div class="ref-why">First-person collage-documentary. Hands, objects, memory, filmed with warmth and rigor. The filmmaker as a readable character in her own film. Permission to include yourself without performing.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-must">must-see</span> Chris Marker · Sans Soleil (1983) <span class="ref-type">film</span></div>
+      <div class="ref-why">The collage-essay-film at its formal peak. Voiceover over fragment, association without narrative spine. Watch for how the voice carries the piece without over-explaining. The Sandor Krasna frame is a direct model for your characterized reader-figure.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Moyra Davey · Les Goddesses (2011) <span class="ref-type">film / art video</span></div>
+      <div class="ref-why">Davey reading Mary Wollstonecraft aloud while pacing her apartment. A woman's intellectual life filmed without apology. The closest art-world ancestor to the reader-figure you are building.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Arthur Jafa · Love is the Message, The Message is Death (2016) <span class="ref-type">film / installation</span></div>
+      <div class="ref-why">Collage as emotional and political argument, found footage composed into a piece greater than its sources. Proof that essay-film can be both rigorous and popularly moving.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Jonas Mekas · As I Was Moving Ahead Occasionally I Saw Brief Glimpses of Beauty (2000) <span class="ref-type">film</span></div>
+      <div class="ref-why">Diary-collage. The daily as material for art. Long and associative — skim, do not finish. For texture of the unguarded/handheld register.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Lynne Ramsay · Morvern Callar (2002) <span class="ref-type">film</span></div>
+      <div class="ref-why">A young woman, her interior, her drift, filmed with analog warmth and grain. Proof the aesthetic can be both art-cinema and emotionally grounded. The body-in-space register you want.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-deep">deep-dive</span> Harun Farocki · Images of the World (1988) <span class="ref-type">film</span></div>
+      <div class="ref-why">Rigorous essay-film, colder register. Background context for how the form thinks-by-juxtaposing. Do not try to match this tone — study the method.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-deep">deep-dive</span> Sofia Coppola · Somewhere (2010) <span class="ref-type">film</span></div>
+      <div class="ref-why">Quiet, textural, a woman thinking. For the pacing register and unstyled-interior texture.</div>
+    </div>
+  </div>
+
+  <!-- Literary -->
+  <div class="ref-group">
+    <div class="ref-group-title">Literary — collage-essay, hybrid-genre, first-person-as-sensibility</div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-must">must-see</span> Anne Carson · Nox (2010) <span class="ref-type">book-object</span></div>
+      <div class="ref-why">A book in a box. Translation, elegy, and book-making as parallel acts. The object-as-reading-event. Direct ancestor of the companion printed essay-object concept.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-must">must-see</span> Maggie Nelson · Bluets (2009) <span class="ref-type">book</span></div>
+      <div class="ref-why">240 numbered fragments on the color blue, grief, reading, Wittgenstein. The four positions held simultaneously in prose. If you can do this in your printed essay, you have the register.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> W.G. Sebald · The Rings of Saturn (1995) <span class="ref-type">book</span></div>
+      <div class="ref-why">Prose with embedded photographs. Walking, reading, association. A whole book is a collage. For the pacing of thought.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Rachel Cusk · Outline trilogy (2014–2018) <span class="ref-type">novels</span></div>
+      <div class="ref-why">First-person narration that recedes so other people come forward. The listening reader. Relevant for the reader-figure's mode of attention — present but not centered.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Joe Brainard · I Remember (1970) <span class="ref-type">book</span></div>
+      <div class="ref-why">Collage-book of memory fragments. The form of remembering, made literary. Very close in spirit to what a printed essay-object could be.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Patti Smith · M Train (2015) <span class="ref-type">memoir</span></div>
+      <div class="ref-why">Reader in her apartment, reader in cafes, reader in memory. Characterized-first-person done with total confidence. The exact register of a woman who is legibly a reader.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Kate Briggs · This Little Art (2017) <span class="ref-type">book</span></div>
+      <div class="ref-why">An essay written while translating Barthes. The reading and the writing happening in parallel. Proof that essay-about-reading can be itself a form of reading.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Claudia Rankine · Citizen (2014) <span class="ref-type">book</span></div>
+      <div class="ref-why">Text, photograph, white space as composition. A book that has a film's rhythm in print.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-deep">deep-dive</span> Teju Cole · Blind Spot (2017) <span class="ref-type">book</span></div>
+      <div class="ref-why">Photograph and prose together, neither subordinate. Model for how image and text can co-carry meaning in the companion essay-object.</div>
+    </div>
+  </div>
+
+  <!-- Visual Art -->
+  <div class="ref-group">
+    <div class="ref-group-title">Visual art — collage as practice</div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> John Stezaker <span class="ref-type">photomontage</span></div>
+      <div class="ref-why">Photographic collage, minimal, precise, haunted. Single images that do enormous psychological work. For the short-cut text-forward card.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Wangechi Mutu <span class="ref-type">collage</span></div>
+      <div class="ref-why">Collage as figure, body, transformation. For the visual ambition — high art can still be warm and figural.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Rinko Kawauchi <span class="ref-type">photography</span></div>
+      <div class="ref-why">Quiet, light-drenched, ordinary moments treated as sacred. The attention-to-domestic-ordinariness register the piece wants without cozy-ness.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-deep">deep-dive</span> Hannah Höch, Kurt Schwitters, Romare Bearden <span class="ref-type">classical collage</span></div>
+      <div class="ref-why">Foundational collage — the modernist and Harlem Renaissance canons. Look for reference when the compositional logic of a scene isn't working.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-deep">deep-dive</span> Sally Mann, Nan Goldin <span class="ref-type">photography</span></div>
+      <div class="ref-why">For the analog-grain, intimate-interior register of the cinematic body. Permission to film domestic space with real attention.</div>
+    </div>
+  </div>
+
+  <!-- BOTM Material -->
+  <div class="ref-group">
+    <div class="ref-group-title">Book of the Month material — study before pitching</div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-must">must-see</span> BOTM Instagram @bookofthemonth <span class="ref-type">feed study</span></div>
+      <div class="ref-why">Spend 30 minutes scrolling their recent posts, Reels, and Stories. Notice what content dominates (unboxings, picks, merch). Notice the gaps. Your pitch fills one of the gaps.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-must">must-see</span> Volume 0 — any issue <span class="ref-type">literary magazine</span></div>
+      <div class="ref-why">Read one issue cover to cover. Pay attention to tone, design, what they fund, who they publish. Your companion essay-object is Volume 0-adjacent. You must read Volume 0 to pitch into its orbit.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-must">must-see</span> Lost Lambs by Madeline Cash <span class="ref-type">novel · Jan 2026 BOTM pick</span></div>
+      <div class="ref-why">The sample book for this pitch. If you have not already read it, read it before Session 2. If time does not permit a full read, read the first 40 pages and skim the rest — enough to sketch a credible episode.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> The Lolly Award page <span class="ref-type">bookofthemonth.com/best-books-of-the-year</span></div>
+      <div class="ref-why">Their statement of literary ambition. Language to borrow for Field 3: "distinctively fresh," "best of the best," "the most dedicated readers we know." These phrases signal you understand their voice.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> BOTM About page <span class="ref-type">bookofthemonth.com/about-us</span></div>
+      <div class="ref-why">Read for voice and positioning. "Bring the best new fiction forward." "Celebrating and championing emerging authors." This is the language BOTM uses about itself. Align your pitch with it.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Aspen Literary Festival lineup <span class="ref-type">aspenliteraryfestival.org</span></div>
+      <div class="ref-why">Study the 2026 speaker list. This is BOTM's editorial taste, externalized: Ruth Ozeki, Michael Cunningham, Tayari Jones, Ben Fountain, Kate Bowler, Robinne Lee, Veronica Roth. Your piece should feel native to this roster.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-deep">deep-dive</span> Janice Radway · A Feeling for Books (1997) <span class="ref-type">academic history</span></div>
+      <div class="ref-why">The scholarly history of Book-of-the-Month Club's cultural role. Middlebrow taste-making as serious cultural work. Not required, but context for anyone going deep on why BOTM matters.</div>
+    </div>
+  </div>
+
+  <!-- Contemporary Lit-Fic -->
+  <div class="ref-group">
+    <div class="ref-group-title">Contemporary lit-fic that maps to your lane</div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Madeline Cash · Lost Lambs (2026) <span class="ref-type">short novel · BOTM</span></div>
+      <div class="ref-why">Sample book for this plan. Short, weird, interior.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Kiran Millwood Hargrave · Almost Life (2026) <span class="ref-type">novel · BOTM March 2026</span></div>
+      <div class="ref-why">Alternate sample. Quiet, psychological, interior.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Emma Cline · The Girls, Daddy <span class="ref-type">fiction</span></div>
+      <div class="ref-why">Volume 0 author. The exact lit-fic register BOTM's Volume 0 operation is commissioning.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-useful">useful</span> Nada Alic · Bad Thoughts <span class="ref-type">short fiction</span></div>
+      <div class="ref-why">Volume 0 author. Contemporary short-story register — formally alive, emotionally serious, voice-driven.</div>
+    </div>
+
+    <div class="ref-item">
+      <div class="ref-name"><span class="priority-tier tier-deep">deep-dive</span> Aja Gabel, Erin Somers, Emily Adrian, Beatriz Serrano <span class="ref-type">novels</span></div>
+      <div class="ref-why">Your stated taste-cluster. Mentioning any of these authors in Field 3 signals you read seriously in the lane you are pitching into.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PART 5 — SESSION PLAN                                           -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<section>
+  <div class="section-num">Part 05</div>
+  <h2>Session plan</h2>
+  <div class="section-sub">Seven sessions, ~9 hours total. Each session has a minimum viable version if energy is low. Click checkboxes to track progress. Click phase headers to collapse.</div>
+
+  <div class="callout">
+    <div class="callout-label">Entry-point flexibility</div>
+    The sessions are numbered but not strictly sequential. Recommended order: Phase 1 → 2 → 3 → 4 → 5 → 6 → 7. If energy pulls you toward writing before reference-gathering, flip Phase 1 and Phase 3. If you want to design before writing, Phase 6 can happen after Phase 3. Do not skip Phase 2 (sample episode) — it unblocks everything else.
+  </div>
+
+  <!-- ── PHASE 1 -->
+  <div class="phase" data-phase="p1">
+    <div class="phase-header">
+      <div class="phase-title"><span class="phase-num">PHASE 1</span>Calibration</div>
+      <div class="phase-meta">~45 min · before any writing · minimum viable: scroll feed, read one ref</div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-intro">
+        Read the plan once. Study BOTM's actual content so you are pitching into real context, not an imagined audience. No writing yet.
+      </div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">1.1</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Read this entire plan document top to bottom, no notes, no pressure.</div></li>
+        <li class="step"><div class="step-num">1.2</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Open BOTM Instagram @bookofthemonth. Scroll 30 posts. Notice what content dominates. Notice what is missing.</div></li>
+        <li class="step"><div class="step-num">1.3</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Open bookofthemonth.com/about-us. Read slowly. Underline any phrase you would want to echo.</div></li>
+        <li class="step"><div class="step-num">1.4</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Open bookofthemonth.com/volume0 and aspenliteraryfestival.org. Skim both. Note the register.</div></li>
+        <li class="step"><div class="step-num">1.5</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Pick ONE must-see film from the reference list to watch this week (before Phase 2). Suggestion: <em>News from Home</em> or <em>The Gleaners and I.</em></div></li>
+        <li class="step"><div class="step-num">1.6</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Open Lost Lambs. Read first 40 pages, or full book if time. Mark one line that catches. This is the line for Phase 2.</div></li>
+        <li class="step"><div class="step-num">1.7</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Session log note: where the caught line is, what register BOTM is in, what feels missing in their current content.</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── PHASE 2 -->
+  <div class="phase" data-phase="p2">
+    <div class="phase-header">
+      <div class="phase-title"><span class="phase-num">PHASE 2</span>Sample episode sketch</div>
+      <div class="phase-meta">~90 min · writing mode · minimum viable: list of 6–8 fragments</div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-intro">
+        The hardest creative task. Doing it now — while energy is fresh — protects every downstream session. The sample does two jobs: it proves the concept to you before it proves it to BOTM, and it becomes Slide 3 material + Field 3 language.
+      </div>
+
+      <div class="session-label">Setup</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">2.1</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">New Google Doc: "Marginalia — Sample Episode · Lost Lambs" (or whatever working name).</div></li>
+        <li class="step"><div class="step-num">2.2</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Paste your Phase 1 caught line at the top. This is the seed.</div></li>
+        <li class="step"><div class="step-num">2.3</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Below it, write one sentence on why the line caught. Do not explain to a reader. Explain to yourself.</div></li>
+      </ul>
+
+      <div class="session-label">The sketch — treat as a director's treatment, not a script</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">2.4</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Write the <strong>opening image</strong>. What does the viewer see first? Describe it in 2–3 sentences. Register, not detail.</div></li>
+        <li class="step"><div class="step-num">2.5</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Write the <strong>book, introduced.</strong> How does the book arrive in the piece? Voiceover? A held shot? A cut to a page?</div></li>
+        <li class="step"><div class="step-num">2.6</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Write four or five <strong>drift movements</strong>. Each movement is a paragraph. What image, writing, association, song, memory, or text surfaces?
+          <ul class="sub-steps">
+            <li>Don't force four positions — let them be implicit</li>
+            <li>Don't narrate the book's plot</li>
+            <li>Let the drift genuinely drift</li>
+          </ul>
+        </div></li>
+        <li class="step"><div class="step-num">2.7</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Write the <strong>return.</strong> How does the piece come back to the book and the reader? What is the closing image or line?</div></li>
+        <li class="step"><div class="step-num">2.8</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Write a short paragraph on the <strong>companion essay-object</strong> — what is in print? A poem you wrote? A fragment of prose? A single image? One design choice (folded broadsheet? saddle-stitched? single card?).</div></li>
+        <li class="step"><div class="step-num">2.9</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">List the <strong>three short cuts.</strong> One atmospheric, one voiced, one text-forward. Just two lines each.</div></li>
+      </ul>
+
+      <div class="session-label">Close</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">2.10</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Read the whole sketch cold. Does it feel like the thing you've been describing? If not, note one thing off. Do not fix now.</div></li>
+        <li class="step"><div class="step-num">2.11</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Save. Close. Phase 2 complete.</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── PHASE 3 -->
+  <div class="phase" data-phase="p3">
+    <div class="phase-header">
+      <div class="phase-title"><span class="phase-num">PHASE 3</span>Field 3 draft — the written pitch</div>
+      <div class="phase-meta">~90 min · writing mode · minimum viable: 300 words, rough</div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-intro">
+        The single most important piece of writing in the submission. BOTM reads Field 3 first. If it hooks, they open the deck. If it doesn't, they don't. Target 400–600 words. Start from the balcony paragraph as source.
+      </div>
+
+      <div class="session-label">Setup</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">3.1</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">New Google Doc: "BOTM — Field 3 Draft."</div></li>
+        <li class="step"><div class="step-num">3.2</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Paste the balcony paragraph at the top as source text. Keep it visible throughout drafting.</div></li>
+        <li class="step"><div class="step-num">3.3</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Below it, paste the one-line and the concept paragraph from Part 1 of this plan.</div></li>
+      </ul>
+
+      <div class="session-label">Draft — four moves</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">3.4</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Move 1 — Open with the sensibility in motion.</strong> Do not open with "I propose." Open with a sentence that sounds like the piece itself. Two or three lines that put the reader inside the register of what you are making.
+          <ul class="sub-steps">
+            <li>Pull language from the balcony paragraph</li>
+            <li>Don't describe — evoke</li>
+          </ul>
+        </div></li>
+        <li class="step"><div class="step-num">3.5</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Move 2 — Define the form.</strong> One paragraph. What the piece is: a monthly-viable collage-essay, film + companion printed essay. Drawn from Sessions 1 and 2. Clean and direct.</div></li>
+        <li class="step"><div class="step-num">3.6</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Move 3 — Name the lane.</strong> One paragraph. Who the piece is for — the literary fiction / contemporary fiction subset of BOTM's audience, the Volume 0 reader, the underline-and-return reader. Reference the taste cluster: Madeline Cash, Kiran Millwood Hargrave, Aja Gabel, Emma Cline.</div></li>
+        <li class="step"><div class="step-num">3.7</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Move 4 — Close with the ask.</strong> You are pitching <em>one piece first.</em> Name the expansion as possibility, not demand. End on a sentence that restates what the piece is, simply.</div></li>
+      </ul>
+
+      <div class="session-label">Session close</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">3.8</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Word count check — should land 400–600. Over 700 = cut. Under 300 = add one paragraph.</div></li>
+        <li class="step"><div class="step-num">3.9</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Read aloud. Cut any sentence that sounds like pitch language. Keep the sensibility.</div></li>
+        <li class="step"><div class="step-num">3.10</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Save. Walk away. Do not revise in the same session.</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── PHASE 4 -->
+  <div class="phase" data-phase="p4">
+    <div class="phase-header">
+      <div class="phase-title"><span class="phase-num">PHASE 4</span>Field 3 revision + other application fields</div>
+      <div class="phase-meta">~60 min · 24+ hours after Phase 3 · minimum viable: budget answer + links</div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-intro">
+        Revise Field 3 with fresh eyes. Fill the other fields. Finalize budget language. Check resume status.
+      </div>
+
+      <ul class="steps">
+        <li class="step"><div class="step-num">4.1</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Reopen Field 3 draft. Read cold. Mark three sentences that are doing the most work. Mark two that are doing too little.</div></li>
+        <li class="step"><div class="step-num">4.2</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Rewrite the two weak sentences. Keep the three strong ones verbatim.</div></li>
+        <li class="step"><div class="step-num">4.3</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Read aloud one more time. If one sentence still feels wrong, cut it rather than fix it.</div></li>
+        <li class="step"><div class="step-num">4.4</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Mark Field 3 as draft-ready.</div></li>
+        <li class="step"><div class="step-num">4.5</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Links to work.</strong> Choose 2–4 links. See Part 6 for guidance. Write them down in the draft doc under Field 1.</div></li>
+        <li class="step"><div class="step-num">4.6</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Type of content.</strong> Pick "Other" from the form. Write a one-line description of the hybrid form: e.g., "hybrid essay-film and printed essay-object."</div></li>
+        <li class="step"><div class="step-num">4.7</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Budget.</strong> Write the phased budget answer. See Part 6 for framework. Do not guess — work from the framework.</div></li>
+        <li class="step"><div class="step-num">4.8</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Resume check.</strong> Open current resume. Is Google Maps × Benson Boone, Google Maps × Marías named? Is generative AI / creative-technology framing current? If not, flag a mini-session for update before submit.</div></li>
+        <li class="step"><div class="step-num">4.9</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Save. Phase 4 complete.</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── PHASE 5 -->
+  <div class="phase" data-phase="p5">
+    <div class="phase-header">
+      <div class="phase-title"><span class="phase-num">PHASE 5</span>Deck copy — all slides written</div>
+      <div class="phase-meta">~90 min · content-complete deck, not designed yet · minimum viable: 5 slides written</div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-intro">
+        All copy written. Image slots identified. Typography and palette direction decided. Not designed yet. Format decision made (PDF or web page).
+      </div>
+
+      <div class="session-label">Setup</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">5.1</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">New Google Doc: "BOTM — Deck Copy."</div></li>
+        <li class="step"><div class="step-num">5.2</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Create five section headers: SLIDE 1 ATMOSPHERE, SLIDE 2 CONCEPT, SLIDE 3 EPISODE, SLIDE 4 SYSTEM, SLIDE 5 BIO + CLOSE.</div></li>
+      </ul>
+
+      <div class="session-label">Writing pass</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">5.3</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Slide 1.</strong> No title, no explanation. Write one phrase (5–10 words max) that could sit on a mood image. Describe the image slot: what is in the frame.</div></li>
+        <li class="step"><div class="step-num">5.4</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Slide 2.</strong> Title (working name, or [TBD]). One-line. Concept paragraph from Field 3, compressed to ~60 words for slide use.</div></li>
+        <li class="step"><div class="step-num">5.5</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Slide 3.</strong> Sample episode — Lost Lambs. Title line. 4–5 fragment-captions describing the drift movements from Phase 2. One image slot per movement. Name the companion essay-object in one line.</div></li>
+        <li class="step"><div class="step-num">5.6</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Slide 4.</strong> The system. Five surfaces: film · essay-object · short cuts · reader loop · (possible) zine. One line each. Visual diagram if possible.</div></li>
+        <li class="step"><div class="step-num">5.7</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Slide 5.</strong> Bio — 3–4 sentences. Writer. Senior copywriter at Google Brand Studio (Google Maps × Benson Boone / Marías). Creative technologist in formation. Closing line.</div></li>
+      </ul>
+
+      <div class="session-label">Decisions</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">5.8</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Format decision: PDF (static, faster) or web page (slower, portfolio-grade). Default: PDF. Web page is optional post-submission portfolio move.</div></li>
+        <li class="step"><div class="step-num">5.9</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Typography decision: pick ONE serif family. Candidates: Tiempos, Canela, GT Sectra, IBM Plex Serif. No sans-serif body. No Helvetica.</div></li>
+        <li class="step"><div class="step-num">5.10</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Palette decision: warm background (cream, off-white, parchment), ink-not-black text, one accent color. Write it down. Stop deciding.</div></li>
+        <li class="step"><div class="step-num">5.11</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Image-source list: for each slide, note where the image is coming from — stock, film still, personal photo, TBD. If TBD, add to a separate shortlist.</div></li>
+      </ul>
+
+      <div class="session-label">Close</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">5.12</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Read all slides in order. Does the deck feel like the thing it pitches? If not, Slide 1 is probably wrong.</div></li>
+        <li class="step"><div class="step-num">5.13</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Save. Phase 5 complete.</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── PHASE 6 -->
+  <div class="phase" data-phase="p6">
+    <div class="phase-header">
+      <div class="phase-title"><span class="phase-num">PHASE 6</span>Deck design execution</div>
+      <div class="phase-meta">~90–120 min · build in Figma or Canva · minimum viable: clean PDF export</div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-intro">
+        Actual design. Not polish. Get to an exportable deck. Polish happens in Phase 7.
+      </div>
+
+      <div class="session-label">Setup</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">6.1</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Open Figma or Canva. New file: "BOTM — Marginalia Pitch Deck."</div></li>
+        <li class="step"><div class="step-num">6.2</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Page dimensions: 1920×1080 for screen deck; 11×8.5 inches landscape for PDF.</div></li>
+        <li class="step"><div class="step-num">6.3</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Set up text styles from your typography decision.</div></li>
+        <li class="step"><div class="step-num">6.4</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Set up color palette from your palette decision.</div></li>
+      </ul>
+
+      <div class="session-label">Build</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">6.5</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Build Slide 1 first. This is the hardest slide. Keep building until it feels like the piece.</div></li>
+        <li class="step"><div class="step-num">6.6</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Build Slides 2–5. Use the same typography/palette decisions consistently. Breathing room on every slide.</div></li>
+        <li class="step"><div class="step-num">6.7</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Source images from the shortlist. Use film-stills, personal photos, or high-quality stock. Never AI-generated generic imagery.</div></li>
+      </ul>
+
+      <div class="session-label">Export</div>
+      <ul class="steps">
+        <li class="step"><div class="step-num">6.8</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Export to PDF. File size under 10 MB for application upload.</div></li>
+        <li class="step"><div class="step-num">6.9</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Name file: "Marginalia-Pitch-Deck-MiaJones.pdf" (or whatever final name).</div></li>
+        <li class="step"><div class="step-num">6.10</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Save. Phase 6 complete.</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── PHASE 7 -->
+  <div class="phase" data-phase="p7">
+    <div class="phase-header">
+      <div class="phase-title"><span class="phase-num">PHASE 7</span>Final read + submit</div>
+      <div class="phase-meta">~45 min · 24+ hours after Phase 6 · minimum viable: submit</div>
+    </div>
+    <div class="phase-body">
+      <div class="phase-intro">
+        Read everything cold. One last pass on Field 3. Attach deck. Submit. Log the submission.
+      </div>
+
+      <ul class="steps">
+        <li class="step"><div class="step-num">7.1</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Open Field 3 draft. Read one final time. Fix typos. Do not rewrite.</div></li>
+        <li class="step"><div class="step-num">7.2</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Open deck PDF. View at actual size. Any typos or layout issues? Fix only critical ones.</div></li>
+        <li class="step"><div class="step-num">7.3</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Navigate to bookofthemonth.applytojob.com/apply/LrtX5jNEpR/Creator-InResidence-Program</div></li>
+        <li class="step"><div class="step-num">7.4</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Fill the form. Paste Field 3 pitch. Paste budget answer. Attach resume. Attach deck if allowed, or link to it (Google Drive shareable, Dropbox, or portfolio URL).</div></li>
+        <li class="step"><div class="step-num">7.5</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Enter links to prior work, LinkedIn URL, basics.</div></li>
+        <li class="step"><div class="step-num">7.6</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Submit.</div></li>
+        <li class="step"><div class="step-num">7.7</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Screenshot confirmation. Save to project folder.</div></li>
+        <li class="step"><div class="step-num">7.8</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Update mia-brain skill memory with submission date.</div></li>
+        <li class="step"><div class="step-num">7.9</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Close this plan. The work is complete regardless of BOTM's response. The pitch itself is portfolio material.</div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PART 6 — APPLICATION FIELD FRAMES                               -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<section>
+  <div class="section-num">Part 06</div>
+  <h2>Application field frames</h2>
+  <div class="section-sub">Each of the five fields scaffolded with what goes in it and what to avoid.</div>
+
+  <div class="field-block">
+    <div class="field-label">Field 1 — Links to work</div>
+    <div class="field-prompt">"Please provide links to your work"</div>
+    <div class="field-scaffold">
+      <p>Pick 2–4 links. Prioritize demonstrating range across writing and visual direction. Do NOT pick everything. Curate.</p>
+      <p>Recommended:</p>
+      <ol>
+        <li>Google Maps × Benson Boone campaign (YouTube or case-study link). Signals scale and creative-direction credential.</li>
+        <li>Google Maps × Marías campaign. International work, second major credit.</li>
+        <li>A piece of your own writing — if any published or polished. Signals you are a writer, not just a copywriter.</li>
+        <li>A visual or technical project from your portfolio — the strongest generative-AI or creative-technology piece you have ready.</li>
+      </ol>
+      <p class="small">If portfolio is not yet live at submission: use Canva deck or case-study PDF hosted on Drive with view-access link.</p>
+    </div>
+  </div>
+
+  <div class="field-block">
+    <div class="field-label">Field 2 — Type of content you're best at</div>
+    <div class="field-prompt">Dropdown: Stills, Memes, Short-form series, Street content/interviews, Other</div>
+    <div class="field-scaffold">
+      <p>Pick <strong>Other.</strong> Write in: <em>Hybrid long-form essay-film and printed literary essay-object. Direction, writing, and collage-based production.</em></p>
+      <p class="small">Do not pick Short-form series — you are not pitching short-form. Pick Other and define yourself.</p>
+    </div>
+  </div>
+
+  <div class="field-block">
+    <div class="field-label">Field 3 — The pitch</div>
+    <div class="field-prompt">"Pitch us an idea you want to make with us. Be as specific as possible. Think outside the box. Your ideas do not have to center around books, but rather content that would appeal to our audience of Gen Z/Millennial women who love to read."</div>
+    <div class="field-scaffold">
+      <p>Target: 400–600 words. Four-move structure:</p>
+      <ol>
+        <li><strong>Open with the sensibility in motion.</strong> 2–3 sentences that put the reader inside the register. Pull from the balcony paragraph.</li>
+        <li><strong>Define the form.</strong> One paragraph on what the piece is: a monthly-viable collage-essay, film + companion printed essay, tied to BOTM's literary fiction selections, Volume 0-adjacent in register.</li>
+        <li><strong>Name the lane.</strong> One paragraph on who the piece is for — the literary-fiction subset of BOTM's audience. Name the taste cluster (Madeline Cash, Kiran Millwood Hargrave, Aja Gabel, Emma Cline, etc.).</li>
+        <li><strong>Close with the ask.</strong> You are pitching one piece first. Name expansion as possibility. End on a single line restating what the piece is.</li>
+      </ol>
+      <p>Avoid:</p>
+      <ul class="tight">
+        <li>Opening with "I propose" or "I want to make"</li>
+        <li>Pitch-deck language ("I'll deliver," "my deliverables are")</li>
+        <li>Quantitative promises ("will get X views," "engagement will be")</li>
+        <li>Over-leaning on the centennial</li>
+        <li>Cozy/me-time/book-club framing</li>
+      </ul>
+      <p>Keep:</p>
+      <ul class="tight">
+        <li>Your actual sentence rhythm</li>
+        <li>Literary references where they fit naturally</li>
+        <li>Specificity about what makes the form different</li>
+        <li>Direct acknowledgment that BOTM's program brief explicitly invited this kind of pitch</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="field-block">
+    <div class="field-label">Field 4 — Production budget</div>
+    <div class="field-prompt">"For the idea you pitched above, what is the production budget in terms of time investment and out-of-pocket expenses?"</div>
+    <div class="field-scaffold">
+      <p>Phased budget. Three tiers.</p>
+      <p><strong>Pilot piece (the first one):</strong></p>
+      <ul class="tight">
+        <li>Time: 4–6 weeks from green-light to delivery</li>
+        <li>Mia time: ~60–80 hours of direction, writing, shoot, edit, print direction</li>
+        <li>Out-of-pocket: $500–$1,500 for music licensing, print sample production, travel if needed, possible editor/motion-designer collaboration at pilot scale</li>
+        <li>Fee range: in the $2,500–$5,000 band of BOTM's Creator-in-Residence range</li>
+      </ul>
+      <p><strong>Ongoing monthly (if the first piece leads to ongoing work):</strong></p>
+      <ul class="tight">
+        <li>Time: 3–4 weeks from brief to delivery per piece</li>
+        <li>Production support: a part-time editor + motion designer, print production partner for the insert</li>
+        <li>Budget shape discussable with BOTM based on scale</li>
+      </ul>
+      <p class="small">Language suggestion: "I'm scoping the first piece realistically for the program's stated range. If ongoing, monthly production becomes more efficient with a small support team, and budget shape is a conversation."</p>
+    </div>
+  </div>
+
+  <div class="field-block">
+    <div class="field-label">Field 5 — Basics</div>
+    <div class="field-prompt">Name, email, phone, address, resume, LinkedIn URL</div>
+    <div class="field-scaffold">
+      <p>Resume check before submit. Must capture:</p>
+      <ul class="tight">
+        <li>Named campaign credits: Google Maps × Benson Boone, Google Maps × Marías</li>
+        <li>Google Brand Studio fellowship work</li>
+        <li>Creative technology / vibe coding fluency (Claude, Cursor, Replit, generative AI)</li>
+        <li>Any completed personal projects positioned as portfolio</li>
+      </ul>
+      <p class="small">If resume is stale: run a 30-minute update mini-session before Phase 7. Do not submit an outdated resume.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PART 7 — DECK STRUCTURE                                         -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<section>
+  <div class="section-num">Part 07</div>
+  <h2>Deck structure</h2>
+  <div class="section-sub">Slide-by-slide direction. What each slide does, what it shouldn't do, image territory, copy guidance.</div>
+
+  <h3>Deck principle</h3>
+  <div class="callout">
+    The deck must <em>be</em> the thing it pitches. If it looks like a standard pitch deck — clean corporate sans, bullet lists, one-color accents — the pitch is dead before it is read. It should look like a literary object in the Volume 0 register. Warm paper tones, serif typography, breathing white space, one atmospheric image per slide doing real work, single-accent color. Think <em>Kinfolk</em>-meets-<em>Cabinet</em>-meets-<em>Aperture</em>, not McKinsey.
+  </div>
+
+  <div class="slide-grid">
+    <div class="slide-key">SLIDE 1</div>
+    <div class="slide-val"><strong>Atmosphere.</strong> Not a title slide. A mood slide.</div>
+
+    <div class="slide-key">JOB</div>
+    <div class="slide-val">Make the reader feel the piece before reading anything explanatory.</div>
+
+    <div class="slide-key">CONTENT</div>
+    <div class="slide-val">One image (film-still register, or high-quality photograph). One phrase 5–10 words max. That's it.</div>
+
+    <div class="slide-key">AVOID</div>
+    <div class="slide-val">Title text. Deck title. Logo. "Pitch deck" anywhere on the slide.</div>
+  </div>
+
+  <div class="slide-grid">
+    <div class="slide-key">SLIDE 2</div>
+    <div class="slide-val"><strong>Concept.</strong> One-line and the definitional paragraph.</div>
+
+    <div class="slide-key">JOB</div>
+    <div class="slide-val">Name what the piece is. Name the form. Name the lane.</div>
+
+    <div class="slide-key">CONTENT</div>
+    <div class="slide-val">Working title at top. One-line in middle, large. 60-word concept paragraph below. One small image or one elegant rule/divider. Volume 0 mentioned in passing.</div>
+
+    <div class="slide-key">AVOID</div>
+    <div class="slide-val">Bullet lists. More than 100 words total. Explanatory diagrams.</div>
+  </div>
+
+  <div class="slide-grid">
+    <div class="slide-key">SLIDE 3</div>
+    <div class="slide-val"><strong>A sample month — Lost Lambs.</strong> Proof of execution.</div>
+
+    <div class="slide-key">JOB</div>
+    <div class="slide-val">Show you can actually do the thing.</div>
+
+    <div class="slide-key">CONTENT</div>
+    <div class="slide-val">Book title as header. 4–5 fragment-captions for the drift movements (from Phase 2). 4–5 small image slots beside them. One line naming the companion essay-object. One line naming the three short cuts.</div>
+
+    <div class="slide-key">AVOID</div>
+    <div class="slide-val">Plot summary of the book. Timeline diagrams. Over-explaining the drift.</div>
+  </div>
+
+  <div class="slide-grid">
+    <div class="slide-key">SLIDE 4</div>
+    <div class="slide-val"><strong>The system.</strong> Cross-format commission distilled.</div>
+
+    <div class="slide-key">JOB</div>
+    <div class="slide-val">Show this is not content — it is an ongoing format that uses BOTM's existing infrastructure.</div>
+
+    <div class="slide-key">CONTENT</div>
+    <div class="slide-val">Five surfaces: film → essay-object → short cuts → reader loop → (possible) zine. One line each. Small visual diagram showing how they relate. Volume 0 named as the adjacent publishing sibling.</div>
+
+    <div class="slide-key">AVOID</div>
+    <div class="slide-val">Org charts. Rollout timelines. Financial projections. "Phase 1, Phase 2" corporate-deck language.</div>
+  </div>
+
+  <div class="slide-grid">
+    <div class="slide-key">SLIDE 5</div>
+    <div class="slide-val"><strong>Bio + close.</strong> Short positioning. Final line.</div>
+
+    <div class="slide-key">JOB</div>
+    <div class="slide-val">Position Mia credibly in 3–4 sentences. Close with a line that stays.</div>
+
+    <div class="slide-key">CONTENT</div>
+    <div class="slide-val">Bio paragraph: writer, senior copywriter at Google Brand Studio (Google Maps × Benson Boone / Marías credits), creative technologist in formation. Closing line (TBD — emerges from Field 3 drafting).</div>
+
+    <div class="slide-key">AVOID</div>
+    <div class="slide-val">Resume-style bullet list. Client logo wall. Headshot. "Thanks for reading." Timeline of how the project rolls out.</div>
+  </div>
+
+  <h3>Typography direction</h3>
+  <p>
+    Serif body. No sans-serif body. Candidates: <strong>GT Sectra, Tiempos, Canela, IBM Plex Serif.</strong> Optional mono accent for captions and callouts — IBM Plex Mono matches this plan's aesthetic and ties visually to your existing project work.
+  </p>
+  <p>
+    Hierarchy: one large display face for titles and key pull-quotes, one body face, one mono for caption/metadata. No more than three typefaces total.
+  </p>
+
+  <h3>Palette direction</h3>
+  <p>
+    Warm base — cream, parchment, off-white. Not pure white. Text in warm-black or deep ink-brown, not pure #000. One accent color, used sparingly — a dusty teal, a deep olive, a muted rust. Pulled from your existing moodboard register (forest-tones + retrofuturistic cool per your aesthetic guide).
+  </p>
+
+  <h3>Image direction</h3>
+  <p>
+    Every image earns its place. No stock illustration. No AI-generated generic imagery. No placeholder shapes. Each image is doing real emotional or intellectual work. Sources: film stills (fair use for pitch), personal photography, high-quality photojournalism or art photography licensed properly.
+  </p>
+  <p>
+    If an image is not available that does the job — <em>leave the slot empty with a single line of text instead.</em> A white page with one sentence is stronger than a slide with a weak image.
+  </p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- PART 8 — TEMPLATES AND WORKING FILES                            -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<section>
+  <div class="section-num">Part 08</div>
+  <h2>Templates and working files</h2>
+  <div class="section-sub">What will exist in your project folder by submission. Track completion here.</div>
+
+  <h3>Google Drive folder structure</h3>
+  <p>Create a folder: <strong>BOTM-Creator-in-Residence-Pitch/</strong></p>
+  <ul class="bare">
+    <li><strong>00_plan.html</strong> — this document</li>
+    <li><strong>01_field-3-draft.gdoc</strong> — Field 3 pitch text, with balcony paragraph preserved at top</li>
+    <li><strong>02_sample-episode-lost-lambs.gdoc</strong> — Phase 2 treatment</li>
+    <li><strong>03_budget-answer.gdoc</strong> — Phased budget language</li>
+    <li><strong>04_deck-copy.gdoc</strong> — All slide copy, written before design</li>
+    <li><strong>05_deck-design.fig or .canva</strong> — Actual designed deck</li>
+    <li><strong>06_deck-final.pdf</strong> — Exported deck for submission</li>
+    <li><strong>07_application-responses.gdoc</strong> — All application field answers consolidated</li>
+    <li><strong>08_submission-confirmation.png</strong> — Screenshot of confirmation after submit</li>
+  </ul>
+
+  <h3>What to track per session</h3>
+  <p>At the end of each working session, log one sentence in a session-log note (paper or digital, whichever you're using). Three things only:</p>
+  <ol class="tight">
+    <li>What phase or step you worked on</li>
+    <li>What you produced</li>
+    <li>One sentence on how it felt — this is diagnostic, not therapeutic</li>
+  </ol>
+
+  <h3>Parking lot — phase 2 ideas, not in initial pitch</h3>
+  <p>Held for future, do not include in submission:</p>
+  <ul class="bare">
+    <li>Quarterly or annual zine collecting drifts</li>
+    <li>Reader-submission loop as standing format</li>
+    <li>Live / ambient versions for bookstore partnerships, pop-ups, Aspen festival activations</li>
+    <li>Potential collaborators — motion designer, editor, print production partner (named once pitch lands)</li>
+    <li>Web version of the piece as standalone portfolio artifact</li>
+    <li>Character evolution across episodes — visual iconography, recurring objects, the iconography of a sensibility over time</li>
+  </ul>
+
+  <h3>Working title — still open</h3>
+  <p>
+    Working title placeholder: <strong>[TBD]</strong>. Not Marginalia (claimed). Not Commonplace / Gathering / Of a Book / Fragments — none landed. The name will likely arrive during Phase 2 or Phase 3, when the piece exists in draft. Do not let the missing name block forward motion.
+  </p>
+  <p>
+    When the name arrives, it should pass three tests:
+  </p>
+  <ol class="tight">
+    <li>Could a BOTM subscriber say it aloud without irony?</li>
+    <li>Does it survive pairing with a specific book title?</li>
+    <li>Does it hold both warmth and intellectual seriousness?</li>
+  </ol>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                          -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<footer>
+  <p>botm_pitch / plan.html · v1.0 · Apr 21, 2026</p>
+  <p>The concept is located. The plan is here. Forward motion is the only remaining task. Start with Phase 1 when energy is available. Do not skip Phase 2. Submit when Phase 7 is complete, not when it is perfect.</p>
+</footer>
+
+<script>
+  // ── progress tracking
+  function toggleStep(el) {
+    el.classList.toggle('done');
+    el.parentElement.classList.toggle('done');
+    updateProgress();
+    saveState();
+  }
+
+  function updateProgress() {
+    const all = document.querySelectorAll('.step-check');
+    const done = document.querySelectorAll('.step-check.done');
+    const total = all.length;
+    const complete = done.length;
+    const pct = total > 0 ? (complete / total) * 100 : 0;
+
+    document.getElementById('doneCount').textContent = complete;
+    document.getElementById('totalCount').textContent = total;
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    const nextMove = document.getElementById('nextMove');
+    const firstUndone = Array.from(all).find(c => !c.classList.contains('done'));
+
+    if (!firstUndone) {
+      nextMove.textContent = 'Plan complete. Submit the application.';
+    } else {
+      const step = firstUndone.parentElement;
+      const stepText = step.querySelector('.step-text').textContent.split('.')[0] + '.';
+      const phase = firstUndone.closest('.phase');
+      const phaseNum = phase ? phase.querySelector('.phase-num').textContent : '';
+      nextMove.textContent = phaseNum + ' — ' + stepText;
+    }
+  }
+
+  // ── phase collapse
+  document.querySelectorAll('.phase-header').forEach(h => {
+    h.addEventListener('click', () => {
+      h.parentElement.classList.toggle('collapsed');
+    });
+  });
+
+  // ── local state persistence
+  function saveState() {
+    const state = {};
+    document.querySelectorAll('.step-check').forEach((el, i) => {
+      state[i] = el.classList.contains('done');
+    });
+    try {
+      // Artifacts environment may not have localStorage; fall back silently
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('botm-pitch-plan-state', JSON.stringify(state));
+      }
+    } catch (e) { /* no-op */ }
+  }
+
+  function loadState() {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const raw = localStorage.getItem('botm-pitch-plan-state');
+        if (!raw) return;
+        const state = JSON.parse(raw);
+        document.querySelectorAll('.step-check').forEach((el, i) => {
+          if (state[i]) {
+            el.classList.add('done');
+            el.parentElement.classList.add('done');
+          }
+        });
+      }
+    } catch (e) { /* no-op */ }
+  }
+
+  // ── init
+  loadState();
+  updateProgress();
+</script>
+
+</body>
+</html>

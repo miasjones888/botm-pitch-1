@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>botm_pitch_sprint / 48hr</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
+
+  :root {
+    --bg: #F5F2EA;
+    --ink: #0A0A0A;
+    --muted: #6B6B66;
+    --faint: #A8A49A;
+    --rule: #1A1A1A;
+    --rule-soft: #C8C5BB;
+    --accent: #5C8B8C;
+    --accent-pale: #D4E0E0;
+    --done: #9AA89A;
+    --done-pale: #D8DED2;
+    --hover: #ECE7DA;
+    --warn: #B85C3C;
+    --warn-pale: #E8D0C4;
+    --urgent: #8A3A2A;
+    --urgent-pale: #E8C4B8;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0E0E0C;
+      --ink: #E8E5DC;
+      --muted: #7A7A72;
+      --faint: #4A4A42;
+      --rule: #2A2A26;
+      --rule-soft: #1E1E1C;
+      --accent: #7AABAC;
+      --accent-pale: #2A3A3A;
+      --done: #4A5A4A;
+      --done-pale: #1E2620;
+      --hover: #1A1A18;
+      --warn: #D87A5C;
+      --warn-pale: #2E1E18;
+      --urgent: #E08A6A;
+      --urgent-pale: #3A1E14;
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 32px 24px 140px;
+  }
+
+  /* ────────────────────────────── header */
+
+  header {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 28px;
+    margin-bottom: 36px;
+  }
+
+  .filename {
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    margin-bottom: 18px;
+  }
+
+  .filename::before { content: '> '; color: var(--accent); }
+
+  .sprint-label {
+    display: inline-block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    padding: 3px 10px;
+    background: var(--urgent);
+    color: var(--bg);
+    margin-bottom: 14px;
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    line-height: 1.25;
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 13px;
+    font-style: italic;
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  .meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 28px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .meta-key { padding-right: 8px; letter-spacing: 0.02em; }
+  .meta-val { color: var(--ink); }
+
+  /* ────────────────────────────── deadline banner */
+
+  .deadline-banner {
+    margin: 24px 0 32px;
+    padding: 18px 22px;
+    background: var(--urgent-pale);
+    border-left: 3px solid var(--urgent);
+  }
+
+  .deadline-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--urgent);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .deadline-text {
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* ────────────────────────────── progress */
+
+  .progress-block {
+    margin: 24px 0 32px;
+    padding: 18px 22px;
+    background: var(--hover);
+    border-left: 2px solid var(--accent);
+  }
+
+  .progress-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .progress-bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--rule);
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.3s ease;
+    width: 0%;
+  }
+
+  .progress-stats {
+    font-size: 12px;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .progress-stats strong { font-weight: 600; }
+
+  .next-move {
+    font-size: 12px;
+    color: var(--ink);
+    padding-top: 10px;
+    border-top: 1px dashed var(--rule);
+    margin-top: 10px;
+  }
+
+  .next-move::before { content: 'NEXT → '; color: var(--accent); font-weight: 500; }
+
+  /* ────────────────────────────── sections */
+
+  section {
+    margin-bottom: 48px;
+  }
+
+  .section-num {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  h2 {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    margin-bottom: 6px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-sub {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 24px;
+    margin-top: 6px;
+  }
+
+  h3 {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 24px 0 10px;
+    color: var(--ink);
+    letter-spacing: 0;
+  }
+
+  h3::before {
+    content: '— ';
+    color: var(--accent);
+  }
+
+  h4 {
+    font-size: 11px;
+    font-weight: 600;
+    margin: 18px 0 8px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  p {
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+
+  em { font-style: italic; }
+  strong { font-weight: 600; }
+
+  /* ────────────────────────────── call-outs */
+
+  .callout {
+    margin: 18px 0;
+    padding: 14px 18px;
+    background: var(--hover);
+    border-left: 2px solid var(--accent);
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+
+  .callout.urgent {
+    background: var(--urgent-pale);
+    border-left-color: var(--urgent);
+  }
+
+  .callout.warn {
+    background: var(--warn-pale);
+    border-left-color: var(--warn);
+  }
+
+  .callout-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .balcony {
+    margin: 20px 0;
+    padding: 18px 22px;
+    background: var(--accent-pale);
+    border-left: 2px solid var(--accent);
+    font-size: 12.5px;
+    line-height: 1.75;
+    font-style: italic;
+  }
+
+  .balcony-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    font-style: normal;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  /* ────────────────────────────── lists */
+
+  ul, ol {
+    margin: 8px 0 16px 0;
+    padding-left: 22px;
+  }
+
+  li {
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  ul.tight li, ol.tight li { margin-bottom: 3px; }
+
+  ul.bare {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  ul.bare li::before {
+    content: '— ';
+    color: var(--muted);
+  }
+
+  /* ────────────────────────────── time blocks */
+
+  .day-header {
+    margin: 40px 0 20px;
+    padding: 14px 18px;
+    background: var(--ink);
+    color: var(--bg);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .day-label {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .day-time {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-pale);
+  }
+
+  .block {
+    margin-bottom: 28px;
+    border: 1px solid var(--rule-soft);
+    background: var(--bg);
+  }
+
+  .block-header {
+    padding: 14px 18px;
+    background: var(--hover);
+    border-bottom: 1px solid var(--rule-soft);
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  .block-header:hover { background: var(--accent-pale); }
+
+  .block-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .block-num {
+    color: var(--accent);
+    margin-right: 10px;
+  }
+
+  .block-meta {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: right;
+    min-width: 140px;
+  }
+
+  .block-body {
+    padding: 18px 22px;
+    display: block;
+  }
+
+  .block.collapsed .block-body {
+    display: none;
+  }
+
+  .block-intro {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px dashed var(--rule-soft);
+  }
+
+  .mvv {
+    margin: 14px 0;
+    padding: 10px 14px;
+    background: var(--warn-pale);
+    border-left: 2px solid var(--warn);
+    font-size: 11.5px;
+    line-height: 1.55;
+  }
+
+  .mvv-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--warn);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .steps {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 28px 20px 1fr;
+    gap: 10px;
+    align-items: start;
+    padding: 7px 0;
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .step-num {
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 500;
+    padding-top: 2px;
+    letter-spacing: 0.04em;
+  }
+
+  .step-check {
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--rule);
+    background: var(--bg);
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 3px;
+    position: relative;
+    transition: all 0.15s;
+  }
+
+  .step-check:hover { border-color: var(--accent); }
+
+  .step-check.done {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .step-check.done::after {
+    content: '✓';
+    position: absolute;
+    top: -2px;
+    left: 2px;
+    color: var(--bg);
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .step-text { color: var(--ink); transition: color 0.15s; }
+
+  .step.done .step-text {
+    color: var(--done);
+    text-decoration: line-through;
+    text-decoration-color: var(--done);
+    text-decoration-thickness: 1px;
+  }
+
+  /* ────────────────────────────── copy-ready blocks */
+
+  .copy-block {
+    margin: 14px 0;
+    padding: 16px 20px;
+    background: var(--bg);
+    border: 1px solid var(--rule-soft);
+    font-size: 12px;
+    line-height: 1.65;
+    position: relative;
+  }
+
+  .copy-block-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  .copy-block em { color: var(--muted); }
+
+  .copy-block p + p { margin-top: 10px; }
+
+  /* ────────────────────────────── deck slides */
+
+  .slide-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 6px 20px;
+    margin: 14px 0;
+    padding: 14px 18px;
+    background: var(--hover);
+    font-size: 11.5px;
+    line-height: 1.5;
+  }
+
+  .slide-key { color: var(--accent); font-weight: 600; }
+  .slide-val { color: var(--ink); }
+
+  /* ────────────────────────────── divider */
+
+  hr {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 40px 0;
+  }
+
+  /* ────────────────────────────── footer */
+
+  footer {
+    margin-top: 60px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  @media (max-width: 640px) {
+    body { padding: 20px 16px 120px; font-size: 12.5px; }
+    h1 { font-size: 19px; }
+    h2 { font-size: 15px; }
+    .meta { grid-template-columns: 1fr; }
+    .block-header { flex-direction: column; gap: 6px; }
+    .block-meta { text-align: left; min-width: 0; }
+    .step { grid-template-columns: 24px 18px 1fr; gap: 8px; font-size: 11.5px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="filename">botm_pitch_sprint / 48hr.html</div>
+  <div class="sprint-label">48-hour sprint</div>
+  <h1>BOTM Creator-in-Residence — Submission Sprint</h1>
+  <div class="subtitle">
+    Compressed execution plan. Six blocks across Tuesday–Thursday. Target submit: Thursday, April 23. Every block has a minimum viable version if energy drops.
+  </div>
+  <div class="meta">
+    <span class="meta-key">target submit</span>
+    <span class="meta-val">Thursday, April 23, 2026</span>
+    <span class="meta-key">total time</span>
+    <span class="meta-val">~6–7 focused hours across 3 days</span>
+    <span class="meta-key">ship destination</span>
+    <span class="meta-val">bookofthemonth.applytojob.com/apply/LrtX5jNEpR</span>
+    <span class="meta-key">strategy</span>
+    <span class="meta-val">Field 3 does the real work · deck is support</span>
+  </div>
+</header>
+
+<div class="deadline-banner">
+  <div class="deadline-label">Submission reality</div>
+  <div class="deadline-text">
+    Credible-and-sent beats polished-and-late. Field 3 is the single most important piece of text in the submission — if they never open the deck link, the pitch still has to land on the text alone. Protect writing time. Design second.
+  </div>
+</div>
+
+<div class="progress-block">
+  <div class="progress-label">Progress</div>
+  <div class="progress-bar-wrap">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-stats"><strong><span id="doneCount">0</span></strong>/<span id="totalCount">0</span> steps</div>
+  </div>
+  <div class="next-move" id="nextMove">Start Block 1 — Calibration.</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SPRINT CONTEXT                                                  -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<section>
+  <div class="section-num">Sprint context</div>
+  <h2>What's in, what's out, what stays true</h2>
+
+  <h3>In for this submission</h3>
+  <ul class="bare">
+    <li>Field 3 written pitch (~400–600 words) — the main deliverable, lives inline in the application</li>
+    <li>4–5 slide deck (PDF, hosted on Drive) — link included inside Field 3</li>
+    <li>Sample episode sketch — drawn from Lost Lambs (or fallback book), appears on Slide 3</li>
+    <li>Budget answer (Field 4) — phased pilot + ongoing</li>
+    <li>Links, content-type dropdown, basics, resume</li>
+  </ul>
+
+  <h3>Parked for later</h3>
+  <ul class="bare">
+    <li>Full reference-library study — you already know enough to pitch</li>
+    <li>Quarterly zine, reader-loop standing feature, Aspen festival activations</li>
+    <li>Web version of the deck (portfolio move after submit if wanted)</li>
+    <li>Working title — stays as [TBD] or "Working Title" in the deck; Field 3 can use an interim name or none</li>
+  </ul>
+
+  <h3>What stays true from the full plan</h3>
+  <ul class="bare">
+    <li>Collage-essay form, four positions held implicitly, no declared grammar</li>
+    <li>Character in two registers — cinematic + casual/webcam, voice always</li>
+    <li>Two artifacts per episode — film + companion printed essay</li>
+    <li>Tied to BOTM's literary fiction / contemporary fiction / Volume 0 lane — not whole catalog</li>
+    <li>Global register, not European; reading life of any woman, not aspirational Paris</li>
+    <li>Centennial as light context only, not frame</li>
+  </ul>
+
+  <div class="balcony">
+    <div class="balcony-label">Field 3 source paragraph · keep visible while drafting</div>
+    Sitting out on a balcony in Paris, watching the sitting reading and thinking and drinking coffee and smoking and writing in your journal while listening to music and perhaps talking passionately with a friend about the book you're reading and how it makes you feel — what you see vs. what they see, the poetry and prose it inspires in you, the change it inspires, how it touches your own life, how you see the world when you come out of the world within the book, how it immediately becomes nostalgic and fuzzy because you can never go back to the feeling of reading the book for the first time, how it feels to hold a book close to your heart, your mind, for it to inspire deep thought, feeling, and discussion, how it connects to the world.
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- DAY 1 — TUESDAY                                                 -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<div class="day-header">
+  <div class="day-label">DAY 1 — Tuesday, April 21</div>
+  <div class="day-time">~2.5 hrs · writing-forward</div>
+</div>
+
+<!-- ── BLOCK 1 -->
+<div class="block" data-block="b1">
+  <div class="block-header">
+    <div class="block-title"><span class="block-num">BLOCK 1</span>Calibration</div>
+    <div class="block-meta">30–45 min</div>
+  </div>
+  <div class="block-body">
+    <div class="block-intro">
+      Fast context setting. You already have most of this from the full plan. Do this before opening any writing doc.
+    </div>
+
+    <div class="mvv">
+      <div class="mvv-label">Minimum viable</div>
+      Skip the Instagram scroll, confirm the book you're working with, read one page of Lost Lambs aloud, move on.
+    </div>
+
+    <ul class="steps">
+      <li class="step"><div class="step-num">1.1</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Confirm the book. Default: <strong>Lost Lambs by Madeline Cash</strong>. Alt if not accessible: any contemporary lit-fic from your taste cluster that has one line you can point to (Almost Life, Lightbreakers, Seduction Theory, Ten Year Affair, Discontent, a Volume 0 story).</div></li>
+      <li class="step"><div class="step-num">1.2</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Open the book. Read 20–30 pages, or the first chapter, or any section you can get to. Mark <strong>ONE line</strong> that catches — underline, screenshot, or note. This is the seed for Block 2.</div></li>
+      <li class="step"><div class="step-num">1.3</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Open BOTM Instagram. Scroll 15 posts. Notice what's saturated (unboxings, merch, TBR stacks). Notice the gap your piece fills.</div></li>
+      <li class="step"><div class="step-num">1.4</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Open bookofthemonth.com/volume0. Skim. You need the tone for register-alignment in Field 3.</div></li>
+      <li class="step"><div class="step-num">1.5</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Create project folder: Google Drive → "BOTM-Pitch-Submission/". All docs go here.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── BLOCK 2 -->
+<div class="block" data-block="b2">
+  <div class="block-header">
+    <div class="block-title"><span class="block-num">BLOCK 2</span>Sample episode sketch</div>
+    <div class="block-meta">60–75 min · writing mode</div>
+  </div>
+  <div class="block-body">
+    <div class="block-intro">
+      The hardest creative task. Doing it today while Field 3 energy is fresh protects every downstream block. Treatment, not script. 500–700 words total.
+    </div>
+
+    <div class="mvv">
+      <div class="mvv-label">Minimum viable</div>
+      List-form only: opening image (1 sentence), 4 drift bullets (1 sentence each), closing return (1 sentence), companion essay-object (1 sentence), three short cuts (one line each). ~200 words. Still works for Slide 3.
+    </div>
+
+    <h4>Structure</h4>
+    <ul class="steps">
+      <li class="step"><div class="step-num">2.1</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">New Google Doc: <strong>"01-sample-episode-lost-lambs.gdoc"</strong>. Paste the caught line from Block 1.2 at the top.</div></li>
+      <li class="step"><div class="step-num">2.2</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Write 1–2 sentences on why the line caught. For you, not a reader.</div></li>
+      <li class="step"><div class="step-num">2.3</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Opening image.</strong> 2–3 sentences. What does the viewer see first? Register, not detail. Where is the reader. What light. What sound.</div></li>
+      <li class="step"><div class="step-num">2.4</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Book introduced.</strong> 2–3 sentences. How does the book arrive — voiceover? A held shot of the cover? The caught line read aloud?</div></li>
+      <li class="step"><div class="step-num">2.5</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Drift movement 1.</strong> Paragraph. First association the book opens. An image, a memory, another text, a song.</div></li>
+      <li class="step"><div class="step-num">2.6</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Drift movement 2.</strong> Paragraph. Second tributary. Different register — if 1 was interior, 2 goes outward.</div></li>
+      <li class="step"><div class="step-num">2.7</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Drift movement 3.</strong> Paragraph. Where writing surfaces — a line of your own prose or poetry, or a fragment from another writer.</div></li>
+      <li class="step"><div class="step-num">2.8</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Drift movement 4.</strong> Paragraph. Social dimension — a conversation with a friend, a letter, something received.</div></li>
+      <li class="step"><div class="step-num">2.9</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Return.</strong> 2–3 sentences. Back to the book, the reader, the closing image or line. Settles, does not conclude.</div></li>
+      <li class="step"><div class="step-num">2.10</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Companion essay-object.</strong> 1 short paragraph. What is in print — a poem, a prose fragment, a letter, a collage of lines. Format (folded card, short zine, single page).</div></li>
+      <li class="step"><div class="step-num">2.11</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Three short cuts.</strong> Two lines each. Atmospheric (no voice) · voiced (single drift movement) · text-forward (fragment on image).</div></li>
+      <li class="step"><div class="step-num">2.12</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Read the whole sketch cold. Save. Close. Do not revise tonight.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── BLOCK 3 -->
+<div class="block" data-block="b3">
+  <div class="block-header">
+    <div class="block-title"><span class="block-num">BLOCK 3</span>Field 3 first draft</div>
+    <div class="block-meta">45–60 min · writing mode</div>
+  </div>
+  <div class="block-body">
+    <div class="block-intro">
+      The main deliverable. Target 400–600 words. Four-move structure. Start from the balcony paragraph.
+    </div>
+
+    <div class="mvv">
+      <div class="mvv-label">Minimum viable</div>
+      300 words, three moves instead of four (drop Move 3 — naming the lane — it's implied in Moves 1 and 2 if the voice is right). Still credible.
+    </div>
+
+    <ul class="steps">
+      <li class="step"><div class="step-num">3.1</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">New Google Doc: <strong>"02-field-3-draft.gdoc"</strong>.</div></li>
+      <li class="step"><div class="step-num">3.2</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Paste the balcony paragraph at the top of the doc. Keep it visible the whole time.</div></li>
+      <li class="step"><div class="step-num">3.3</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Move 1 — Sensibility in motion.</strong> 2–3 opening sentences that put the reader inside the register. Pull language from the balcony paragraph. Do NOT open with "I propose" or "I want to make." Open with a sentence that sounds like the piece itself.</div></li>
+      <li class="step"><div class="step-num">3.4</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Move 2 — Define the form.</strong> 1 paragraph. What the piece is: monthly-viable collage-essay, film + companion printed essay. Drawn from Block 2. Clean and direct.</div></li>
+      <li class="step"><div class="step-num">3.5</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Move 3 — Name the lane.</strong> 1 paragraph. Who the piece is for — the literary fiction subset of BOTM's audience, the Volume 0 reader. Drop 2–3 author names from your taste cluster (Madeline Cash, Kiran Millwood Hargrave, Aja Gabel, Emma Cline).</div></li>
+      <li class="step"><div class="step-num">3.6</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Move 4 — Close with the ask.</strong> Pitching ONE piece first. Expansion named as possibility, not demand. End on a single line restating what the piece is.</div></li>
+      <li class="step"><div class="step-num">3.7</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Add a line at the end pointing to the deck: <em>"A short deck supporting this pitch is here: [Drive link TBD tomorrow]."</em></div></li>
+      <li class="step"><div class="step-num">3.8</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Word count check: 400–600. Cut if over 700. Add one paragraph if under 300.</div></li>
+      <li class="step"><div class="step-num">3.9</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Read aloud once. Cut any sentence that sounds like pitch-deck corporate language. Keep voice.</div></li>
+      <li class="step"><div class="step-num">3.10</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Save. Walk away. Do not revise tonight.</div></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">Voice check</div>
+      Read back the balcony paragraph. That is your voice. If Field 3 sounds more corporate than that paragraph, revise toward the paragraph. If it sounds more writerly than the paragraph, keep it — you have range above the baseline.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- DAY 2 — WEDNESDAY                                               -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<div class="day-header">
+  <div class="day-label">DAY 2 — Wednesday, April 22</div>
+  <div class="day-time">~3–4 hrs · revision + build</div>
+</div>
+
+<!-- ── BLOCK 4 -->
+<div class="block" data-block="b4">
+  <div class="block-header">
+    <div class="block-title"><span class="block-num">BLOCK 4</span>Field 3 revision + application fields</div>
+    <div class="block-meta">60–75 min · morning, after rest</div>
+  </div>
+  <div class="block-body">
+    <div class="block-intro">
+      Cold read on Field 3. Surgical fixes only. Then fill in the budget, links, content type, and resume check.
+    </div>
+
+    <div class="mvv">
+      <div class="mvv-label">Minimum viable</div>
+      Read Field 3 once, fix only glaring problems. Paste budget copy below verbatim. Use existing resume as-is. Ship.
+    </div>
+
+    <h4>Field 3 revision</h4>
+    <ul class="steps">
+      <li class="step"><div class="step-num">4.1</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Reopen Field 3 draft. Read cold. Mark 3 sentences doing the most work (star them). Mark 2 doing too little (strike them).</div></li>
+      <li class="step"><div class="step-num">4.2</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Rewrite the 2 weak sentences. Keep the 3 strong ones verbatim. Do not touch anything else.</div></li>
+      <li class="step"><div class="step-num">4.3</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Read aloud once more. If any sentence still feels off, cut it rather than fix it.</div></li>
+      <li class="step"><div class="step-num">4.4</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Mark Field 3 as draft-ready. Save.</div></li>
+    </ul>
+
+    <h4>Budget answer — paste the copy below, adjust only if needed</h4>
+
+    <div class="copy-block">
+      <div class="copy-block-label">Field 4 — paste or adapt</div>
+      <p><strong>Pilot piece (this first one):</strong></p>
+      <p><em>Time investment:</em> approximately 60–80 hours over 4–6 weeks from green-light to delivery. This covers creative direction, writing (both the voiceover/script and the companion printed essay), a focused shoot, edit, sound design, and print production direction.</p>
+      <p><em>Out-of-pocket:</em> $750–$1,500, covering music licensing, print sample production for the companion essay-object, possible part-time editor or motion-designer collaboration at pilot scale, and minor production costs.</p>
+      <p><em>Proposed fee:</em> $3,500–$5,000, within BOTM's stated Creator-in-Residence per-piece range. Happy to scope tighter if the pilot works best as proof-of-concept at a lower tier.</p>
+      <p><strong>Ongoing (if the first piece leads to continued work):</strong></p>
+      <p>Monthly production becomes more efficient with a small consistent support team — a part-time editor, motion-design support, and a print production partner for the companion essay-object. Production time compresses to roughly 3–4 weeks per piece. Budget shape is a conversation based on scale and ambition.</p>
+    </div>
+
+    <ul class="steps">
+      <li class="step"><div class="step-num">4.5</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Save budget answer to a new doc: <strong>"03-application-fields.gdoc"</strong>.</div></li>
+    </ul>
+
+    <h4>Other fields</h4>
+    <ul class="steps">
+      <li class="step"><div class="step-num">4.6</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Content type.</strong> Pick "Other" in the dropdown. Write in: <em>Hybrid long-form essay-film and printed literary essay-object. Direction, writing, and collage-based production.</em></div></li>
+      <li class="step"><div class="step-num">4.7</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Links to work.</strong> Pick 2–4 links. Priority order: (1) Google Maps × Benson Boone case-study link, (2) Google Maps × Marías link, (3) a piece of your own writing if available, (4) strongest visual/technical project. Write them in the application-fields doc.</div></li>
+      <li class="step"><div class="step-num">4.8</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Resume check.</strong> Open current resume. Named campaigns present? Creative-tech framing current? If glaring gaps — 20-min patch. Otherwise use as-is.</div></li>
+      <li class="step"><div class="step-num">4.9</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Save all application fields in "03-application-fields.gdoc" so you can copy-paste on Thursday.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ── BLOCK 5 -->
+<div class="block" data-block="b5">
+  <div class="block-header">
+    <div class="block-title"><span class="block-num">BLOCK 5</span>Deck — copy + build, combined</div>
+    <div class="block-meta">2 hrs · afternoon · Canva</div>
+  </div>
+  <div class="block-body">
+    <div class="block-intro">
+      Copy written directly into the Canva file as you build. No separate copy doc. Faster. Target: 4 slides minimum, 5 if time allows. One serif family, warm cream + ink + one accent.
+    </div>
+
+    <div class="mvv">
+      <div class="mvv-label">Minimum viable</div>
+      4 slides instead of 5 (drop Slide 5 bio + close — bio goes in Field 3 naturally, close line can be the last line of Field 3). Clean layouts. One image per slide from your personal library or Canva's free library.
+    </div>
+
+    <h4>Setup</h4>
+    <ul class="steps">
+      <li class="step"><div class="step-num">5.1</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Open Canva. Create new design: "Presentation (16:9)". Name it <strong>"Marginalia-Pitch-Deck-Draft"</strong>.</div></li>
+      <li class="step"><div class="step-num">5.2</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Upload the Canva Pro Brand Kit (if you have one). If not: pick ONE serif from Canva's list — GT Sectra, Canela, Crimson Text, Lora, EB Garamond. Lock it. Don't change during build.</div></li>
+      <li class="step"><div class="step-num">5.3</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Set page background to warm cream: <strong>#F5F2EA</strong> or <strong>#EFEAE0</strong>. Text color: <strong>#1A1A1A</strong> or warm-black. Accent: <strong>#5C8B8C</strong> (dusty teal) or <strong>#7A5A2A</strong> (amber). Lock palette. Don't change during build.</div></li>
+    </ul>
+
+    <h4>Slide 1 — Atmosphere (not a title slide)</h4>
+
+    <div class="slide-grid">
+      <div class="slide-key">JOB</div>
+      <div class="slide-val">Make reader feel the piece before any explanation.</div>
+      <div class="slide-key">CONTENT</div>
+      <div class="slide-val">One full-bleed or large image + one short phrase (5–10 words). No title. No logo. No deck name.</div>
+      <div class="slide-key">PHRASE OPTIONS</div>
+      <div class="slide-val"><em>"The reading life of any woman, filmed and written"</em> · <em>"A collage-essay on the interior life of reading"</em> · <em>"One book. One reader. A month."</em></div>
+      <div class="slide-key">IMAGE</div>
+      <div class="slide-val">Personal photo or Canva free library — a hand with a book, an unstyled domestic interior, a window, a reader's shoulder. Not Kinfolk-perfect. Real.</div>
+    </div>
+
+    <ul class="steps">
+      <li class="step"><div class="step-num">5.4</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Build Slide 1 first. Keep iterating until it <em>feels</em> like the piece. If it looks like a corporate slide, you have not finished it.</div></li>
+    </ul>
+
+    <h4>Slide 2 — Concept</h4>
+
+    <div class="slide-grid">
+      <div class="slide-key">JOB</div>
+      <div class="slide-val">Name what the piece is.</div>
+      <div class="slide-key">CONTENT</div>
+      <div class="slide-val">Working title centered (or "A Working Title — TBD"). Below it, one-line in large display. Below that, a 60-word concept paragraph. One small thin rule or small image as visual breath.</div>
+      <div class="slide-key">COPY — ONE-LINE</div>
+      <div class="slide-val"><em>"A collage-essay on the interior life of reading — film plus companion printed essay, monthly, tied to your literary fiction selections."</em></div>
+      <div class="slide-key">COPY — PARAGRAPH</div>
+      <div class="slide-val"><em>"A monthly-viable collage-essay held by a characterized reader-figure. One book as occasion, the reading as subject. Film: 6–9 minutes, collaged across image, voice, writing, and sound. Companion printed essay ships with the BOTM box. Three short cuts for social. Volume 0-adjacent in publishing register."</em></div>
+    </div>
+
+    <ul class="steps">
+      <li class="step"><div class="step-num">5.5</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Build Slide 2. Generous white space. No bullet lists.</div></li>
+    </ul>
+
+    <h4>Slide 3 — Sample episode · Lost Lambs</h4>
+
+    <div class="slide-grid">
+      <div class="slide-key">JOB</div>
+      <div class="slide-val">Prove you can do it.</div>
+      <div class="slide-key">CONTENT</div>
+      <div class="slide-val">Book title as header. 4 drift-movement captions (2-line summaries from your Block 2 sketch) arranged as a grid or vertical list. 4 image slots beside them (can be placeholder textures if real images unavailable). One-line naming the companion essay-object.</div>
+      <div class="slide-key">LAYOUT</div>
+      <div class="slide-val">Two-column or four-fragment grid. Let each drift movement breathe with its image. Do not summarize the plot.</div>
+    </div>
+
+    <ul class="steps">
+      <li class="step"><div class="step-num">5.6</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Build Slide 3. Pull drift captions directly from Block 2 sketch — compress to 2 lines each.</div></li>
+    </ul>
+
+    <h4>Slide 4 — The system</h4>
+
+    <div class="slide-grid">
+      <div class="slide-key">JOB</div>
+      <div class="slide-val">Show the cross-format commission distilled. This is the slide BOTM's editorial team screenshots to send their boss.</div>
+      <div class="slide-key">CONTENT</div>
+      <div class="slide-val">Five surfaces as a visual row or diagram: FILM → PRINTED ESSAY → SHORT CUTS → READER LOOP (optional) → (possible) ZINE. One line of description under each. Volume 0 named as sibling publication.</div>
+      <div class="slide-key">COPY</div>
+      <div class="slide-val">
+        <em>Film:</em> 6–9 min collage-essay per piece<br>
+        <em>Printed essay:</em> companion object in the BOTM box, Volume 0-adjacent<br>
+        <em>Short cuts:</em> 3 vertical cuts for social per piece<br>
+        <em>Reader loop (optional):</em> send-me-your-drift invitation, curated<br>
+        <em>Zine (possible):</em> quarterly or annual collected edition
+      </div>
+    </div>
+
+    <ul class="steps">
+      <li class="step"><div class="step-num">5.7</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Build Slide 4. Horizontal flow or clean vertical list. Accent color on the five titles.</div></li>
+    </ul>
+
+    <h4>Slide 5 — Bio + close (optional if short on time)</h4>
+
+    <div class="slide-grid">
+      <div class="slide-key">JOB</div>
+      <div class="slide-val">Position you credibly in 3–4 sentences. Close on a line that stays.</div>
+      <div class="slide-key">COPY — BIO</div>
+      <div class="slide-val"><em>"Mia Jones is a senior copywriter at Google Brand Studio, with named campaign credits including Google Maps × Benson Boone and Google Maps × Marías. She writes, directs, and is building a creative-technologist practice. She lives in San Diego with three cats and a working library of contemporary literary fiction."</em></div>
+      <div class="slide-key">COPY — CLOSE</div>
+      <div class="slide-val"><em>"One book. One reader. A month."</em> · or · <em>"Not about the book. Inside the reading of it."</em> · or leave open — Field 3 can carry the close.</div>
+    </div>
+
+    <ul class="steps">
+      <li class="step"><div class="step-num">5.8</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Build Slide 5 if time allows. Skip if not — bio goes in Field 3 naturally.</div></li>
+    </ul>
+
+    <h4>Export + host</h4>
+    <ul class="steps">
+      <li class="step"><div class="step-num">5.9</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Read the whole deck cold. Does it <em>look like</em> the thing it pitches? If Slide 1 feels generic, that's the only slide to fix before exporting.</div></li>
+      <li class="step"><div class="step-num">5.10</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Export to PDF. File name: <strong>"Marginalia-Pitch-Deck-MiaJones.pdf"</strong> (or whatever working-title+your-name).</div></li>
+      <li class="step"><div class="step-num">5.11</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Upload PDF to Google Drive in the project folder. Set sharing to "Anyone with the link can view." Copy the shareable link.</div></li>
+      <li class="step"><div class="step-num">5.12</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Open Field 3 doc. Replace "[Drive link TBD tomorrow]" with the real link. Save.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- DAY 3 — THURSDAY                                                -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<div class="day-header">
+  <div class="day-label">DAY 3 — Thursday, April 23</div>
+  <div class="day-time">~45–60 min · submit</div>
+</div>
+
+<!-- ── BLOCK 6 -->
+<div class="block" data-block="b6">
+  <div class="block-header">
+    <div class="block-title"><span class="block-num">BLOCK 6</span>Final read + submit</div>
+    <div class="block-meta">45–60 min</div>
+  </div>
+  <div class="block-body">
+    <div class="block-intro">
+      Cold read on everything. Surgical fixes only. Submit. Do not keep revising.
+    </div>
+
+    <div class="mvv">
+      <div class="mvv-label">Minimum viable</div>
+      Skim Field 3. Verify deck link works. Fill application. Submit.
+    </div>
+
+    <h4>Final reads</h4>
+    <ul class="steps">
+      <li class="step"><div class="step-num">6.1</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Open Field 3 doc. Read once, aloud if possible. Fix typos. Do NOT rewrite.</div></li>
+      <li class="step"><div class="step-num">6.2</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Open deck PDF. View at actual size. Any typos or obvious layout issues? Fix only those. Re-export if needed, re-upload to Drive, re-copy link.</div></li>
+      <li class="step"><div class="step-num">6.3</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Test the Drive link in an incognito/private browser window to confirm public view access works.</div></li>
+    </ul>
+
+    <h4>Submit</h4>
+    <ul class="steps">
+      <li class="step"><div class="step-num">6.4</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Navigate to <strong>bookofthemonth.applytojob.com/apply/LrtX5jNEpR/Creator-InResidence-Program</strong></div></li>
+      <li class="step"><div class="step-num">6.5</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Fill basics: name, email, phone, address.</div></li>
+      <li class="step"><div class="step-num">6.6</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Upload resume.</div></li>
+      <li class="step"><div class="step-num">6.7</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">LinkedIn URL: paste from your profile.</div></li>
+      <li class="step"><div class="step-num">6.8</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Links to work: paste 2–4 links from application-fields doc.</div></li>
+      <li class="step"><div class="step-num">6.9</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Content type dropdown: <strong>Other</strong>. Description: <em>"Hybrid long-form essay-film and printed literary essay-object. Direction, writing, and collage-based production."</em></div></li>
+      <li class="step"><div class="step-num">6.10</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Pitch field (Field 3): paste the full Field 3 draft, with the Drive link to the deck as its final line.</div></li>
+      <li class="step"><div class="step-num">6.11</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Budget field (Field 4): paste the budget copy from Block 4.</div></li>
+      <li class="step"><div class="step-num">6.12</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Complete human-check captcha.</div></li>
+      <li class="step"><div class="step-num">6.13</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text"><strong>Submit.</strong></div></li>
+    </ul>
+
+    <h4>After submit</h4>
+    <ul class="steps">
+      <li class="step"><div class="step-num">6.14</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Screenshot the confirmation page. Save to the project folder as "04-submission-confirmation.png".</div></li>
+      <li class="step"><div class="step-num">6.15</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Check inbox for confirmation email. Screenshot if present.</div></li>
+      <li class="step"><div class="step-num">6.16</div><div class="step-check" onclick="toggleStep(this)"></div><div class="step-text">Close this plan. The pitch is complete regardless of BOTM's response. The work itself is portfolio material.</div></li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-label">After-ship reminder</div>
+      The pitch is now its own portfolio artifact. Even if BOTM doesn't respond or passes, you have: a Field 3 pitch demonstrating creative-direction thinking, a deck demonstrating design and sensibility, a sample episode sketch demonstrating your ability to develop concept into executable treatment, and a completed application proving you ship. Log it as a completed creative project in the mia-brain skill.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- COMPRESSED REFERENCE                                            -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<section>
+  <div class="section-num">Appendix</div>
+  <h2>Compressed reference — use during execution</h2>
+  <div class="section-sub">The few things to have open while writing. Not the full reference library — just what you need for this sprint.</div>
+
+  <h3>BOTM pages to keep open</h3>
+  <ul class="bare">
+    <li>bookofthemonth.com/volume0 — register check</li>
+    <li>bookofthemonth.com/about-us — voice check</li>
+    <li>Instagram @bookofthemonth — audience check</li>
+    <li>bookofthemonth.applytojob.com/apply/LrtX5jNEpR — the application itself</li>
+  </ul>
+
+  <h3>Pitch do's and don'ts</h3>
+
+  <div class="callout">
+    <div class="callout-label">Do</div>
+    <ul class="tight">
+      <li>Open Field 3 with the sensibility in motion — not "I propose"</li>
+      <li>Name specific authors from your taste cluster</li>
+      <li>Keep the balcony paragraph's voice in your ear</li>
+      <li>Reference Volume 0 as adjacent register</li>
+      <li>Pitch ONE piece first; name expansion as possibility</li>
+      <li>Write in your actual sentence rhythm, not pitch-deck language</li>
+    </ul>
+  </div>
+
+  <div class="callout warn">
+    <div class="callout-label">Don't</div>
+    <ul class="tight">
+      <li>Open with "I want to make" or "My idea is"</li>
+      <li>Promise views, engagement, reach, or quantitative metrics</li>
+      <li>Lean on the centennial as primary frame</li>
+      <li>Use cozy / me-time / book-club framing</li>
+      <li>Use bullet lists inside Field 3</li>
+      <li>Describe the piece — evoke it</li>
+      <li>Include a headshot on Slide 5</li>
+      <li>Put "pitch deck" anywhere on Slide 1</li>
+    </ul>
+  </div>
+
+  <h3>Voice tuning — if Field 3 sounds off, try one of these</h3>
+  <ul class="bare">
+    <li>Open with an image or a scene instead of a concept</li>
+    <li>Cut the word "content" if it appears — replace with "work" or "piece"</li>
+    <li>Cut "audience" if it appears — replace with "reader" or "readers"</li>
+    <li>Cut any paragraph that starts with "I" three times in a row</li>
+    <li>Read the balcony paragraph aloud, then read your draft aloud. The gap between them is the edit.</li>
+  </ul>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                          -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+
+<footer>
+  <p>botm_pitch_sprint / 48hr.html · Apr 21, 2026</p>
+  <p>Target submit: Thursday, April 23. Credible-and-sent beats polished-and-late. The Field 3 pitch is the real deliverable — everything else supports it. Start with Block 1 when you open this. Do not skip Block 2. Ship when Block 6 completes, not when perfection arrives.</p>
+</footer>
+
+<script>
+  function toggleStep(el) {
+    el.classList.toggle('done');
+    el.parentElement.classList.toggle('done');
+    updateProgress();
+    saveState();
+  }
+
+  function updateProgress() {
+    const all = document.querySelectorAll('.step-check');
+    const done = document.querySelectorAll('.step-check.done');
+    const total = all.length;
+    const complete = done.length;
+    const pct = total > 0 ? (complete / total) * 100 : 0;
+
+    document.getElementById('doneCount').textContent = complete;
+    document.getElementById('totalCount').textContent = total;
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    const nextMove = document.getElementById('nextMove');
+    const firstUndone = Array.from(all).find(c => !c.classList.contains('done'));
+
+    if (!firstUndone) {
+      nextMove.textContent = 'Submitted. Close this plan.';
+    } else {
+      const step = firstUndone.parentElement;
+      const stepText = step.querySelector('.step-text').textContent.split('.')[0] + '.';
+      const block = firstUndone.closest('.block');
+      const blockNum = block ? block.querySelector('.block-num').textContent : '';
+      nextMove.textContent = blockNum + ' — ' + stepText;
+    }
+  }
+
+  document.querySelectorAll('.block-header').forEach(h => {
+    h.addEventListener('click', () => {
+      h.parentElement.classList.toggle('collapsed');
+    });
+  });
+
+  function saveState() {
+    const state = {};
+    document.querySelectorAll('.step-check').forEach((el, i) => {
+      state[i] = el.classList.contains('done');
+    });
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        localStorage.setItem('botm-pitch-sprint-state', JSON.stringify(state));
+      }
+    } catch (e) { /* no-op */ }
+  }
+
+  function loadState() {
+    try {
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const raw = localStorage.getItem('botm-pitch-sprint-state');
+        if (!raw) return;
+        const state = JSON.parse(raw);
+        document.querySelectorAll('.step-check').forEach((el, i) => {
+          if (state[i]) {
+            el.classList.add('done');
+            el.parentElement.classList.add('done');
+          }
+        });
+      }
+    } catch (e) { /* no-op */ }
+  }
+
+  loadState();
+  updateProgress();
+</script>
+
+</body>
+</html>
