@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reference guide · extraction logic for the expanded cluster (41–80)</title>
+
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&display=swap" rel="stylesheet">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600&display=swap');
+
+  :root {
+    --doc-bg:        #F4F4F2;
+    --doc-surface:   #FFFFFF;
+    --doc-text:      #1A1A18;
+    --doc-text-soft: #4A4A46;
+    --doc-text-mute: #7A7672;
+    --doc-text-faint:#A8A4A0;
+    --doc-rule:      #D8D6D2;
+
+    --status-in:     #4A6B4A;
+    --status-part:   #B8893A;
+    --status-neg:    #8C4036;
+    --status-info:   #5A6680;
+    --status-key:    #7A6F8E;
+
+    --font-sans: 'General Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--doc-bg);
+    color: var(--doc-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.65;
+  }
+
+  .doc {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 80px 48px 160px;
+  }
+
+  /* ─── HEAD */
+
+  .doc-head {
+    margin-bottom: 56px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--doc-rule);
+  }
+
+  .doc-filename {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.04em;
+    margin-bottom: 24px;
+  }
+  .doc-filename::before {
+    content: '> ';
+    color: var(--doc-text-faint);
+  }
+
+  .doc-title {
+    font-family: var(--font-sans);
+    font-size: 42px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.025em;
+    margin-bottom: 16px;
+    line-height: 1.1;
+  }
+
+  .doc-sub {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    color: var(--doc-text-soft);
+    line-height: 1.65;
+    max-width: 72ch;
+    margin-bottom: 24px;
+  }
+
+  .doc-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding-top: 20px;
+    border-top: 1px dashed var(--doc-rule);
+  }
+
+  .doc-meta strong {
+    color: var(--doc-text);
+    font-weight: 500;
+  }
+
+  /* ─── SECTION */
+
+  .section {
+    margin-bottom: 80px;
+  }
+
+  .section-head {
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--doc-rule);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .section-title-block { flex: 1; }
+
+  .section-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: 26px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .section-tag {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-faint);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .section-intro {
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--doc-text-soft);
+    line-height: 1.7;
+    margin-bottom: 32px;
+    max-width: 72ch;
+  }
+
+  .section-intro p { margin-bottom: 14px; }
+  .section-intro p:last-child { margin-bottom: 0; }
+
+  .section-intro em {
+    color: var(--doc-text);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  /* ─── PRINCIPLE BLOCK */
+
+  .principle-block {
+    padding: 28px 32px;
+    background: var(--doc-surface);
+    border: 1px solid var(--doc-rule);
+    border-left: 3px solid var(--status-key);
+    margin-bottom: 24px;
+  }
+
+  .principle-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--status-key);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .principle-title {
+    font-family: var(--font-sans);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.012em;
+    line-height: 1.35;
+    margin-bottom: 14px;
+  }
+
+  .principle-body {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--doc-text-soft);
+    line-height: 1.7;
+  }
+
+  .principle-body p { margin-bottom: 12px; }
+  .principle-body p:last-child { margin-bottom: 0; }
+
+  .principle-body em {
+    color: var(--doc-text);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  /* ─── ENTRY */
+
+  .entry {
+    padding: 28px 32px;
+    background: var(--doc-surface);
+    border: 1px solid var(--doc-rule);
+    margin-bottom: 16px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+
+  .entry.in-register  { border-left: 3px solid var(--status-in); }
+  .entry.extraction   { border-left: 3px solid var(--status-part); }
+  .entry.structural   { border-left: 3px solid var(--status-info); }
+  .entry.negative     { border-left: 3px solid var(--status-neg); }
+
+  .entry-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .entry-num strong {
+    display: block;
+    font-family: var(--font-sans);
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.025em;
+    line-height: 0.9;
+    margin-bottom: 6px;
+    text-transform: none;
+  }
+
+  .entry-content { padding: 0; }
+
+  .entry-title {
+    font-family: var(--font-sans);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--doc-text);
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+    margin-bottom: 4px;
+  }
+
+  .entry-tag {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .entry-tag.in-register  { background: rgba(74, 107, 74, 0.12); color: var(--status-in); }
+  .entry-tag.extraction   { background: rgba(184, 137, 58, 0.14); color: var(--status-part); }
+  .entry-tag.structural   { background: rgba(90, 102, 128, 0.14); color: var(--status-info); }
+  .entry-tag.negative     { background: rgba(140, 64, 54, 0.12); color: var(--status-neg); }
+
+  .entry-desc {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--doc-text-soft);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .entry-desc em {
+    color: var(--doc-text);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .entry-extraction {
+    margin-top: 12px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--doc-rule);
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 20px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    color: var(--doc-text-soft);
+    line-height: 1.65;
+  }
+
+  .entry-extraction + .entry-extraction { margin-top: 8px; padding-top: 8px; border-top: none; }
+
+  .entry-extraction .label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    padding-top: 1px;
+  }
+  .entry-extraction .label.use   { color: var(--status-in); }
+  .entry-extraction .label.skip  { color: var(--status-neg); }
+  .entry-extraction .label.where { color: var(--doc-text-mute); }
+
+  .entry-extraction .val em {
+    color: var(--doc-text);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  /* ─── FOOTER PATTERNS */
+
+  .patterns-list {
+    list-style: none;
+    border: 1px solid var(--doc-rule);
+    background: var(--doc-surface);
+  }
+
+  .patterns-list li {
+    padding: 20px 26px;
+    border-bottom: 1px solid var(--doc-rule);
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 28px;
+    align-items: baseline;
+  }
+
+  .patterns-list li:last-child { border-bottom: none; }
+
+  .patterns-list .pkey {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .patterns-list .pval {
+    font-family: var(--font-sans);
+    font-size: 14px;
+    color: var(--doc-text-soft);
+    line-height: 1.65;
+  }
+
+  .patterns-list .pval em {
+    color: var(--doc-text);
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .patterns-list .pval .refs {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--doc-text-mute);
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+
+  /* ─── LEGEND */
+
+  .legend {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border: 1px solid var(--doc-rule);
+    background: var(--doc-surface);
+    margin-bottom: 32px;
+  }
+
+  .legend-cell {
+    padding: 18px 22px;
+    border-right: 1px solid var(--doc-rule);
+  }
+  .legend-cell:last-child { border-right: none; }
+
+  .legend-swatch {
+    width: 100%;
+    height: 3px;
+    margin-bottom: 12px;
+  }
+
+  .legend-swatch.in-register  { background: var(--status-in); }
+  .legend-swatch.extraction   { background: var(--status-part); }
+  .legend-swatch.structural   { background: var(--status-info); }
+  .legend-swatch.negative     { background: var(--status-neg); }
+
+  .legend-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .legend-label.in-register  { color: var(--status-in); }
+  .legend-label.extraction   { color: var(--status-part); }
+  .legend-label.structural   { color: var(--status-info); }
+  .legend-label.negative     { color: var(--status-neg); }
+
+  .legend-desc {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--doc-text-soft);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 800px) {
+    .doc { padding: 40px 16px 80px; }
+    .entry { grid-template-columns: 1fr; gap: 12px; padding: 20px 22px; }
+    .entry-extraction { grid-template-columns: 1fr; gap: 6px; }
+    .patterns-list li { grid-template-columns: 1fr; gap: 8px; }
+    .legend { grid-template-columns: 1fr 1fr; }
+    .legend-cell { border-right: none; border-bottom: 1px solid var(--doc-rule); }
+  }
+</style>
+</head>
+<body>
+
+<div class="doc">
+
+  <!-- ─── HEAD -->
+  <header class="doc-head">
+    <div class="doc-filename">marginalia / reference-guide.html</div>
+    <h1 class="doc-title">Reference guide: extraction logic for the expanded cluster.</h1>
+    <p class="doc-sub">Forty additional references (41–80) added to the cluster. This doc is the extraction key — what each image contributes, what to use, what to skip. Paired with README.md, which covers refs 01–40 and establishes the two-register taxonomy. Read the README first; this document extends it without restating it.</p>
+    <p class="doc-sub">The core rule across this cluster: <em>not every image is an endorsement of its whole.</em> Several of the most useful references contribute one specific move — a font, a palette, an issue-cover structure — while the rest of the image is off-register and should be ignored. The <strong>extraction</strong> and <strong>structural</strong> tags below mark those cases explicitly.</p>
+    <div class="doc-meta">
+      <span><strong>project</strong> Marginalia · visual language reference</span>
+      <span><strong>batch</strong> 03 · expanded cluster (41–80)</span>
+      <span><strong>registers</strong> A · Quiet Chapbook &nbsp;·&nbsp; B · Cinematic-Editorial Composite</span>
+    </div>
+  </header>
+
+  <!-- ─── LEGEND -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-title-block">
+        <div class="section-num">00 · how to read this guide</div>
+        <h2 class="section-title">Four tags. Each ref carries exactly one.</h2>
+      </div>
+      <div class="section-tag">classification</div>
+    </div>
+    <p class="section-intro">Every reference 41–80 is classified as one of the four below. The classification determines how to use the image. Read the tag before the description.</p>
+
+    <div class="legend">
+      <div class="legend-cell">
+        <div class="legend-swatch in-register"></div>
+        <div class="legend-label in-register">in register</div>
+        <div class="legend-desc">Whole image on-register. Use as a direct compositional reference for the relevant format.</div>
+      </div>
+      <div class="legend-cell">
+        <div class="legend-swatch extraction"></div>
+        <div class="legend-label extraction">extraction</div>
+        <div class="legend-desc">Only one element is useful — a font, a palette, a single move. Rest of image is off-register. Strict extraction only.</div>
+      </div>
+      <div class="legend-cell">
+        <div class="legend-swatch structural"></div>
+        <div class="legend-label structural">structural</div>
+        <div class="legend-desc">Visual execution is off-register but the structural logic (how the piece is organized) is directly useful. Reuse the structure, not the style.</div>
+      </div>
+      <div class="legend-cell">
+        <div class="legend-swatch negative"></div>
+        <div class="legend-label negative">negative ref</div>
+        <div class="legend-desc">Included as a <em>counter-example</em>. Marks what Marginalia is consciously not doing. Do not extract anything.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── BATCH 03 · REFS 41-60 -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-title-block">
+        <div class="section-num">01 · refs 41–60</div>
+        <h2 class="section-title">The first twenty additions.</h2>
+      </div>
+      <div class="section-tag">batch 03a</div>
+    </div>
+    <p class="section-intro">This set extends Register A (quiet chapbook) with several new sketchbook, film-still, and postcard references, and introduces the first typography-extraction and palette-extraction entries. The most load-bearing in the set are 41, 43, 46, 50, 51, 55, and 57 — these are direct additions to the core of the visual language.</p>
+
+    <!-- 41 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>41</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Sketchbooks floating over blue-grey with seagulls.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">Three open sketchbooks — pencil landscape with handwritten French prose, mixed-media spread with silhouetted figure, archival portrait mounted opposite a handwritten card — composited on a dusty teal-grey ground with flying terns scattered across the field. <em>Archival specimen-plate logic</em> meets sketchbook intimacy. The color ground sits adjacent to the system's dusty navy without duplicating it.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Zine title or contents spread, film opening composite, sketchbook-as-object reference for any epistolary moment.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 42 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>42</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Torn portrait — blurred face, slit paper.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">A soft-focus portrait of a woman photographed through or behind a torn paper sheet, so her face reads as a specimen split down the middle. Muted warm palette — ink, bone, dust. <em>The image <strong>is</strong> the work the project is about</em>: a reader held indirectly, seen in fragments, preserved rather than exposed.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Film reader-figure treatment (alongside ref 21 callouts), zine spread where subject is held at distance, deck slide that needs a single quiet subject image.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 43 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>43</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Laviere art project — single image + justified body text.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">Small editorial page: a duotone greyscale photograph of a figure with a surfboard at the water's edge, set alongside a justified block of serif-italic body text on a cream ground. Footer reads "laviere · art project." <em>This is the single cleanest demonstration of body-text-with-image at editorial scale in the entire cluster.</em></p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The single-column justified text block + image pairing. The proportions. The generous negative space above the footer.</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val"><em>The italic serif body.</em> Translate to General Sans italic (permitted within system), keep everything else.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 44 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>44</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Pampas grass · reading woman · scattered petals triptych.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">Three stacked film stills: tall pampas grass bending in wind, a woman in a black collared shirt reading a book in a window-lit interior, scattered pale petals on grey pavement with black ballet flats at the bottom edge. Each frame is compositionally complete. <em>This is what the Marginalia film wants to look like.</em></p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Film brief as a direct model for the reader-and-atmosphere sequence. Deck slide 3 (drift-movement grid) for how to choose images that hold individually.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 45 -->
+    <div class="entry extraction">
+      <div class="entry-num">ref<strong>45</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">"Blooming Blessings" — bubbled outline display face.</div>
+        <span class="entry-tag extraction">extraction</span>
+        <p class="entry-desc">A cozy-aesthetic social tile: schoolgirl under a transparent umbrella, surrounded by white sparkle-doodles, corner flourishes, twinkling stars, and affirmative copy. The whole image is deep in drift-02 and drift-03 territory — busy decorative collage, cozy register. <em>However, the display lettering for "Blooming Blessings"</em> — bubbled, outlined, slightly imperfect — <em>is a candidate for a single hero-display moment.</em></p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The bubbled outline display lettering <em>only</em>. Candidate for a zine cover title treatment, a section break, or a deck hero moment where the system calls for warmth and a handmade display face.</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">Everything else in the image. The sparkle doodles, the corner flourishes, the subject photograph, the affirmative copy, the cozy lifestyle register. <em>This is drift-02 and drift-03 territory — strict extraction.</em></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 46 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>46</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Fireworks + figure at night.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">Two stacked film frames: a burst of fireworks against dark sky, a woman standing in the middle of a rural road at dusk looking back over her shoulder. Both grainy, both atmospheric, both on dusty navy grounds. <em>The exact emotional register of the film's reflective moments.</em></p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Film brief as a direct atmospheric reference — the quiet beat after a read-aloud moment. Zine closing spread.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 47 -->
+    <div class="entry extraction">
+      <div class="entry-num">ref<strong>47</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Faces · iris watercolor · figure — tonal grid.</div>
+        <span class="entry-tag extraction">extraction</span>
+        <p class="entry-desc">A six-panel moodboard: a blurred grey painting with two figures in mist, a wallpaper of inked-portrait faces, a watercolor iris in dusty blue, a dark abstract with white paint strokes, a plantain-leaf painting with Japanese characters, and a small chair glowing inside a purple aura. <em>The tonal grid is directly relevant;</em> the face-collage panel is not.</p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>tonal palette across five of six panels</em> — dusty blue, dusty purple, steel-grey, bone-cream, muted green. A moodboard reference for how the system's range of muted tones actually look when placed together.</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">The face-wallpaper panel (top center) — that one is busier and more decorative than the rest of the grid. Ignore for color sampling.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 48 -->
+    <div class="entry extraction">
+      <div class="entry-num">ref<strong>48</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">"ARE YOU HAPPY NOW?" — paint swipe + hillside.</div>
+        <span class="entry-tag extraction">extraction</span>
+        <p class="entry-desc">A torn-paper collage: hand-lettered "ARE YOU HAPPY NOW?" on a torn white note, a heavy forest-green paint swipe underneath, a photograph of a woman walking away down a hillside path, with pink crayon bars stacked on the right. <em>The composition is the useful part;</em> the pink crayon bars pull the whole thing off-register.</p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>torn-note + paint-swipe + photograph stacking</em> as a compositional move. Hand-lettered pulled-quote on torn paper, sitting above a painterly color block, sitting above an atmospheric photograph. That grammar is directly useful for zine cover or section break.</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">The pink crayon vertical bars. Saturation is off the system. If adapting, replace with a quiet lavender or navy mark, or remove entirely.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 49 -->
+    <div class="entry extraction">
+      <div class="entry-num">ref<strong>49</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">"Things that go away in time" — pastel six-panel.</div>
+        <span class="entry-tag extraction">extraction</span>
+        <p class="entry-desc">A six-panel grid: mirror-selfie schoolgirl with camera, hand-lettered list "things that go away in time" on cream, pink-and-green blob photograph, sage-green textured fabric, periwinkle blue fabric with a polaroid, and legs in grey socks and slippers. The mirror-selfie panel drifts toward K-beauty lifestyle; the rest is a palette study.</p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>palette only</em>. Butter-cream, dusty sage, periwinkle blue, soft blush, muted pink-beige. These are a warmer, more pastel expansion of the locked system palette — adjacent to cream and lavender but pushing into soft neutrals. Candidate for secondary accent swatches or seasonal variation.</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>handwritten list on cream</em> (top center panel) as a secondary reference for how hand-lettering can carry a full page without feeling decorative.</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">The mirror-selfie panel and the slippers panel. Both drift lifestyle. Use the palette extraction and the list panel only.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 50 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>50</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">April 1973 — Hockney-style diary page.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">A preprinted calendar page, "APRIL 1973 / 24 Tuesday", with a full handwritten prose account of an incident in a London pub overlaid in script, plus a single teal-ink wash rectangle as a quiet visual accent mid-page. <em>This is the exact precedent for the film's written-word-over-image modality and for the zine's epistolary spreads.</em> Handwriting as full-body text, not decoration.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Film brief as a model for writing-on-screen grammar. Zine dated-diary spread. Deck slide that needs to demonstrate "the written response" beat.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 51 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>51</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Zara Home · Picasso editorial — handwritten French caption.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">A three-image editorial page: a chair with a tossed Picasso pillow on terracotta tile (large), a small archival portrait (top right), a black-and-white behind-the-scenes photo of Picasso drawing on a canvas (lower right), and a generous handwritten French caption at the bottom. Header "ZARA HOME" in small sans caps. <em>This is the textbook small-literary-monograph register.</em> Real photography treated at modest scale, handwriting as closing caption, no collage chaos.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Zine spread as a direct layout precedent — hero image + small supporting images + handwritten caption. This is the grammar Marginalia's zine aspires to across its quieter spreads.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 52 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>52</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Telenova — "Cinema for Your Ears" vinyl liner.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">A vinyl sleeve interior on cream: heavy sans display "CINEMA / FOR / YOUR EARS" top-left, a handwritten intimate note from the band mid-left, a small black-and-white behind-the-scenes photo top-right, and the full credits block in compact sans with colon-delimited metadata. <em>This is a complete document-as-artifact reference</em> — credits treated editorially, handwriting as voice, display sans + body sans + mono-like metadata working together.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Deck colophon slide, zine masthead, any artifact where credits/metadata need to carry their own editorial weight. This is also a reference for how the zine's letter-from-the-editor voice can sit on the page.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 53 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>53</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">"coffee" · "graffiti" — minimalist object-and-line-drawing page.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">A single page with enormous cream negative space: a photograph of a splatter-ware cup of coffee on the left, a thin outlined ellipse in the top right captioned "graffiti," and a dense column of small black line drawings of objects (bags, baguette, cheese, eggs, leaf, hands) captioned "coffee" in small sans, lower-center. <em>This is the system's whitespace principle made into a full page.</em></p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Zine single-page spreads, especially one where the page needs to hold a single image alongside a small inventory. Strong precedent for the <em>field-guide register</em> the zine takes on Spread 08 (Catalog).</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 54 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>54</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">"INTUITION + NOTIONS OF RHYTHM" — single line + tulips.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">A near-empty cream page: a single continuous contour line drawing of a figure on the left, a small hand-scrawled caption "YOUR FLOW" center-right, and a tight composite of a diver photograph, small stone drawings, and a greyscale tulips image in the bottom right. Header footer: "INTUITION + NOTIONS OF RHYTHM." <em>Sketchbook-as-editorial-page, carried entirely by restraint.</em></p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Zine spread where the content is about process or thinking — the drift-movement beat, or a mid-book breath. Strong for demonstrating how hand-drawn contour line can share a page with treated photography without fighting it.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 55 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>55</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Richard Long — hillside / five circles.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">A British land-art specimen plate: a small black-and-white hillside photograph top, a six-line typeset serif poem mid-page ("On this hillside I have walked in five circles…"), and a simple concentric-circles pencil diagram at the bottom, with a small handwritten signature. Cream ground throughout. <em>This is the gold standard for photo + short text + diagram sharing a single page in a scholarly register.</em></p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>whole composition</em> as a direct precedent. Photo + poem + diagram arrangement, proportions, pacing, cream ground.</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">The <em>serif poem typography</em>. Translate to General Sans, keep the proportions and placement.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 56 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>56</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Lace on floorboards — sunlight + stencil.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">A generous cream page with a single small photograph top-center — sunlight cast through lace curtains onto wooden floorboards, creating a pale floral pattern — and a tiny stenciled flower motif floating low on the page. <em>Extreme restraint. A whole page given to one quiet observation.</em></p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Zine quiet spread (direct sibling to ref 15 and ref 70). Film opening or closing still. Any moment that needs to say "the work pays attention to this."</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 57 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>57</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Three-panel sea with white-clad figure.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">Three vertically stacked horizontal film stills: cresting blue waves, a white-clad figure in a panama hat seen from behind wading in shallow water, a line of small seabirds floating across the frame. Modest cream margins, soft film grain. <em>This is the sea-equivalent of ref 44's reading-woman triptych</em> — narrative in three frames, nothing narrated.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Film brief as a sequencing reference. Deck slide 3 (drift-movement). Zine spread where the story is held across a stack of stills rather than a single image.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 58 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>58</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Birds · clouds · lavender sky — soft composite.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">A layered composite: ghost-printed seagulls on warm cream fabric (large), a small paired cloud-photo insert (right of center), and a muted lavender sky with a bare red tree (lower right). All images treated toward faded, archival, nearly monochromatic. <em>This is the system's most direct precedent for how lavender lives at full-ground scale</em> — warm, atmospheric, muted into almost-bone.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Zine spread where the lavender moment gets to be the whole page rather than an accent. Film atmospheric beat reference. Moodboard anchor for the muted lavender end of the palette.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 59 -->
+    <div class="entry extraction">
+      <div class="entry-num">ref<strong>59</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">"the Lamb" — film-strip crop numbered.</div>
+        <span class="entry-tag extraction">extraction</span>
+        <p class="entry-desc">A grainy warm-peach sunset sea photograph with a lamb grazing in long grass across the foreground, overlaid with three small stacked image crops (grass, lamb detail, empty dirt) and captions "(1)" and "the Lamb" in sans. Hairline slash marks in the corners as decorative frame. <em>The numbered-fragment-as-caption logic is useful; the peach-saturation photograph is off-palette.</em></p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>numbered-fragment layout</em> — small image crops laid over a hero photograph, each labeled as a numbered beat. Useful for deck slide 3 or for a zine spread that indexes its own details.</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">The peach-saturation photograph. Treat source photography toward duotone (system green or navy) before adapting this composition.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 60 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>60</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Serre Chevalier postcard — front + back with handwriting.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">Vintage French postcard, front and back: an alpine scene with seated figure on a path, a hand-addressed verso with a blue mountain stamp and round postmark scrawls. <em>This is a better version of existing refs 01 and 22.</em> The two-sided presentation shows the whole object, not just the sent surface.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Deck slide 5 (postcard close) as the preferred precedent. Zine colophon page. Any moment the project needs to argue itself as a mailed object.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── BATCH 03 · REFS 61-80 -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-title-block">
+        <div class="section-num">02 · refs 61–80</div>
+        <h2 class="section-title">The second twenty additions.</h2>
+      </div>
+      <div class="section-tag">batch 03b</div>
+    </div>
+    <p class="section-intro">This set is heavier on structure, extraction, and negative refs than the first twenty. Three entries mark <em>structural</em> references — publications that are off-register visually but whose organization is directly useful (62, 69, 79). Two entries mark negative refs that appear elsewhere in the folder (75 ≈ existing 35; 76 ≈ existing 34 — duplicate files preserved for documentation, see Section 04).</p>
+
+    <!-- 61 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>61</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Desert / road / house triptych — color-block overlays.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">Three vintage documentary photographs — a man standing in a desert with saguaros, a deep purple-toned road stretching to mountains, a woman in front of a house beside a hay bale — overlaid with rectangular color-block swatches (red/magenta, deep navy, pastel mint/green). <em>Contact-sheet-meets-editorial</em>. The overlays function like paint-sample chips inside a photo plate.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Deck slide 3 as a way to annotate the drift-movement grid with color keys. Film brief as a reference for how color grading can be indicated alongside source stills.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 62 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>62</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">"joy" album — four-panel captioned grid.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">Four squares on a black digital ground: a blurred pink-green wildflower, a dusty watercolor florals abstract, a muted sea horizon, a soft green-gray still life. Each captioned minimally in white sans: "lamp / say the name / limerence / in my head" — with tiny secondary "joy" tags. <em>This is the cleanest structural reference in the entire cluster for Marginalia's issue-contents page or film thumbnail grid.</em></p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>grid + single-word caption + secondary tag</em> structure directly. Translate the dark ground to cream, keep the captions in General Sans. This is a strong candidate for a zine contents spread and for a "past issues" deck slide.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 63 -->
+    <div class="entry extraction">
+      <div class="entry-num">ref<strong>63</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Apple + blossoming tree — floating objects collage.</div>
+        <span class="entry-tag extraction">extraction</span>
+        <p class="entry-desc">A sparse cream-ground collage: a forest photograph mid-left, a man in a suit walking right, two apple halves + a pearl + a dried apple slice + an outlined-profile face shape all floating around the frame, connected by a single thin blue line. <em>The floating-objects-on-cream approach is useful</em>; the whimsical illustrative line work is not.</p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>floating-specimens-on-cream composition</em>. Disparate photographic objects arranged across a cream ground with generous space, each placed with intention. Useful for zine spreads that need to gesture at inventory or mind-wandering.</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">The thin hand-drawn blue line connecting elements. Reads as illustrative/whimsical — off-register. If something similar is needed, use a single printed rule or omit entirely.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 64 -->
+    <div class="entry extraction">
+      <div class="entry-num">ref<strong>64</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">"life on FILM" — typewriter caption over fisheye still.</div>
+        <span class="entry-tag extraction">extraction</span>
+        <p class="entry-desc">A fisheye-distorted film still of a young person crouched in tall grass, with "life on FILM" in small typewriter-style mono floating in the upper center of the frame, and a small decorative lotus-leaf illustration in the lower-left corner. <em>The typewriter film-caption is the extraction;</em> the fisheye distortion and the lotus illustration are not.</p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>small typewriter-caption-over-image treatment</em>. Permits writing-on-screen that reads as journal entry rather than subtitle. Strong for film title cards, deck subtitles, and zine caption strips (sibling to existing refs 24, 28, 30).</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">The fisheye lens and the lotus-leaf illustration overlay. Both are specifically outside the system.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 65 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>65</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Ghost tree drawing + "miss miss miss" in grass.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">A generous cream page: a faint, ghostly tree drawing spanning the top half, a paired diptych below (a dark B&amp;W film interior with a figure's head tilted back, a grass photograph with "miss miss miss" hand-written directly into the grass), and a tiny mono caption at the bottom. <em>Handwriting in the world of the image — written into grass, not pasted on paper.</em></p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Zine spread where a single obsession carries the page. Film reference for written-word-as-diegetic element (words existing in the world rather than added on top).</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 66 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>66</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Japanese editorial — pressed botanical + crumpled pink note.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">A two-page magazine spread: a large pressed-botanical specimen floating over the left page with a vertical column of Japanese text running down its right, and a crumpled salmon-pink note on the right page with "THERE'S A DEGREE OF DIFFICULTY IN DEALING WITH ME" hand-lettered onto it. Footer text block below. <em>This is monograph register holding two opposite tones on facing pages</em> — botanical gravity and personal confession.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Zine facing-spread precedent where one page is quiet and the other carries a pulled quote on found material. Strong for the writing-response beat of the zine arc.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 67 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>67</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">"jeudi, 19 juillet" — green handwriting over beach still.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">A cream upper half with "jeudi, 19 juillet" hand-lettered in green marker, and a film still below of a woman in a dark sweater wading in shallow sea. The two fields sit separately — handwriting above, image below, no overlay. <em>This is the Marginalia film-to-text register almost exactly</em> — date as handwriting, footage as witness.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Film opening title card. Zine dated-entry spread. The single clearest precedent for how Marginalia treats dates as handwritten objects rather than typeset metadata.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 68 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>68</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Lavender sketchbook — floral stamps spread.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">An open sketchbook on a soft purple-to-lavender ground: left page shows scattered stamped-floral shapes in pale lavender tones across a ghosted window interior; right page has a small card with handwritten French ("Tisser le réel avec l'imaginaire"), overlaid on a darker violet field with scribbled pink marks. <em>This is the demonstration of how lavender operates at full-spread scale without drifting decorative.</em></p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Zine reference for a full-ground lavender spread. Moodboard anchor alongside ref 58. Deck moment if a single page needs to go deep into lavender.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 69 -->
+    <div class="entry structural">
+      <div class="entry-num">ref<strong>69</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">"oriographs · january" — monthly issue cover.</div>
+        <span class="entry-tag structural">structural</span>
+        <p class="entry-desc">A zine one-sheet: bathtub photograph center with Scrabble tiles spelling JANUARY across it, cobalt-blue stars scattered, a hot-water-bottle and a striped pouch at the upper-right and lower-right corners, "oriographs" small-caps label below the image, and a heavy justified footer of letter-from-the-editor prose. Dated 2026. <em>Structurally this is doing exactly what a Marginalia issue cover could do</em>; visually it is louder than the system allows.</p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>structural logic</em>. Month as title, single anchor image with supporting objects, small publication mark, dense letter-at-the-foot. This is a candidate template for Marginalia's monthly issue cover.</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">The cobalt stars, the Scrabble-tile typography, the heavy decorative graphic weight. Replace with: cream ground, General Sans month-title, small supporting objects treated to duotone, dusty navy or lavender accents only.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 70 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>70</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Grass + sea diptych on cream mat.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">A single square image — green grass on the left half, blue sea on the right half, sky above both — mounted with a deep cream mat. Nothing else. <em>Duplicate of existing ref 40.</em> Kept here because the second upload indicates how strongly the image registers as essential.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Already documented as the core zine quietest-spread reference. See README.md ref 40. Safe to deduplicate.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 71 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>71</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Wildflowers + star field on aged paper.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">Two paired photographs — a cluster of pink phlox at left, a black star field at right — mounted inside a taped, water-stained, aged-paper frame. <em>Specimen-plate register carried by the substrate itself.</em> The aging of the paper is the composition.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Zine spread that benefits from archival presentation. Sibling to existing ref 39. Strong for constellation-page or catalog-page pairings where the viewer is meant to read each image as evidence.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 72 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>72</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Sky / sea — nine-square atmospheric grid.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">Nine small painted panels arranged in a 3×3 grid: skies, clouds, water, a single gull, a sunset burning low across the bottom row. Each panel compositionally complete. <em>Sibling to existing ref 38.</em> Usable for sequencing atmospheric material into a grid without the grid reading as indexed.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Zine Spread 08 (Catalog) and deck slide 3. Precedent for how to make a grid feel composed rather than inventoried.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 73 -->
+    <div class="entry extraction">
+      <div class="entry-num">ref<strong>73</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Cornflower-blue botanical grid.</div>
+        <span class="entry-tag extraction">extraction</span>
+        <p class="entry-desc">Small photographs of flowers and plants arranged against a dusty cornflower-blue ground, with taller stems of chartreuse-yellow buds and a single purple geranium at the right. Saturated poppies and marigolds sit across the top edge. <em>The blue ground is the extraction;</em> the saturated flower photography pulls the overall image away from the system.</p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>cornflower-blue ground color</em> as an adjacent-to-navy palette extension. Candidate for a zine spread ground, or a deck section where the system's dusty navy can be reinterpreted slightly lighter and dustier. Also useful as a <em>structural</em> precedent for botanical-specimens-as-grid.</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">The high-saturation red poppies and orange marigolds. If adapting the composition, replace source photography with botanical material treated to duotone in forest green or navy.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 74 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>74</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">"forest" — mono single-word title card.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">A video-player-like composition: a vertical forest photograph on the left fills about a third of the page, the rest is a pale mint-green ground with a single monospaced word "forest" near the lower left, and a tiny time-code "46:00" at the bottom. <em>This is the cleanest statement in the whole cluster of what a Marginalia title card should feel like.</em> Minor palette drift (the mint ground is slightly outside the system) but the compositional move is canonical.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Deck title slides. Film chapter titles. Zine section dividers. Translate the mint ground to cream when adapting.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 75 -->
+    <div class="entry extraction">
+      <div class="entry-num">ref<strong>75</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">"THE INTERNET CAN'T ARCHIVE THIS FEELING." — polaroid.</div>
+        <span class="entry-tag extraction">extraction</span>
+        <p class="entry-desc">A centered polaroid photograph of two women running barefoot in white dresses through a sunlit field, with "THE INTERNET CAN'T ARCHIVE" hand-lettered across the top and "THIS FEELING." hand-lettered underlined below. Two small flower doodles in the corners. <em>Duplicate of existing ref 35.</em> The sentiment and core layout are pure Marginalia; the doodles remain drift-04 territory.</p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>hand-lettered headline + centered polaroid + underline emphasis</em> layout. Strong precedent for social cuts and for zine closing statements.</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">The corner flower doodles (drift-04 — scattered hand).</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 76 -->
+    <div class="entry negative">
+      <div class="entry-num">ref<strong>76</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">"De Botanica" — craft collage with embroidered birds.</div>
+        <span class="entry-tag negative">negative ref</span>
+        <p class="entry-desc">A vintage-zine cover: a blurred white-flower photograph overlaid with paper-cutout birds (one in printed fabric, one stitched with thread), plus a "Oh, dear — The flowers — I can't find words enough to praise you" ransom-note clipping. Vertical "DE BOTANICA" title down the right side on textured green bookcloth. <em>Duplicate of existing ref 34, which is classified in the README as a permitted tactile-handcraft reference.</em> Here it is reclassified as a <em>negative reference</em> against the current Marginalia register.</p>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">Everything. The paper-cutout birds, the embroidered outline, the ransom-note typesetting, the stitched elements — all push into craft-zine / textile-collage territory, which the locked Marginalia system explicitly rejects as drift-02 (busy collage).</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val"><em>Only as a counter-example</em>. If an artifact starts looking like this, something has gone wrong. This tension against existing ref 34's permissive classification is intentional — the system is narrowing as the project converges.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 77 -->
+    <div class="entry in-register">
+      <div class="entry-num">ref<strong>77</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Ink splatter poem + purple aura gradient.</div>
+        <span class="entry-tag in-register">in register</span>
+        <p class="entry-desc">An open sketchbook spread: the left page shows a handful of black ink splatters and a short handwritten poem ("is to touch / upon what's not yet known / knows one / to know one's / unknown"); the right page is a deep purple-to-bone gradient with a pale halo at its center. <em>Duplicate of existing ref 33.</em> Repeated here because the sketchbook-intimacy + lavender/purple atmosphere pairing is core to the project's register.</p>
+        <div class="entry-extraction">
+          <span class="label where">use in</span>
+          <span class="val">Already documented. See README.md ref 33. Safe to deduplicate.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 78 -->
+    <div class="entry extraction">
+      <div class="entry-num">ref<strong>78</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">V — "August 9th / winter bear" fan zine spread.</div>
+        <span class="entry-tag extraction">extraction</span>
+        <p class="entry-desc">A cream spread with a dried cornflower down the vertical center, a typeset lyric block at the left captioned "AUGUST, 9th / by V" and signed in graffiti "WINTER BEAR", three stacked film stills of the subject running down the right with a washi-tape-taped quote strip ("just imagine your face say hello to me / then all the bad days / they're nothing to me"). Cursive headers top and bottom. <em>Sibling to existing ref 32.</em> Structurally rich; the cursive and sentimental framing push it slightly outside the system.</p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>pressed-flower-as-vertical-divider + typeset letter column + stacked film stills + one pulled quote strip</em> structure. Strong precedent for a lyric zine spread that combines writing with a stack of visual evidence.</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">The cursive script at top ("sleep like a winter bear") and bottom ("would you come fly to me"). Translate to General Sans italic if needed, or omit.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 79 -->
+    <div class="entry structural">
+      <div class="entry-num">ref<strong>79</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">"Films &amp; tv" — annual favorites cyanotype one-sheet.</div>
+        <span class="entry-tag structural">structural</span>
+        <p class="entry-desc">A one-sheet dominated by cyan duotone: a vertical film-strip of labeled stills down the left edge (BEDEVILLED 2010, SOULMATE 2023, HAN GONGJU 2014), an ornamental serif "Films &amp; tv" display title at top right, a blue-toned film-still of two figures facing the sea with film-crop marks and overlaid film titles mid-page, a dense footer listing annual favorites. Torn-paper edges at top and bottom. <em>Sibling to existing ref 31, but cleaner structurally and with more useful organization logic.</em></p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>annual-favorites one-sheet structure</em>: vertical film-strip column, central hero still with overlaid labels, dense footer listing titles. Directly adaptable for Marginalia's annual or seasonal recap issue.</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">The ornamental serif "F" and the cursive serif title treatment (drift-01 — serif display). The cyan saturation level. The torn-paper edges as the dominant graphic move. Replace with: General Sans display, dusty navy duotone, clean cream ground.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 80 -->
+    <div class="entry extraction">
+      <div class="entry-num">ref<strong>80</strong></div>
+      <div class="entry-content">
+        <div class="entry-title">Photobooth strip + "life is short / the world is wide."</div>
+        <span class="entry-tag extraction">extraction</span>
+        <p class="entry-desc">A two-panel layout: left shows a vertical photobooth strip of four portraits pasted over a page of old German cursive handwriting; right shows a muted cliff landscape over sea with "life is short and / the world is wide" in a dusty magenta typewriter face arranged as two separated phrases. <em>Duplicate of existing ref 30, extending it with the photobooth-strip-over-handwriting element on the left panel.</em></p>
+        <div class="entry-extraction">
+          <span class="label use">use</span>
+          <span class="val">The <em>photobooth-over-handwriting archival specimen layering</em> (left panel). The <em>typewriter pull-quote over landscape</em> pairing (right panel, already covered by ref 30).</span>
+        </div>
+        <div class="entry-extraction">
+          <span class="label skip">skip</span>
+          <span class="val">The <em>dusty magenta typewriter color</em>. Off-palette. Translate to ink (#1C1C1A) or dusty navy (#3E4A66) when adapting.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PATTERNS -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-title-block">
+        <div class="section-num">03 · cross-cutting patterns</div>
+        <h2 class="section-title">What the expanded cluster adds to the system.</h2>
+      </div>
+      <div class="section-tag">read holistically</div>
+    </div>
+    <p class="section-intro">Five distinctions this batch makes that the original 40 did not fully articulate. Each is a real addition — not a restatement.</p>
+
+    <ul class="patterns-list">
+      <li>
+        <div class="pkey">palette extension</div>
+        <div class="pval">A softer, dustier secondary palette emerges across the new references — butter-cream, dusty sage, periwinkle, soft blush, cornflower — all adjacent to the locked cream/navy/lavender but pushing into more muted warm neutrals. These are candidate <em>seasonal accent swatches</em>, not replacements.
+          <span class="refs">refs 49 · 73 · 47 · 58 · 68</span>
+        </div>
+      </li>
+      <li>
+        <div class="pkey">typography extension</div>
+        <div class="pval">Two specific display-type candidates: a <em>bubbled outline hand-display face</em> for rare hero moments (ref 45 extraction only), and <em>typewriter-mono as small caption grammar</em> now confirmed across several references. General Sans remains the primary, IBM Plex Mono the secondary — these extensions expand the acceptable hero-display register slightly.
+          <span class="refs">refs 45 · 64 · plus existing 24, 28, 30</span>
+        </div>
+      </li>
+      <li>
+        <div class="pkey">handwriting-in-the-world</div>
+        <div class="pval"><em>Handwriting that exists inside the image</em> rather than added over the top — written into grass, on crumpled paper picked up and photographed, on a postcard verso, on a preprinted diary page. This is a sharper version of the epistolary register and resolves some of the earlier ambiguity about when handwriting is permitted.
+          <span class="refs">refs 50 · 60 · 65 · 66 · 67</span>
+        </div>
+      </li>
+      <li>
+        <div class="pkey">issue-cover structure</div>
+        <div class="pval">Two strong structural precedents for a monthly or annual publication cover (69, 79). Both reject their own visual execution but offer directly adaptable organizational logic. The Marginalia cover template can be built by combining their structures with the locked system visuals.
+          <span class="refs">refs 69 · 79 · plus extension of existing 31</span>
+        </div>
+      </li>
+      <li>
+        <div class="pkey">register sharpening</div>
+        <div class="pval">The new batch <em>narrows</em> the system rather than expanding it. Ref 76 specifically re-classifies a previously permissive entry (existing 34) as a negative reference. Several other entries emphasize restraint at the expense of density. The direction of travel is clear: <em>quieter</em>.
+          <span class="refs">refs 53 · 54 · 55 · 56 · 70 · 74 · 76</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ─── DUPLICATES -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-title-block">
+        <div class="section-num">04 · duplicates and near-duplicates</div>
+        <h2 class="section-title">Overlaps with the original forty.</h2>
+      </div>
+      <div class="section-tag">file hygiene</div>
+    </div>
+    <p class="section-intro">Four entries in the new batch are byte-identical to existing references. These are kept rather than deleted because the second upload carries information: <em>a ref uploaded twice is a ref that matters twice.</em> When the cluster is next cleaned, the duplicates can be removed; the annotations in the guide doc above should be merged with the README entries for the originals.</p>
+
+    <ul class="patterns-list">
+      <li>
+        <div class="pkey">ref 70 = ref 40</div>
+        <div class="pval">Grass + sea diptych on cream mat. <em>Byte-identical.</em> Safe to delete 70 and keep 40; guide annotation for 70 is documentation-only.</div>
+      </li>
+      <li>
+        <div class="pkey">ref 75 = ref 35</div>
+        <div class="pval">"Internet can't archive this feeling." <em>Byte-identical.</em> Safe to delete 75 and keep 35.</div>
+      </li>
+      <li>
+        <div class="pkey">ref 76 ≈ ref 34</div>
+        <div class="pval">"De Botanica" embroidered flower cover. <em>Byte-identical file, but reclassified as negative reference in this guide</em>. Keep both entries: README treats 34 as a permitted tactile-handcraft reference; this guide treats 76 as drift-02 counter-example. The tension is intentional — the system is narrowing. If deduplicating, keep the negative classification.</div>
+      </li>
+      <li>
+        <div class="pkey">ref 77 ≈ ref 33</div>
+        <div class="pval">Ink splatter + handwritten poem + purple aura. <em>Byte-identical.</em> Safe to delete 77 and keep 33.</div>
+      </li>
+      <li>
+        <div class="pkey">ref 80 ≈ ref 30</div>
+        <div class="pval">"Life is short and the world is wide." <em>Byte-identical.</em> Safe to delete 80 and keep 30, though this guide's note on the photobooth-over-handwriting layering (the left panel) is worth carrying forward into the README entry for 30.</div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ─── USE ROUTING -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-title-block">
+        <div class="section-num">05 · use routing</div>
+        <h2 class="section-title">Which new refs matter for which deliverable.</h2>
+      </div>
+      <div class="section-tag">prioritization</div>
+    </div>
+    <p class="section-intro">Not every ref is equally load-bearing. This is the triage for a fresh Claude or a design collaborator who needs to know which of the 40 new entries to open first for a given output.</p>
+
+    <ul class="patterns-list">
+      <li>
+        <div class="pkey">film brief</div>
+        <div class="pval">44 (reading triptych), 46 (fireworks/figure), 50 (Hockney diary), 57 (sea triptych), 65 (handwriting in grass), 67 (jeudi juillet). These extend existing refs 21, 23, 25, 26, 29 without replacing them.</div>
+      </li>
+      <li>
+        <div class="pkey">zine brief</div>
+        <div class="pval">51 (Zara Home Picasso), 53 (coffee/graffiti), 54 (intuition rhythm), 55 (Richard Long), 56 (lace on floorboards), 58 (birds+lavender), 62 (joy contents grid), 66 (Japanese spread), 68 (lavender sketchbook), 71 (starfield specimen). 62 is the single strongest add for the zine's contents spread.</div>
+      </li>
+      <li>
+        <div class="pkey">deck v5</div>
+        <div class="pval">61 (desert color blocks) for slide 3, 74 (forest mono) for title slides, 60 (Serre Chevalier postcard) for slide 5 close. 62 is also a candidate for a "past issues" or "future cadence" slide if that gets added.</div>
+      </li>
+      <li>
+        <div class="pkey">issue cover template</div>
+        <div class="pval">69 (oriographs January) and 79 (Films &amp; tv annual) together — structural only, visuals stripped and translated. This is a <em>future</em> artifact, not a Thursday-blocking one.</div>
+      </li>
+      <li>
+        <div class="pkey">social cuts</div>
+        <div class="pval">75 / ref 35 (internet can't archive) remains the anchor. 67 (jeudi juillet) is a strong short-form vertical.</div>
+      </li>
+      <li>
+        <div class="pkey">palette / moodboard</div>
+        <div class="pval">47 (tonal grid), 49 (pastel palette), 58 (lavender at scale), 73 (cornflower ground extraction).</div>
+      </li>
+      <li>
+        <div class="pkey">typography extensions</div>
+        <div class="pval">45 (bubble display), 64 (typewriter caption). Both are strict-extraction — the rest of each image is specifically off-register.</div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ─── NOTES FOR CLAUDE DESIGN -->
+  <section class="section">
+    <div class="section-head">
+      <div class="section-title-block">
+        <div class="section-num">06 · if uploading to claude design</div>
+        <h2 class="section-title">What to include, what to hold back.</h2>
+      </div>
+      <div class="section-tag">extraction hygiene</div>
+    </div>
+
+    <div class="principle-block">
+      <div class="principle-eyebrow">extraction hygiene</div>
+      <div class="principle-title">Upload the <em>in-register</em> entries first. Hold the <em>extraction</em> and <em>structural</em> entries back until the baseline is extracting correctly.</div>
+      <div class="principle-body">
+        <p>Claude Design averages across what it's shown. If the <em>extraction</em> references are uploaded alongside the <em>in-register</em> ones without annotation, the tool will extract the whole image rather than the single element that matters — and the busy / decorative / saturated portions of those images will pollute the style profile.</p>
+        <p><strong>Recommended upload order.</strong> Batch 1: the twelve clear in-register additions (41, 42, 43, 44, 46, 50, 51, 52, 53, 54, 55, 56, 57, 58, 60, 62, 65, 66, 67, 68, 71, 72, 74 — twenty-three entries in total, the spine of the cluster). Verify Claude Design's extraction is reading these correctly. Only then add the extraction and structural entries (45, 47, 48, 49, 59, 61, 63, 64, 69, 73, 75, 78, 79, 80) — <em>with the annotations from this guide pasted alongside each image upload</em>. Never add ref 76 (the negative reference) to Claude Design.</p>
+        <p>If the tool's extraction starts producing busy collage, cozy lifestyle, serif display, scattered doodles, or over-saturated color, <em>remove the extraction and structural entries and re-extract from the in-register spine only.</em></p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>
